@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="stylemainpage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
     <!-- Font Awesome のCDNを head内に追加 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 <!--モバイル時ヘッダー-->
@@ -78,7 +77,7 @@
 <div class="container-fluid">
     <div class="row">
       <!-- サイドバー -->
-    <nav class="col-md-3 col-lg-2 d-flex flex-column align-items-center sidebar position-fixed">
+    <nav class="d-none d-md-flex col-md-3 col-lg-2 d-flex flex-column align-items-center sidebar position-fixed">
     <ul class="nav flex-column sidebar-content">
     <li class="nav-item mb-4 text-center">
       <a class="nav-link p-0 d-flex flex-column align-items-center text-white hover-bg-dark" href="#">
@@ -107,25 +106,73 @@
   </ul>
 </nav>
 
+<main class="d-flex flex-column align-items-center justify-content-start"
+      style="padding-top: 120px; padding-left: 100px;">
 
-          <!-- メインコンテンツ -->
-      <main class="col-md-9 col-lg-10 px-md-4 d-flex flex-column align-items-center justify-content-center text-center"
-            style="margin-left: 100px; margin-top: 80px;">
-        <h1 class="mt-4">メインコンテンツ</h1>
-        <p>ここにページの内容が入ります。</p>
+  <form style="width: 100%; max-width: 600px;">
+    <div class="input-group rounded-pill bg-light px-3 py-1" style="height: 45px;">
+      <span class="input-group-text border-0 bg-transparent">
+        <i class="fas fa-search text-secondary"></i>
+      </span>
+      <input type="text" class="form-control border-0 bg-transparent" placeholder="検索">
+    </div>
+  </form>
 
-        <!-- 検索バー（左寄せテキスト）-->
-        <form class="w-75 mt-4">
-          <div class="input-group rounded-pill bg-light px-3 py-1" style="height: 45px;">
-            <span class="input-group-text border-0 bg-transparent">
-              <i class="fas fa-search text-secondary"></i>
-            </span>
-            <input type="text" class="form-control border-0 bg-transparent" placeholder="検索" aria-label="検索">
-          </div>
-        </form>
-      </main>
+<div class="container mt-4">
+  <div class="row justify-content-start"> <!-- 左寄せ -->
+    <div class="col-md-4 mb-4">
+      <!-- 1個目のチーム枠 -->
+      <div class="border rounded p-3" style="height: 150px;">
+        <h5 class="mb-3">チームタイトル1</h5>
+        <div class="d-flex align-items-start gap-3">
+          <img src="https://via.placeholder.com/100" alt="チーム画像1" class="img-fluid rounded" style="width: 100px; height: 100px; object-fit: cover;">
+          <p class="mb-0 flex-grow-1">説明文1</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <!-- 2個目のチーム枠 -->
+      <div class="border rounded p-3" style="height: 150px;">
+        <h5 class="mb-3">チームタイトル2</h5>
+        <div class="d-flex align-items-start gap-3">
+          <img src="https://via.placeholder.com/100" alt="チーム画像2" class="img-fluid rounded" style="width: 100px; height: 100px; object-fit: cover;">
+          <p class="mb-0 flex-grow-1">説明文2</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <!-- 3個目のチーム枠 -->
+      <div class="border rounded p-3" style="height: 150px;">
+        <h5 class="mb-3">チームタイトル3</h5>
+        <div class="d-flex align-items-start gap-3">
+          <img src="https://via.placeholder.com/100" alt="チーム画像3" class="img-fluid rounded" style="width: 100px; height: 100px; object-fit: cover;">
+          <p class="mb-0 flex-grow-1">説明文3</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <!-- 4個目のチーム枠は2行目の左端に配置される -->
+      <div class="border rounded p-3" style="height: 150px;">
+        <h5 class="mb-3">チームタイトル4</h5>
+        <div class="d-flex align-items-start gap-3">
+          <img src="https://via.placeholder.com/100" alt="チーム画像4" class="img-fluid rounded" style="width: 100px; height: 100px; object-fit: cover;">
+          <p class="mb-0 flex-grow-1">説明文4</p>
+        </div>
+      </div>
     </div>
   </div>
+</div>
+
+
+
+</main>
+
+
+
+
+
+</div>
+</div>
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"

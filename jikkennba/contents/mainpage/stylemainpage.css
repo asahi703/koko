@@ -63,3 +63,32 @@ header {
 .input-group .form-control:focus {
   box-shadow: none;
 }
+
+.team-selector {
+  justify-content: center;
+}
+
+.team-box {
+  width: 60px;
+  height: 60px;
+  background-color: #6c757d;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.team-box:hover {
+  background-color: #5a6268;
+}
+
+.team-box.active {
+  background-color: #0d6efd;
+}
+
+
