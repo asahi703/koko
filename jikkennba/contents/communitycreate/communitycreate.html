@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet" href="stylemainpage.css">
+    <link rel="stylesheet" href="stylecommunitycreate.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
     <!-- Font Awesome のCDNを head内に追加 -->
 </head>
@@ -76,7 +76,7 @@
 
 <div class="container-fluid">
     <div class="row">
-      <!-- サイドバー -->
+<!-- サイドバー -->
     <nav class="d-none d-md-flex col-md-3 col-lg-2 d-flex flex-column align-items-center sidebar position-fixed">
     <ul class="nav flex-column sidebar-content">
     <li class="nav-item mb-4 text-center">
@@ -106,65 +106,31 @@
   </ul>
 </nav>
 
-<main class="d-flex flex-column align-items-center justify-content-start"
-      style="padding-top: 120px; padding-left: 100px;">
-
-  <form style="width: 100%; max-width: 600px;">
-    <div class="input-group rounded-pill bg-light px-3 py-1" style="height: 45px;">
-      <span class="input-group-text border-0 bg-transparent">
-        <i class="fas fa-search text-secondary"></i>
-      </span>
-      <input type="text" class="form-control border-0 bg-transparent" placeholder="検索">
-    </div>
-  </form>
-
-<div class="container mt-4">
-  <div class="row justify-content-start"> <!-- 左寄せ -->
-    <div class="col-md-4 mb-4">
-      <!-- 1個目のチーム枠 -->
-      <div class="border rounded p-3" style="height: 150px;">
-        <h5 class="mb-3">コミュニティタイトル1</h5>
-        <div class="d-flex align-items-start gap-3">
-          <img src="https://via.placeholder.com/100" alt="チーム画像1" class="img-fluid rounded" style="width: 100px; height: 100px; object-fit: cover;">
-          <p class="mb-0 flex-grow-1">説明文1</p>
+<!-- メインコンテンツ -->
+<main class="col-md-9 offset-md-2" style="padding-top: 150px;">
+  <div class="text-center mb-4">
+    <h2 class="fs-5 fw-bold">コミュニティ作成</h2>
+  </div>
+  <div class="card bg-secondary-subtle mx-auto w-100" style="max-width: 800px;">
+    <div class="card-body">
+      <form>
+        <div class="mb-3">
+          <label for="communityName" class="form-label">コミュニティ名<span class="text-danger">*</span></label>
+          <input type="text" class="form-control" id="communityName" required>
         </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-4">
-      <!-- 2個目のチーム枠 -->
-      <div class="border rounded p-3" style="height: 150px;">
-        <h5 class="mb-3">コミュニティタイトル2</h5>
-        <div class="d-flex align-items-start gap-3">
-          <img src="https://via.placeholder.com/100" alt="チーム画像2" class="img-fluid rounded" style="width: 100px; height: 100px; object-fit: cover;">
-          <p class="mb-0 flex-grow-1">説明文2</p>
+        <div class="mb-3">
+          <label for="communityDescription" class="form-label">説明</label>
+          <textarea class="form-control" id="communityDescription" rows="4"></textarea>
         </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-4">
-      <!-- 3個目のチーム枠 -->
-      <div class="border rounded p-3" style="height: 150px;">
-        <h5 class="mb-3">コミュニティタイトル3</h5>
-        <div class="d-flex align-items-start gap-3">
-          <img src="https://via.placeholder.com/100" alt="チーム画像3" class="img-fluid rounded" style="width: 100px; height: 100px; object-fit: cover;">
-          <p class="mb-0 flex-grow-1">説明文3</p>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary px-5">作成</button>
         </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-4">
-      <!-- 4個目のチーム枠は2行目の左端に配置される -->
-      <div class="border rounded p-3" style="height: 150px;">
-        <h5 class="mb-3">コミュニティタイトル4</h5>
-        <div class="d-flex align-items-start gap-3">
-          <img src="https://via.placeholder.com/100" alt="チーム画像4" class="img-fluid rounded" style="width: 100px; height: 100px; object-fit: cover;">
-          <p class="mb-0 flex-grow-1">説明文4</p>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
-</div>
 </main>
-</div>
-</div>
+
+
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
