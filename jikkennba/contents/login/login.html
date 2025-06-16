@@ -12,9 +12,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="styleLogin.css">
     <title>Title</title>
-</head>
+<body class="bg-light" style="padding-top: 80px;">
 <!--モバイル時ヘッダー-->
-<header class="d-flex d-md-none w-100 navbar navbar-expand-md align-items-center py-4">
+<header class="d-flex d-md-none w-100 navbar navbar-expand-md align-items-center py-4 fixed-top shadow-sm">
     <nav class="container d-flex justify-content-between">
         <!-- ブランドロゴとタイトル -->
         <a class="navbar-brand d-flex align-items-center position-absolute top-50 start-50 translate-middle" href="#">
@@ -51,7 +51,7 @@
 </header>
 
 <!--PC時ヘッダー-->
-<header class="d-none d-md-flex w-100 navbar navbar-expand-md align-items-center py-md-2 fixed-top">
+<header class="d-none d-md-flex w-100 navbar navbar-expand-md align-items-center py-md-2 fixed-top shadow-sm">
     <nav class="container d-flex flex-column flex-md-row justify-content-between align-items-center-md">
         <!-- ブランドロゴとタイトル -->
         <a class="navbar-brand d-flex align-items-center" href="#">
@@ -72,30 +72,31 @@
         </div>
     </nav>
 </header>
-<body class="bg-light">
-<div class="container d-flex flex-column align-items-center justify-content-center" style="padding-top: 160px;">
-    <div class="d-flex flex-column justify-content-center align-items-center w-75">
+
+<!-- メインコンテンツ -->
+<div class="container d-flex flex-column align-items-center justify-content-center vw-100">
+    <div class="d-flex flex-column justify-content-center align-items-center w-100 mt-md-3">
         <div class="mb-3">
             <h2>ログイン</h2>
         </div>
-        <form action="sighin.html" method="post" class="border rounded shadow p-4 w-50">
+        <form action="sighin.html" method="post" class="border rounded shadow p-4 w-100" style="max-width: 400px; width: 100%;">
             <input type="hidden" name="func" value="" />
             <input type="hidden" name="param" value="" />
-            <div class="form-group my-md-2 px-md-3 w-100">
+            <div class="form-group my-2 px-2 w-100">
                 <label>メールアドレス <span class="text-danger fw-bold">*</span></label>
-                <input type="text" name="user_name" class="form-control" placeholder="メールアドレス" required>
+                <input type="email" name="user_mailaddress" class="form-control" placeholder="メールアドレス" required>
             </div>
-            <div class="form-group my-md-2 px-md-3 w-100">
+            <div class="form-group my-2 px-2 w-100">
                 <label>パスワード <span class="text-danger fw-bold">*</span></label>
-                <input type="email" name="user_mailaddress" class="form-control" placeholder="パスワード" required>
+                <input type="password" name="user_password" class="form-control" placeholder="パスワード" required>
             </div>
             <div class="text-center">
                 <p>利用規約は <a href="#">こちらから</a></p>
             </div>
-            <div class="form-group d-flex justify-content-center my-md-2 px-md-3 w-100">
+            <div class="form-group d-flex justify-content-center my-2 px-2 w-100">
                 <input type="submit" class="btn btn-primary w-100" value="ログイン">
             </div>
-            <div class="form-group d-flex justify-content-center my-md-2 px-md-3 w-100">
+            <div class="form-group d-flex justify-content-center my-2 px-2 w-100">
                 <a href="">新規登録はこちら</a>
             </div>
         </form>
