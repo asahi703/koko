@@ -8,15 +8,6 @@ header,
     background-color: #867FEA;
 }
 
-/* ヘッダーを固定 */
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1030; /* Bootstrapのナビバーと重ならないように */
-}
-
 .sidebar {
   top: 80px; /* ヘッダーの高さと合わせて調整 */
   left: 0;
@@ -25,7 +16,7 @@ header {
   background-color: #867FEA;
   overflow-y: auto;
   padding-top: 40px;
-  z-index: 1020;
+  z-index: 0;
 }
 
 .navbar-toggler {
