@@ -12,7 +12,6 @@
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <title>Title</title>
 </head>
-
 <body class="bg-light" style="padding-top: 80px;">
     <!--モバイル時ヘッダー-->
     <header class="d-flex d-md-none w-100 navbar navbar-expand-md align-items-center py-4 fixed-top shadow-sm">
@@ -56,6 +55,39 @@
         </div>
     </header>
 
+
+    <!-- スマホ用ナビゲーションバー -->
+    <div class="d-flex d-md-none bg-white border-top border-bottom py-2 px-3 justify-content-between align-items-center sticky-top shadow"
+        style="top: 64px; z-index: 1020; margin-top: 0;">
+        <!-- 左：戻る -->
+        <a href="#" class="text-dark text-decoration-none d-flex align-items-center">
+            <img src="../../img/sidebarImg/arrow_back_25dp_999999_FILL0_wght400_GRAD0_opsz24.svg" alt="戻る"
+                style="width: 24px; height: 24px;">
+        </a>
+
+        <!-- 中央：ナビ項目 -->
+        <div class="d-flex justify-content-center flex-grow-1">
+            <a href="#" class="text-dark text-center text-decoration-none mx-3">
+                <div class="small">行事予定表</div>
+            </a>
+            <a href="#" class="text-dark text-center text-decoration-none mx-3">
+                <div class="small">出席確認</div>
+            </a>
+        </div>
+
+        <!-- 右：メニュー（ドロップダウン） -->
+        <div class="dropdown">
+            <a href="#" class="text-dark" role="button" id="dropdownMenuButtonMobile" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <span class="material-icons"><img src="../../img/sidebarImg/more_vert_25dp_999999_FILL0_wght400_GRAD0_opsz24.svg"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButtonMobile">
+                <li><a class="dropdown-item" href="#">メンバー確認</a></li>
+                <li><a class="dropdown-item" href="#">メンバー追加</a></li>
+            </ul>
+        </div>
+    </div>
+
     <!--PC時ヘッダー-->
     <header class="d-none d-md-flex w-100 navbar navbar-expand-md align-items-center py-md-2 fixed-top shadow-sm">
         <nav class="container d-flex flex-column flex-md-row justify-content-between align-items-center-md">
@@ -79,7 +111,6 @@
             </div>
         </nav>
     </header>
-
 
     <!-- メインラッパー -->
     <div class="container-fluid">
@@ -124,41 +155,6 @@
                     </ul>
                 </div>
             </nav>
-
-            <!-- スマホ用(ヘッダーの直下に置く) -->
-            <!-- スマホ用ナビゲーションバー -->
-            <div class="d-flex d-md-none bg-white border-top border-bottom py-2 px-3 justify-content-between align-items-center sticky-top"
-                style="top: 80px; z-index: 1020;">
-
-                <!-- 左：戻る -->
-                <a href="#" class="text-dark text-decoration-none d-flex align-items-center">
-                    <img src="../../img/sidebarImg/arrow_back_25dp_999999_FILL0_wght400_GRAD0_opsz24.svg" alt="戻る"
-                        style="width: 24px; height: 24px;">
-                    <span class="ms-2">すべてのクラス</span>
-                </a>
-
-                <!-- 中央：ナビ項目 -->
-                <div class="d-flex justify-content-center flex-grow-1">
-                    <a href="#" class="text-dark text-center text-decoration-none mx-3">
-                        <div class="small">行事予定表</div>
-                    </a>
-                    <a href="#" class="text-dark text-center text-decoration-none mx-3">
-                        <div class="small">出席確認</div>
-                    </a>
-                </div>
-
-                <!-- 右：メニュー（ドロップダウン） -->
-                <div class="dropdown">
-                    <a href="#" class="text-dark" role="button" id="dropdownMenuButtonMobile" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <span class="material-icons"><img src="../../img/sidebarImg/more_vert_25dp_999999_FILL0_wght400_GRAD0_opsz24.svg"></span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButtonMobile">
-                        <li><a class="dropdown-item" href="#">メンバー確認</a></li>
-                        <li><a class="dropdown-item" href="#">メンバー追加</a></li>
-                    </ul>
-                </div>
-            </div>
 
             <!-- メインコンテンツ -->
             <main class="col-12 col-md-9 col-lg-10 offset-md-3 offset-lg-2 p-4" style="min-height: 100vh;">
