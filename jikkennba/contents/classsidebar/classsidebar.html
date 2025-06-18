@@ -56,7 +56,32 @@
     </header>
 
 
-    <!-- スマホ用ナビゲーションバー -->
+    
+
+    <!--PC時ヘッダー-->
+    <header class="d-none d-md-flex w-100 navbar navbar-expand-md align-items-center py-md-2 fixed-top shadow-sm">
+        <nav class="container d-flex flex-column flex-md-row justify-content-between align-items-center-md">
+            <!-- ブランドロゴとタイトル -->
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="../../img/headerImg/logo.png" style="width: 50px"
+                    class="hd-img d-inline-block align-top img-fluid" alt="">
+                <img src="../../img/headerImg/account.png" style="width: 50px"
+                    class="hd-img d-inline-block align-top img-fluid ms-4" alt="">
+            </a>
+            <!-- メニュー -->
+            <div class="d-flex flex-row fs-5">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link hover-text" href="#">チームに参加</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link hover-text" href="#">チームを作成</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+<!-- スマホ用ナビゲーションバー -->
     <div class="d-flex d-md-none bg-white border-top border-bottom py-2 px-3 justify-content-between align-items-center sticky-top shadow"
         style="top: 64px; z-index: 1020; margin-top: 0;">
         <!-- 左：戻る -->
@@ -87,31 +112,6 @@
             </ul>
         </div>
     </div>
-
-    <!--PC時ヘッダー-->
-    <header class="d-none d-md-flex w-100 navbar navbar-expand-md align-items-center py-md-2 fixed-top shadow-sm">
-        <nav class="container d-flex flex-column flex-md-row justify-content-between align-items-center-md">
-            <!-- ブランドロゴとタイトル -->
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="../../img/headerImg/logo.png" style="width: 50px"
-                    class="hd-img d-inline-block align-top img-fluid" alt="">
-                <img src="../../img/headerImg/account.png" style="width: 50px"
-                    class="hd-img d-inline-block align-top img-fluid ms-4" alt="">
-            </a>
-            <!-- メニュー -->
-            <div class="d-flex flex-row fs-5">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link hover-text" href="#">チームに参加</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link hover-text" href="#">チームを作成</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-
     <!-- メインラッパー -->
     <div class="container-fluid">
         <div class="row">
