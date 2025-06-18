@@ -9,8 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet" href="stylecommunitycreate.css">
+    <link rel="stylesheet" href="stylecalendar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
     <!-- Font Awesome のCDNを head内に追加 -->
 </head>
 <body>
@@ -76,7 +78,7 @@
 
 <div class="container-fluid">
     <div class="row">
-<!-- サイドバー -->
+      <!-- サイドバー -->
     <nav class="d-none d-md-flex col-md-3 col-lg-2 d-flex flex-column align-items-center sidebar position-fixed">
     <ul class="nav flex-column sidebar-content">
     <li class="nav-item mb-4 text-center">
@@ -106,29 +108,53 @@
   </ul>
 </nav>
 
-<!-- メインコンテンツ -->
-<main class="col-md-9 offset-md-2" style="padding-top: 150px;">
-  <div class="text-center mb-4">
-    <h2 class="fs-5 fw-bold">コミュニティ作成</h2>
-  </div>
-  <div class="card bg-secondary-subtle mx-auto w-100" style="max-width: 800px;">
-    <div class="card-body">
-      <form>
-        <div class="mb-3">
-          <label for="communityName" class="form-label">コミュニティ名<span class="text-danger">*</span></label>
-          <input type="text" class="form-control" id="communityName" required>
-        </div>
-        <div class="mb-3">
-          <label for="communityDescription" class="form-label">説明</label>
-          <textarea class="form-control" id="communityDescription" rows="4"></textarea>
-        </div>
-        <div class="text-center">
-          <button type="submit" class="btn btn-primary px-5">作成</button>
-        </div>
-      </form>
-    </div>
+<main>
+  <div class="calendar-container">
+    <h2>行事予定カレンダー</h2>
+    <div id="calendar"></div>
   </div>
 </main>
+
+
+
+
+    </div>
+</div>
+
+<!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+<script>
+  
+  document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      locale: 'ja',
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,listWeek'
+      },
+      events: [
+        {
+          title: '入学式',
+          start: '2025-04-08',
+          description: '体育館にて午前10時から'
+        },
+        {
+          title: '運動会',
+          start: '2025-05-20',
+          description: '校庭で開催（雨天中止）'
+        }
+      ]
+    });
+
+    calendar.render();
+  });
+</script>
+
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
