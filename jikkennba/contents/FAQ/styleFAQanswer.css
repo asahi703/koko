@@ -1,0 +1,68 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+header,
+.offcanvas{
+    background-color: #867FEA;
+}
+
+/* ヘッダーを固定 */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1030; /* Bootstrapのナビバーと重ならないように */
+}
+
+.sidebar {
+  top: 60px; /* ヘッダーの高さと合わせて調整 */
+  left: 0;
+  height: calc(100vh - 60px);
+  width: 100px; /* 固定幅 */
+  background-color: #867FEA;
+  overflow-y: auto;
+  padding-top: 40px;
+  z-index: 1020;
+}
+
+.navbar-toggler {
+    border-color: rgba(0,0,0,0);
+}
+
+.hover-text:hover{
+    color: darkgray !important;
+}
+
+/* ホバー時の色変更 */
+.sidebar-content a:hover {
+  background-color: #c1bdfa;
+  color: white;
+  text-decoration: none;
+}
+
+/* アクティブリンクの強調 */
+.sidebar-content a.active {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.nav-label {
+  font-size: 0.8rem;
+  color: white;
+  margin-top: 4px;
+}
+
+.input-group.rounded-pill {
+  border: 1px solid #ccc;
+  border-radius: 50px;
+}
+
+.input-group .form-control:focus {
+  box-shadow: none;
+}
+
+
+
