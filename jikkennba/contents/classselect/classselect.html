@@ -116,133 +116,146 @@
         </ul>
       </nav>
 
-      <!-- サイドバー（スマホ用ボトムナビ） -->
-      <nav class="d-md-none fixed-bottom bg-white border-top shadow-sm">
-        <ul class="nav justify-content-around py-1 mb-0">
-          <li class="nav-item">
-            <a class="nav-link text-center p-0" href="#">
-              <img src="../../img/sidebarImg/notifications.png" class="icon-img img-fluid" width="30" alt="...">
-              <div class="small">通知</div>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-center p-0" href="#">
-              <img src="../../img/sidebarImg/chat.png" class="icon-img img-fluid" width="30" alt="...">
-              <div class="small">チャット</div>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-center p-0" href="#">
-              <img src="../../img/sidebarImg/community.png" class="icon-img img-fluid" width="30" alt="...">
-              <div class="small">コミュニティ</div>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-center p-0" href="#">
-              <img src="../../img/sidebarImg/FAQ.png" class="icon-img img-fluid" width="30" alt="...">
-              <div class="small">FAQ</div>
-            </a>
-          </li>
-        </ul>
-      </nav>
+      <!-- サイドバーとメインコンテンツ -->
+      <div class="container-fluid">
+        <div class="row">
+          <!-- サイドバー（スマホ用ボトムナビ） -->
+          <nav class="d-md-none fixed-bottom bg-white border-top shadow-sm">
+            <ul class="nav justify-content-around py-1 mb-0">
+              <li class="nav-item">
+                <a class="nav-link text-center p-0" href="#">
+                  <img src="../../img/sidebarImg/notifications.png" class="icon-img img-fluid" width="30" alt="...">
+                  <div class="small">通知</div>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-center p-0" href="#">
+                  <img src="../../img/sidebarImg/chat.png" class="icon-img img-fluid" width="30" alt="...">
+                  <div class="small">チャット</div>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-center p-0" href="#">
+                  <img src="../../img/sidebarImg/community.png" class="icon-img img-fluid" width="30" alt="...">
+                  <div class="small">コミュニティ</div>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-center p-0" href="#">
+                  <img src="../../img/sidebarImg/FAQ.png" class="icon-img img-fluid" width="30" alt="...">
+                  <div class="small">FAQ</div>
+                </a>
+              </li>
+            </ul>
+          </nav>
 
 
-      <!-- メインコンテンツ -->
+          <!-- メインコンテンツ -->
 
-      <main
-        class="col-12 col-md-9 col-lg-10 px-md-4 d-flex flex-column align-items-center justify-content-center text-center mx-auto"
-        style="margin-top: 80px; margin-bottom: 60px; max-width: 1200px;">
+          <main
+            class="col-12 col-md-9 col-lg-10 px-md-4 d-flex flex-column align-items-center justify-content-center text-center mx-auto"
+            style="margin-top: 80px; margin-bottom: 60px; max-width: 1200px;">
 
-        <!-- 全画面共通：右上固定ボタン -->
-        <button type="button" onclick="location.href='クラス作成画面へのパスを書く'" class="btn btn-primary position-fixed"
-          style="top: 90px; right: 20px; z-index: 1030;">
-          クラス作成
-        </button>
-        
-        <!-- 検索バー -->
-        <div class="row justify-content-center w-100">
-          <div class="col-12 col-md-6">
-            <form class="mt-4">
-              <div class="input-group bg-white rounded-pill border px-3 py-1" style="height: 45px;">
-                <div class="d-flex justify-content-center align-items-center">🔍</div>
-                <input type="text" name="" class="form-control rounded-pill" style="border: none; box-shadow: none;"
-                  placeholder="検索">
+            <!-- 全画面共通：右上固定ボタン -->
+            <button type="button" onclick="location.href='クラス作成画面へのパスを書く'" class="btn btn-primary position-fixed"
+              style="top: 90px; right: 20px; z-index: 1030;">
+              クラス作成
+            </button>
+
+            <!-- 選択されているコミュニティ名を表示 -->
+            <div class="w-100 d-flex justify-content-start align-items-start mb-3" style="max-width: 1200px;">
+              <p class="mb-0 fs-3">選択されているコミュニティ名を表示</p>
+            </div>
+
+            <!-- 検索バー -->
+            <div class="row justify-content-center w-100">
+              <div class="col-12 col-md-6">
+                <form class="mt-4">
+                  <div class="input-group bg-white rounded-pill border px-3 py-1" style="height: 45px;">
+                    <div class="d-flex justify-content-center align-items-center">🔍</div>
+                    <input type="text" name="" class="form-control rounded-pill" style="border: none; box-shadow: none;"
+                      placeholder="検索">
+                  </div>
+                </form>
               </div>
-            </form>
-          </div>
+            </div>
+
+            <div class="container mt-4">
+              <div class="row">
+                <!-- カード1 -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                  <a href="" class="nav-link">
+                    <div class="class-card rounded d-flex align-items-center p-3 shadow-sm w-100"
+                      style="height: 100px;">
+                      <div style="width: 40px; height: 40px; background-color: magenta;" class="rounded me-3"></div>
+                      <div class="flex-grow-1">
+                        <p class="mb-0 fw-bold">一組</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <!-- カード2 -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                  <a href="" class="nav-link">
+                    <div class="class-card rounded d-flex align-items-center p-3 shadow-sm w-100"
+                      style="height: 100px;">
+                      <div style="width: 40px; height: 40px; background-color: magenta;" class="rounded me-3"></div>
+                      <div class="flex-grow-1">
+                        <p class="mb-0 fw-bold">二組</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <!-- カード3 -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                  <a href="" class="nav-link">
+                    <div class="class-card rounded d-flex align-items-center p-3 shadow-sm w-100"
+                      style="height: 100px;">
+                      <div style="width: 40px; height: 40px; background-color: magenta;" class="rounded me-3"></div>
+                      <div class="flex-grow-1">
+                        <p class="mb-0 fw-bold">三組</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <!-- カード4 -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                  <a href="" class="nav-link">
+                    <div class="class-card rounded d-flex align-items-center p-3 shadow-sm w-100"
+                      style="height: 100px;">
+                      <div style="width: 40px; height: 40px; background-color: magenta;" class="rounded me-3"></div>
+                      <div class="flex-grow-1">
+                        <p class="mb-0 fw-bold">四組</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <!-- カード5 -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                  <a href="" class="nav-link">
+                    <div class="class-card rounded d-flex align-items-center p-3 shadow-sm w-100"
+                      style="height: 100px;">
+                      <div style="width: 40px; height: 40px; background-color: magenta;" class="rounded me-3"></div>
+                      <div class="flex-grow-1">
+                        <p class="mb-0 fw-bold">五組</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+              </div>
+            </div>
+          </main>
+
+          <!-- メインコンテンツ -->
+
+
         </div>
-
-        <div class="container mt-4">
-          <div class="row">
-            <!-- カード1 -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-              <a href="" class="nav-link">
-                <div class="class-card rounded d-flex align-items-center p-3 shadow-sm w-100" style="height: 100px;">
-                  <div style="width: 40px; height: 40px; background-color: magenta;" class="rounded me-3"></div>
-                  <div class="flex-grow-1">
-                    <p class="mb-0 fw-bold">一組</p>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <!-- カード2 -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-              <a href="" class="nav-link">
-                <div class="class-card rounded d-flex align-items-center p-3 shadow-sm w-100" style="height: 100px;">
-                  <div style="width: 40px; height: 40px; background-color: magenta;" class="rounded me-3"></div>
-                  <div class="flex-grow-1">
-                    <p class="mb-0 fw-bold">二組</p>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <!-- カード3 -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-              <a href="" class="nav-link">
-                <div class="class-card rounded d-flex align-items-center p-3 shadow-sm w-100" style="height: 100px;">
-                  <div style="width: 40px; height: 40px; background-color: magenta;" class="rounded me-3"></div>
-                  <div class="flex-grow-1">
-                    <p class="mb-0 fw-bold">三組</p>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <!-- カード4 -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-              <a href="" class="nav-link">
-                <div class="class-card rounded d-flex align-items-center p-3 shadow-sm w-100" style="height: 100px;">
-                  <div style="width: 40px; height: 40px; background-color: magenta;" class="rounded me-3"></div>
-                  <div class="flex-grow-1">
-                    <p class="mb-0 fw-bold">四組</p>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <!-- カード5 -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-              <a href="" class="nav-link">
-                <div class="class-card rounded d-flex align-items-center p-3 shadow-sm w-100" style="height: 100px;">
-                  <div style="width: 40px; height: 40px; background-color: magenta;" class="rounded me-3"></div>
-                  <div class="flex-grow-1">
-                    <p class="mb-0 fw-bold">五組</p>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-          </div>
-        </div>
-      </main>
-
-      <!-- メインコンテンツ -->
-
-
-    </div>
-  </div>
+      </div>
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
