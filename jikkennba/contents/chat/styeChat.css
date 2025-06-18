@@ -59,9 +59,6 @@ header,
 }
 
 .chat-msg{
-  border: 1px solid #dee2e6; 
-  border-radius: 0.375rem; 
-  display: inline-block; 
-  max-width: 70%; 
-  background: #fff;
+  max-width: 75%; 
+  word-wrap: break-word;
 }
