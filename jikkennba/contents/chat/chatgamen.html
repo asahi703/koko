@@ -197,21 +197,9 @@
 
       <!-- メインコンテンツ -->
       <main class="flex-grow-1 chat-container">
-        <!-- 検索バー -->
-        <div class="row justify-content-center w-100 mt-4">
-          <div class="col-12 col-md-6">
-            <form>
-              <div class="input-group bg-white rounded-pill border px-3 py-1" style="height: 45px;">
-                <div class="d-flex justify-content-center align-items-center">🔍</div>
-                <input type="text" name="" class="form-control rounded-pill" style="border: none; box-shadow: none;"
-                  placeholder="検索">
-              </div>
-            </form>
-          </div>
-        </div>
-        <!-- チャット画面 -->
 
-        <div class="container mt-4">
+        <!-- チャット画面 -->
+        <div class="container mt-4" style="height: 500px; overflow-y: auto;">
           <div class="row flex-column">
             <!-- 左寄せメッセージ（受信） -->
             <div class="d-flex justify-content-start mb-2">
@@ -231,19 +219,35 @@
 
             <!-- 右寄せメッセージ（送信） -->
             <div class="d-flex justify-content-end mb-2">
-              <div class="chat-msg bg-white border rounded p-2">
+              <div class="chat-msg chat-msg-sbm border rounded p-2">
                 <div>右寄せのメッセージです。送信した内容がここに表示されます。</div>
                 <div class="opacity-50 small mt-1 text-end">06/16 10:36</div>
               </div>
             </div>
           </div>
+
         </div>
 
+        <!-- チャット入力エリア -->
+        <!-- メッセージ入力フォーム -->
+        <div class="row justify-content-center w-100 mt-4">
+          <div class="col-12 col-md-6">
+            <form class="chat-input">
+              <div class="input-group bg-white rounded-pill border px-3 py-1" style="height: 45px;">
+                <input type="text" name="" class="form-control rounded-pill" style="border: none; box-shadow: none;"
+                  placeholder="メッセージを入力">
+                <button type="submit"
+                  class="btn btn-primary rounded-pill ms-2 d-flex align-items-center justify-content-center"
+                  style="height: 100%; padding: 0 16px; border: none; background: none;">
+                  <img src="../../img/send_24dp_999999_FILL0_wght400_GRAD0_opsz24.svg" alt="送信" style="width: 24px; height: 24px;">
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </main>
     </div>
-    </main>
-  </div>
-  </div>
-  </div>
   </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"

@@ -59,6 +59,28 @@ header,
 }
 
 .chat-msg{
+  background-color: whitesmoke;
   max-width: 75%; 
   word-wrap: break-word;
+}
+
+.chat-msg-sbm{
+  background-color: skyblue;
+}
+
+.chat-input{
+  position: fixed;
+  bottom: 20px;
+  padding: 0 2rem;
+  width: calc(100% - 350px); /* サイドバーの幅を引く */
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+
+  @media screen and (max-width: 768px){
+    width: 100%; /* モバイルでは全幅 */
+    left: 0; /* 左側の余白をなくす */
+  }
+
+  @media screen and (min-width: 769px) {
+    left: 350px; /* サイドバーの幅を引く */
+  }
 }
