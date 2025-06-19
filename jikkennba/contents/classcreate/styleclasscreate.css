@@ -64,15 +64,5 @@ header {
   box-shadow: none;
 }
 
-.team-selector {
-  justify-content: center;
-}
 
-.class-card{
-  background-color: #cccccc;
-}
 
-.class-card:hover {
-  background-color: #dcdcdc;
-
-}

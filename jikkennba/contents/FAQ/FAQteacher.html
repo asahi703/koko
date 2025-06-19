@@ -10,7 +10,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-  <link rel="stylesheet" href="styleTopsidebar.css">
+  <link rel="stylesheet" href="styleFAQteacher.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-..." crossorigin="anonymous" />
 </head>
 
 <body class="bg-light" style="padding-top: 80px;">
@@ -146,35 +148,48 @@
           </li>
         </ul>
       </nav>
-
+      
       <!-- メインコンテンツ -->
-      <main
-        class="col-12 col-md-9 col-lg-10 px-md-4 d-flex flex-column align-items-center justify-content-center text-center mx-auto"
-        style="margin-top: 80px; margin-bottom: 60px; max-width: 1200px;">
-        <h1 class="mt-4">メインコンテンツ</h1>
-        <p>ここにページの内容が入ります。</p>
+      <main class="container py-5">
+        <div class="mx-auto px-3" style="max-width: 800px;">
 
-        <!-- 検索バー -->
-        <div class="row justify-content-center w-100">
-          <div class="col-12 col-md-6">
-            <form class="mt-4">
-              <div class="input-group bg-white rounded-pill border px-3 py-1" style="height: 45px;">
-                <div class="d-flex justify-content-center align-items-center">🔍</div>
-                <input type="text" name="" class="form-control rounded-pill" style="border: none; box-shadow: none;"
-                  placeholder="検索">
-              </div>
-            </form>
+          <!-- タイトルと新規追加ボタン（レスポンシブ対応） -->
+          <div
+            class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
+            <h2 class="mb-0">FAQ管理画面（管理者）</h2>
           </div>
-        </div>
 
-        <div class="container mt-4">
-            <div class="row">
-            
-            
-            </div>
+          <!-- 管理用のFAQリスト -->
+          <ul class="list-group shadow">
+            <li
+              class="list-group-item d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2">
+              <span>行事の予定がわかりません</span>
+              <div class="d-flex flex-wrap justify-content-start justify-content-sm-end gap-2">
+                <button class="btn btn-sm btn-outline-primary" onclick="location.href='クラス作成画面へのパスを書く'">
+                  <i class="fas fa-edit"></i> 編集
+                </button>
+                <button class="btn btn-sm btn-outline-danger" onclick="location.href='クラス作成画面へのパスを書く'">
+                  <i class="fas fa-trash"></i> 削除
+                </button>
+              </div>
+            </li>
+            <li
+              class="list-group-item d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2">
+              <span>配布物がどこにあるか分からない</span>
+              <div class="d-flex flex-wrap justify-content-start justify-content-sm-end gap-2">
+                <button class="btn btn-sm btn-outline-primary" onclick="location.href='クラス作成画面へのパスを書く'">
+                  <i class="fas fa-edit"></i> 編集
+                </button>
+                <button class="btn btn-sm btn-outline-danger" onclick="location.href='クラス作成画面へのパスを書く'">
+                  <i class="fas fa-trash"></i> 削除
+                </button>
+              </div>
+            </li>
+            <!-- 他のFAQも同様に追加 -->
+          </ul>
         </div>
-        
       </main>
+
     </div>
   </div>
 </body>

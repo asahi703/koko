@@ -64,15 +64,15 @@ header {
   box-shadow: none;
 }
 
-.team-selector {
-  justify-content: center;
+main {
+  background-color: #f0f0f0;
+  min-height: 100vh;
 }
 
-.class-card{
-  background-color: #cccccc;
+.list-group-item {
+  font-size: 18px;
 }
 
-.class-card:hover {
-  background-color: #dcdcdc;
 
-}
+
+
