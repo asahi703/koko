@@ -33,7 +33,6 @@ header,
   box-shadow: none;
 }
 
-
 .sidebar {
   top: 60px; /* ヘッダーの高さと合わせて調整 */
   left: 0;
@@ -43,4 +42,45 @@ header,
   overflow-y: auto;
   padding-top: 40px;
   z-index: 1020;
+}
+
+.chat-container {
+  @media screen and (max-width: 768px) {
+    margin-left: 0; /* モバイルでは左側の余白をなくす */
+    
+  }
+
+  /*pc画面時*/
+  @media screen and (min-width: 769px) {
+    margin-left: 350px; padding: 1rem; 
+    max-width: calc(100% - 350px);
+    overflow-x: hidden;
+  }
+}
+
+.chat-msg{
+  background-color: whitesmoke;
+  max-width: 75%; 
+  word-wrap: break-word;
+}
+
+.chat-msg-sbm{
+  background-color: skyblue;
+}
+
+.chat-input{
+  position: fixed;
+  bottom: 20px;
+  padding: 0 2rem;
+  width: calc(100% - 350px); /* サイドバーの幅を引く */
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+
+  @media screen and (max-width: 768px){
+    width: 100%; /* モバイルでは全幅 */
+    left: 0; /* 左側の余白をなくす */
+  }
+
+  @media screen and (min-width: 769px) {
+    left: 350px; /* サイドバーの幅を引く */
+  }
 }
