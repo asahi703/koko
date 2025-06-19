@@ -30,20 +30,33 @@ header,
     background-color: #867FEA;
 }
 
-/* サイドバーのスタイル */
 
-/* --- サイドバーの共通スタイル --- */
+.top-sidebar {
+  top: 75px; /* ヘッダーの高さ */
+  left: 0;
+  width: 100px;
+  height: 100vh;
+  background-color: #867FEA;
+  position: fixed;
+  overflow-y: auto;
+  padding-top: 40px;
+}
+
+
+/* クラスサイドバーのスタイル */
+
+/* --- クラスサイドバーの共通スタイル --- */
 .custom-hover:hover {
     background-color: #f0f0f0;
     color: #000;
-  }
+}
 
 /* --- PC表示（768px以上） --- */
 @media (min-width: 768px) {
-    #sidebar {
+    #class-sidebar {
         position: fixed !important;
         top: 80px;
-        left: 0;
+        left: 100px;
         width: 220px;
         height: 100vh;
         border-right: 1px solid #eee;
@@ -59,7 +72,7 @@ header,
 
 /* --- スマホ表示（〜767.98px） --- */
 @media (max-width: 767.98px) {
-    #sidebar {
+    #class-sidebar {
         position: static !important;
         flex-direction: row;
         overflow-x: auto;
@@ -69,9 +82,10 @@ header,
         border-bottom: 1px solid #eee;
         background-color: #fff;
         z-index: 1;
+
     }
 
-    #sidebar .nav-link {
+    #class-sidebar .nav-link {
         flex: 0 0 auto;
         padding: 10px 12px;
         border-right: 1px solid #ddd;
@@ -82,15 +96,25 @@ header,
     }
 
     /* スクロールバーの見た目 */
-    #sidebar::-webkit-scrollbar {
+    #class-sidebar::-webkit-scrollbar {
         height: 6px;
     }
 
-    #sidebar::-webkit-scrollbar-thumb {
+    #class-sidebar::-webkit-scrollbar-thumb {
         background-color: #ccc;
         border-radius: 3px;
     }
+
+    .class-main-content {
+      margin-left: 0 !important;
+      width: 100% !important;
+    }
 }
-.cu-pt{
+
+.cu-pt {
     cursor: pointer;
 }
+
+  @media (max-width: 768px) {
+    
+  }
