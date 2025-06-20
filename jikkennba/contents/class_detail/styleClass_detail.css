@@ -140,15 +140,3 @@ header,
 .post-word{
     word-wrap: break-word;
 }
-
-/* Bootstrap 5ではサブメニュー表示用CSSがないため追加 */
-.dropdown-submenu {
-  position: relative;
-}
-
-.dropdown-submenu > .dropdown-menu {
-  top: 0;
-  left: 100%;
-  margin-left: 0.1rem;
-  margin-right: 0.1rem;
-}
