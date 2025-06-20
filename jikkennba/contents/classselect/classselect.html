@@ -156,11 +156,37 @@
             class="col-12 col-md-9 col-lg-10 px-md-4 d-flex flex-column align-items-center justify-content-center text-center mx-auto"
             style="margin-top: 80px; margin-bottom: 60px; max-width: 1200px;">
 
-            <!-- 全画面共通：右上固定ボタン -->
-            <button type="button" onclick="location.href='クラス作成画面へのパスを書く'" class="btn btn-primary position-fixed"
-              style="top: 90px; right: 20px; z-index: 1030;">
+            <!-- 全画面共通：右上固定ボタン。モーダルを出す -->
+            <button type="button" class="btn btn-primary position-fixed" data-bs-toggle="modal"
+              data-bs-target="#exampleModal" style="top: 90px; right: 20px; z-index: 1030;">
               クラス作成
             </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">クラス作成</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <form>
+                    <div class="modal-body">
+                      <div class="mb-3">
+                        <label for="communityName" class="form-label">クラス名<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="communityName" required>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                      <button type="submit" class="btn btn-primary px-5">作成</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
 
             <!-- 選択されているコミュニティ名を表示 -->
             <div class="w-100 d-flex justify-content-start align-items-start mb-3" style="max-width: 1200px;">
