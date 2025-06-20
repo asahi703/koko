@@ -34,13 +34,13 @@ header,
 }
 
 
-.sidebar {
-  top: 60px; /* ヘッダーの高さと合わせて調整 */
+.top-sidebar {
+  top: 75px; /* ヘッダーの高さ */
   left: 0;
-  height: calc(100vh - 60px);
-  width: 100px; /* 固定幅 */
+  width: 100px;
+  height: 100vh;
   background-color: #867FEA;
+  position: fixed;
   overflow-y: auto;
   padding-top: 40px;
-  z-index: 1020;
 }
