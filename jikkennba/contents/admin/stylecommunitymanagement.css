@@ -1,0 +1,134 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #867FEA;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1030;
+  height: 76px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: #e5e5e5;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.desktop-sidebar {
+  position: fixed;
+  top: 76px;
+  left: 0;
+  width: 250px;
+  height: calc(100vh - 76px);
+  background: #fff;
+  z-index: 1020;
+}
+
+.desktop-sidebar {
+  position: fixed;
+  top: 76px;
+  left: 0;
+  width: 250px;
+  height: calc(100vh - 76px);
+  background: #fff;
+  z-index: 1020;
+}
+
+.main-content {
+  margin-left: 250px;
+  min-height: calc(100vh - 76px);
+  background: #e5e5e5;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 0 0 0;
+  margin-top: 20px;
+}
+
+.main-content-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+  margin-top: 40px;
+}
+
+.main-content-header h2 {
+  margin: 0;
+}
+
+.btn-add {
+  background: #ff5400;
+  color: #fff;
+  font-size: 1.2rem;
+  border-radius: 12px;
+  padding: 10px 28px;
+  border: none;
+  font-weight: 500;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+  /* フォント指定なし（デフォルト） */
+}
+
+.btn-add:hover {
+  background: #ff7f32;
+}
+
+.community-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+  align-items: center;
+}
+
+.community-card {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 0 32px 0 0;
+  width: 600px;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+}
+
+.community-title {
+  color: #222;
+  flex: 1;
+  text-align: center;
+  /* フォント指定なし（デフォルト） */
+}
+
+.btn-delete {
+  background: #bdbdbd;
+  color: #fff;
+  font-size: 1.3rem;
+  border-radius: 16px;
+  padding: 12px 40px;
+  border: none;
+  font-weight: 500;
+  box-shadow: 2px 4px 8px #bbb7;
+  transition: background 0.2s;
+  margin-left: 32px;
+  /* フォント指定なし（デフォルト） */
+}
+
+.btn-delete:hover {
+  background: #757575;
+}
