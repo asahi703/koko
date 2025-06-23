@@ -34,16 +34,6 @@ body {
   z-index: 1020;
 }
 
-.desktop-sidebar {
-  position: fixed;
-  top: 76px;
-  left: 0;
-  width: 250px;
-  height: calc(100vh - 76px);
-  background: #fff;
-  z-index: 1020;
-}
-
 .main-content {
   margin-left: 250px;
   min-height: calc(100vh - 76px);
