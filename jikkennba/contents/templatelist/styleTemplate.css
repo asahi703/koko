@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header,
+.offcanvas {
+    background-color: #867FEA;
+}
+
+.navbar-toggler {
+    border-color: rgba(0, 0, 0, 0);
+}
+
+.hover-text:hover {
+    color: darkgray !important;
+}
+
+/* ホバー時の色変更 */
+.sidebar-content a:hover {
+    background-color: #5a4cbc;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-label {
+    font-size: 0.8rem;
+    color: white;
+    margin-top: 4px;
+}
+
+.input-group .form-control:focus {
+    box-shadow: none;
+}
+
+
+.top-sidebar {
+    top: 75px;
+    /* ヘッダーの高さ */
+    left: 0;
+    width: 100px;
+    height: 100vh;
+    background-color: #867FEA;
+    position: fixed;
+    overflow-y: auto;
+    padding-top: 40px;
+}
+
+.chat-multiple-arrowback {
+    position: absolute;
+    width: 50px;
+    top: 90px;
+    left: 110px;
+}
+
+.chat-multiple-arrowback img {
+    width: 40px;
+}
+
+.template-list-container {
+    /* 背景色なしでOK、枠カードだけ表示 */
+    padding: 1px 0;
+    /* 高さ・スクロールはHTMLのインラインstyleでもOK */
+}
+
+.template-card {
+    min-width: 200px;
+    min-height: 140px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px #0001;
+    text-align: center;
+}
+
+.template-body {
+  text-align: left;
+  width: 100%;
+  padding: 0 1rem 1rem 1rem;
+  /* ↓↓↓ ここからがポイント ↓↓↓ */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;      /* 最大3行まで表示（好きな行数に調整OK） */
+  line-clamp: 3;              /* 標準プロパティも追加 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*スマホ画面時*/
+@media (max-width: 768px) {
+    .chat-multiple-arrowback {
+        top: 90px;
+        left: 10px;
+    }
+}
