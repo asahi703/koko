@@ -1,10 +1,14 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
 
+body {
+  padding-top: 80px;
+}
+
 header,
-.offcanvas{
+.offcanvas {
     background-color: #867FEA;
 }
 
@@ -18,11 +22,12 @@ header {
 }
 
 .sidebar {
-  top: 60px; /* ヘッダーの高さと合わせて調整 */
+  top: 75px; /* ヘッダーの高さと合わせて調整 */
   left: 0;
-  height: calc(100vh - 60px);
+  height: 100vh;
   width: 100px; /* 固定幅 */
   background-color: #867FEA;
+  position: fixed; /* インラインスタイルから移動 */
   overflow-y: auto;
   padding-top: 40px;
   z-index: 1020;
@@ -74,5 +79,53 @@ header {
 
 .class-card:hover {
   background-color: #dcdcdc;
+}
 
+/* New styles moved from HTML */
+.hd-img {
+  width: 50px;
+}
+
+.main-content-styles {
+  margin-top: 80px;
+  margin-bottom: 60px;
+  max-width: 1200px;
+}
+
+.class-create-button {
+  top: 90px;
+  right: 20px;
+  z-index: 1030;
+}
+
+.community-name-display {
+  max-width: 1200px;
+}
+
+.search-bar-styles {
+  height: 45px;
+}
+
+.search-input-style {
+  border: none;
+  box-shadow: none;
+}
+
+.class-card-container-styles {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.class-card-image-placeholder {
+  width: 40px;
+  height: 40px;
+  background-color: magenta;
+}
+
+.class-card-style {
+  height: 100px;
+}
+
+.user-select-none-style {
+  user-select: none;
 }
