@@ -54,3 +54,9 @@ header,
   background-color: #dcdcdc;
 
 }
+
+.team-option{
+  position: absolute;
+  right: 50px;
+  top: 70px;
+}
