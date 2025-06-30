@@ -1,158 +1,66 @@
-  /* グローバルリセット */
-  * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box; /* サイズ計算を統一 */
-  }
-
-  /* ヘッダーとオフキャンバスの背景色 */
-  header,
-  .offcanvas{
-      background-color: #867FEA;
-  }
-
-  /* ヘッダーを固定 */
-  header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1030; /* Bootstrapのナビバーと重ならないように */
-  }
-
-  /* サイドバーのスタイル */
-  .sidebar {
-      position: fixed; /* サイドバーも固定 */
-      top: 60px; /* ヘッダーの高さと合わせて調整 */
-      left: 0;
-      height: calc(100vh - 60px); /* ヘッダーを除いた残りの高さ */
-      width: 100px; /* 固定幅 */
-      background-color: #867FEA;
-      overflow-y: auto; /* コンテンツがはみ出す場合にスクロールを許可 */
-      padding-top: 40px;
-      z-index: 1020; /* ヘッダーの下になるように */
-  }
-
-  .navbar-toggler {
-      border-color: rgba(0,0,0,0); /* 透明なボーダー */
-  }
-
-  /* ホバー時の色変更（ヘッダーメニュー） */
-  .hover-text:hover{
-      color: darkgray !important;
-  }
-
-  /* ホバー時の色変更（サイドバーコンテンツ） */
-  .sidebar-content a:hover {
-      background-color: #c1bdfa;
-      color: white;
-      text-decoration: none;
-  }
-
-  /* アクティブリンクの強調（サイドバー） */
-  .sidebar-content a.active {
-      background-color: #0d6efd;
-      color: white;
-  }
-
-  /* サイドバーのナビゲーションラベル */
-  .nav-label {
-      font-size: 0.8rem;
-      color: white;
-      margin-top: 4px;
-  }
-
-/* 権限付与とログアウトの新しいサイドバー要素のスタイル */
-.permission-logout-sidebar {
-    position: fixed;
-    top: 60px; /* ヘッダーの高さに合わせる */
-    left: 100px; /* 既存のサイドバーの右隣に配置 */
-    width: 200px; /* 幅を広げてテキストが中央揃えに見えるように調整 */
-    height: calc(100vh - 60px); /* サイドバーと同じ高さ */
-    background-color: #ffffff; /* 画像の背景色に合わせる */
-    padding-top: 50px; /* 上部のパディング */
-    /* padding-left: 20px; */ /* 中央揃えにするため削除または調整 */
-    z-index: 1010; /* 他の要素との重なり順を調整 */
-    border-right: 1px solid #ccc; /* 必要であれば右側の境界線 */
-    display: flex; /* flexboxを適用 */
-    flex-direction: column; /* 縦方向に並べる */
-    align-items: center; /* 子要素を水平方向に中央揃え */
-    /* justify-content: flex-start; */ /* 垂直方向の配置（必要に応じて調整）*/
+*{
+    margin: 0;
+    padding: 0;
 }
 
-.permission-logout-sidebar a {
-    color: black; /* 画像に合わせてテキスト色を黒に */
-    font-size: 1rem; /* フォントサイズ調整 */
-    margin-bottom: 15px; /* リンク間のスペース */
-    text-decoration: none;
-    display: block; /* 各リンクを新しい行に配置 */
-    width: 100%; /* 親要素の幅いっぱいに広げてテキストの中央揃えを有効にする */
-    text-align: center; /* テキストを中央揃え */
+header,
+.offcanvas{
+    background-color: #867FEA;
 }
 
-.permission-logout-sidebar a:hover {
-    color: #867FEA; /* ホバー時のテキスト色 */
-    background-color: transparent; /* ホバー時に背景色を変えない */
+.navbar-toggler {
+    border-color: rgba(0,0,0,0);
 }
 
-/* メインコンテンツのスタイル */
-.main-content {
-    margin-top: 60px;
-    margin-left: 300px;
-    padding-top: 100px; /* ここを変更または追加 */
-    padding-right: 20px; /* 元のpaddingの値に合わせて設定 */
-    padding-bottom: 20px; /* 元のpaddingの値に合わせて設定 */
-    padding-left: 20px; /* 元のpaddingの値に合わせて設定 */
-    background-color: #E6F3E6;
-    min-height: calc(100vh - 60px);
-    box-sizing: border-box;
+.hover-text:hover{
+    color: darkgray !important;
 }
 
-.user-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 24px; /* mb-4に相当 */
+/* ホバー時の色変更 */
+.sidebar-content a:hover {
+  background-color: #5a4cbc;
+  color: white;
+  text-decoration: none;
 }
 
-.user-icon {
-    width: 80px; /* アイコンの幅 */
-    height: 80px; /* アイコンの高さ */
-    background-color: #5cb85c; /* 緑色のアイコン */
-    border-radius: 50%; /* 円形にする */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-weight: bold;
-    margin-right: 16px; /* me-3に相当 */
+.nav-label {
+  font-size: 0.8rem;
+  color: white;
+  margin-top: 4px;
 }
 
-.user-name {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: black;
+.input-group .form-control:focus {
+  box-shadow: none;
 }
 
-.user-detail {
-    font-size: 0.9rem;
-    color: gray;
+
+.top-sidebar {
+  top: 75px; /* ヘッダーの高さ */
+  left: 0;
+  width: 100px;
+  height: 100vh;
+  background-color: #867FEA;
+  position: fixed;
+  overflow-y: auto;
+  padding-top: 40px;
 }
 
-.memo-section {
-    margin-top: 30px;
+.memo-textarea {
+  width: 100%;
+  min-height: 120px;
+  border-radius: 12px;
+  border: 1.5px solid #e0e0e0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  font-size: 1.1rem;
+  color: #222;
+  background: #fff;
+  resize: vertical;
+  padding: 16px;
+  overflow-wrap: break-word;
+  word-break: break-all;
 }
-
-.memo-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: black;
-}
-
-.memo-box {
-    width: 100%;
-    height: 150px; /* メモ欄の高さ */
-    background-color: #ffffff; /* 白い背景 */
-    border: 1px solid #ddd; /* 境界線 */
-    border-radius: 5px; /* 角を丸くする */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 軽い影 */
+.memo-textarea:focus {
+  border-color: #867FEA;
+  box-shadow: 0 0 0 2px rgba(134, 127, 234, 0.2);
+  outline: none;
 }
