@@ -19,8 +19,7 @@
     <nav class="container d-flex justify-content-between">
         <!-- ブランドロゴとタイトル -->
         <a class="navbar-brand d-flex align-items-center position-absolute top-50 start-50 translate-middle" href="#">
-            <img src="../../img/headerImg/logo.png" style="width: 50px"
-                 class="hd-img d-inline-block align-top img-fluid" alt="">
+            <img src="../../img/headerImg/logo.png" class="hd-img d-inline-block align-top img-fluid logo-img" alt="">
             <h1 class="title ms-2 fs-md-3 mb-0"></h1>
         </a>
         <!-- ハンバーガーを右端に配置（スマホ表示） -->
@@ -56,9 +55,8 @@
     <nav class="container d-flex flex-column flex-md-row justify-content-between align-items-center-md">
         <!-- ブランドロゴとタイトル -->
         <a class="navbar-brand d-flex align-items-center" href="#">
-            <img src="../../img/headerImg/logo.png" style="width: 50px"
-                 class="hd-img d-inline-block align-top img-fluid" alt="">
-            <img src="../../img/headerImg/account.png" style="width: 50px" class="hd-img d-inline-block align-top img-fluid ms-4" alt="">
+            <img src="../../img/headerImg/logo.png" class="hd-img d-inline-block align-top img-fluid logo-img" alt="">
+            <img src="../../img/headerImg/account.png" class="hd-img d-inline-block align-top img-fluid ms-4 account-img" alt="">
         </a>
     </nav>
 </header>
@@ -97,23 +95,23 @@
 
 
       <!-- メインコンテンツ -->
-      <main class="col-md-9 offset-md-2" style="padding-top: 150px;">
+      <main class="col-md-9 offset-md-2 main-content-area">
         <div class="text-center mb-4">
           <h2 class="fs-5 fw-bold">テンプレート作成</h2>
         </div>
-        <div class="card bg-secondary-subtle mx-auto w-100" style="max-width: 800px;">
+        <div class="card bg-secondary-subtle mx-auto w-100 card-template-create">
           <div class="card-body">
             <form>
               <div class="mb-3">
                 <label for="communityName" class="form-label">テンプレート名<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="communityName" required>
+                <input type="text" class="form-control template-input" id="communityName" required>
               </div>
               <div class="mb-3">
                 <label for="communityDescription" class="form-label">テンプレート</label>
-                <textarea class="form-control" id="communityDescription" rows="4"></textarea>
+                <textarea class="form-control template-textarea" id="communityDescription" rows="4"></textarea>
               </div>
               <div class="text-center">
-                <button type="submit" class="btn btn-primary px-5">作成</button>
+                <button type="submit" class="btn btn-primary px-5 template-create-btn">作成</button>
               </div>
             </form>
           </div>

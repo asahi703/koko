@@ -170,6 +170,19 @@ header {
     background: #6c8cf0;
 }
 
+.logo-img {
+    width: 50px;
+}
+.account-img {
+    width: 50px;
+}
+.main-content-area {
+    padding-top: 150px;
+}
+.card-template-create {
+    max-width: 800px;
+}
+
 @media (max-width: 900px) {
     .main-area {
         margin-left: 0;
