@@ -86,6 +86,14 @@ header {
     justify-content: flex-start;
 }
 
+.main-content-area {
+    padding-top: 150px;
+}
+
+.card-template-create {
+    max-width: 800px;
+}
+
 .template-create-header {
     display: flex;
     align-items: center;
@@ -118,69 +126,30 @@ header {
 }
 
 .template-input {
-    margin-left: 220px;
-    width: 700px;
-    max-width: 80vw;
-    height: 50px;
-    border: none;
-    border-radius: 4px;
-    background: #fff;
-    font-size: 28px;
-    padding: 0 16px;
-    margin-bottom: 40px;
-    outline: none;
+    /* Bootstrap標準に近いサイズ */
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    font-size: 1rem;
+    height: 38px;
+    padding: 6px 12px;
 }
 
 .template-textarea {
-    margin-left: 220px;
-    width: 900px;
-    max-width: 95vw;
-    height: 200px;
-    border: none;
-    border-radius: 8px;
-    background: #fff;
-    font-size: 32px;
-    color: #7a8bb7;
-    padding: 24px;
-    margin-bottom: 60px;
-    outline: none;
-    resize: none;
-}
-
-.template-textarea::placeholder {
-    color: #7a8bb7;
-    font-size: 32px;
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    font-size: 1rem;
+    height: 100px;
+    padding: 6px 12px;
 }
 
 .template-create-btn {
-    margin-left: 360px;
-    width: 420px;
-    max-width: 80vw;
-    background: #8ea6fa;
-    color: #fff;
-    font-size: 32px;
-    border: none;
-    border-radius: 8px;
-    padding: 16px 0;
-    font-weight: 400;
-    transition: background 0.2s;
-}
-
-.template-create-btn:hover {
-    background: #6c8cf0;
-}
-
-.logo-img {
-    width: 50px;
-}
-.account-img {
-    width: 50px;
-}
-.main-content-area {
-    padding-top: 150px;
-}
-.card-template-create {
-    max-width: 800px;
+    width: 200px;
+    max-width: 100%;
+    margin-left: 0;
+    font-size: 1rem;
+    padding: 8px 0;
 }
 
 @media (max-width: 900px) {
@@ -188,31 +157,50 @@ header {
         margin-left: 0;
         margin-top: 70px;
     }
+    .main-content-area {
+        padding-top: 90px;
+    }
+    .card-template-create {
+        max-width: 98vw;
+        width: 98vw;
+        margin-left: auto;
+        margin-right: auto;
+    }
     .template-create-header {
         padding: 30px 0 0 10px;
     }
     .template-create-title {
         font-size: 24px;
-        margin-left: 40px;
+        margin-left: 20px;
     }
-    .template-label,
+    .template-label {
+        font-size: 20px;
+        margin-left: 0;
+        margin-bottom: 6px;
+    }
     .template-input,
     .template-textarea,
     .template-create-btn {
         margin-left: 0;
-        width: 95vw;
-        max-width: 95vw;
+        width: 90vw;
+        max-width: 90vw;
+        font-size: 16px;
     }
     .template-input {
-        font-size: 20px;
+        height: 36px;
+        padding: 4px 8px;
     }
     .template-textarea {
-        font-size: 20px;
-        height: 120px;
+        height: 60px;
+        padding: 4px 8px;
     }
     .template-create-btn {
-        font-size: 20px;
-        padding: 10px 0;
+        padding: 8px 0;
+        font-size: 16px;
+        width: 60vw;
+        max-width: 90vw;
+        margin: 0 auto;
+        display: block;
     }
 }
 
