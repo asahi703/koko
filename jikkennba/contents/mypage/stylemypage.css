@@ -1,19 +1,19 @@
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }
 
 header,
-.offcanvas{
-    background-color: #867FEA;
+.offcanvas {
+  background-color: #867FEA;
 }
 
 .navbar-toggler {
-    border-color: rgba(0,0,0,0);
+  border-color: rgba(0, 0, 0, 0);
 }
 
-.hover-text:hover{
-    color: darkgray !important;
+.hover-text:hover {
+  color: darkgray !important;
 }
 
 /* ホバー時の色変更 */
@@ -35,7 +35,8 @@ header,
 
 
 .top-sidebar {
-  top: 75px; /* ヘッダーの高さ */
+  top: 75px;
+  /* ヘッダーの高さ */
   left: 0;
   width: 100px;
   height: 100vh;
@@ -45,12 +46,32 @@ header,
   padding-top: 40px;
 }
 
+
+/*マイページ*/
+.main-page-content {
+  margin-left: 100px;
+  width: calc(100vw - 120px);
+  min-height: 80vh;
+  padding: 10px 24px 60px 24px;
+  background: #fff;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+@media (max-width: 767.98px) {
+  .main-page-content {
+    margin-left: 0;
+    width: 100vw;
+    padding: 16px 4vw 70px 4vw;
+  }
+}
+
 .memo-textarea {
   width: 100%;
   min-height: 120px;
   border-radius: 12px;
   border: 1.5px solid #e0e0e0;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
   font-size: 1.1rem;
   color: #222;
   background: #fff;
@@ -59,8 +80,13 @@ header,
   overflow-wrap: break-word;
   word-break: break-all;
 }
+
 .memo-textarea:focus {
   border-color: #867FEA;
   box-shadow: 0 0 0 2px rgba(134, 127, 234, 0.2);
   outline: none;
+}
+
+.mypage-navbar-img {
+  width: 35px;
 }
