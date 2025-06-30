@@ -44,3 +44,36 @@ header,
   overflow-y: auto;
   padding-top: 40px;
 }
+
+body.bg-light {
+    padding-top: 80px;
+}
+.logo-img {
+    width: 50px;
+}
+.account-img {
+    width: 50px;
+}
+.top-sidebar-fixed {
+    width: 100px;
+}
+.main-content-classcreate {
+    padding-top: 100px;
+}
+.card-classcreate {
+    max-width: 800px;
+}
+@media (max-width: 900px) {
+    .main-content-classcreate {
+        padding-top: 70px;
+    }
+    .card-classcreate {
+        max-width: 98vw;
+        width: 98vw;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .top-sidebar-fixed {
+        width: 60px;
+    }
+}
