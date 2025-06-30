@@ -13,14 +13,13 @@
   <link rel="stylesheet" href="styleTemplate.css">
 </head>
 
-<body class="bg-light" style="padding-top: 80px;">
+<body class="bg-light">
   <!--モバイル時ヘッダー-->
   <header class="d-flex d-md-none w-100 navbar navbar-expand-md align-items-center py-4 fixed-top shadow-sm">
     <nav class="container d-flex justify-content-between">
       <!-- ブランドロゴとタイトル -->
       <a class="navbar-brand d-flex align-items-center position-absolute top-50 start-50 translate-middle" href="#">
-        <img src="../../img/headerImg/logo.png" style="width: 50px" class="hd-img d-inline-block align-top img-fluid"
-          alt="">
+        <img src="../../img/headerImg/logo.png" class="hd-img d-inline-block align-top img-fluid logo-img" alt="">
         <h1 class="title ms-2 fs-md-3 mb-0"></h1>
       </a>
       </div>
@@ -31,10 +30,8 @@
     <nav class="container d-flex flex-column flex-md-row justify-content-between align-items-center-md">
       <!-- ブランドロゴとタイトル -->
       <a class="navbar-brand d-flex align-items-center" href="#">
-        <img src="../../img/headerImg/logo.png" style="width: 50px" class="hd-img d-inline-block align-top img-fluid"
-          alt="">
-        <img src="../../img/headerImg/account.png" style="width: 50px"
-          class="hd-img d-inline-block align-top img-fluid ms-4" alt="">
+        <img src="../../img/headerImg/logo.png" class="hd-img d-inline-block align-top img-fluid logo-img" alt="">
+        <img src="../../img/headerImg/account.png" class="hd-img d-inline-block align-top img-fluid ms-4 account-img" alt="">
       </a>
     </nav>
   </header>
@@ -43,7 +40,7 @@
   <div class="container-fluid">
     <div class="row">
       <!-- サイドバー（PCのみ表示） -->
-      <nav class="top-sidebar d-none d-md-flex flex-column align-items-center p-0" style="width: 100px;">
+      <nav class="top-sidebar d-none d-md-flex flex-column align-items-center p-0" >
         <ul class="nav flex-column sidebar-content w-100">
           <li class="nav-item mb-4 text-center">
             <a class="nav-link p-0 d-flex flex-column align-items-center text-white hover-bg-dark" href="#"
@@ -107,8 +104,7 @@
       </nav>
 
       <!-- メインコンテンツ -->
-      <main
-        class="col-12 col-md-9 col-lg-10 px-md-4 d-flex flex-column align-items-center justify-content-center text-center mx-auto"
+      <main class="col-12 col-md-9 col-lg-10 px-md-4 d-flex flex-column align-items-center justify-content-center text-center mx-auto main-content-template"
         style="margin-top: 80px; margin-bottom: 60px; max-width: 1200px; ">
 
         <div class="chat-multiple-arrowback">
@@ -118,8 +114,7 @@
         </div>
 
         <!-- 作成ボタン：右上固定 -->
-        <button type="button" class="btn btn-primary position-absolute" style="top: 90px; right: 30px;"
-          data-bs-toggle="modal" data-bs-target="#templateCreateModal">
+        <button type="button" class="btn btn-primary position-absolute template-create-btn-fixed" data-bs-toggle="modal" data-bs-target="#templateCreateModal">
           作成
         </button>
 
@@ -187,13 +182,12 @@
           <p class="fs-3">テンプレート一覧</p>
         </div>
 
-        <div class="template-list-container w-100 mt-3" style="height: 400px; overflow-y: auto; overflow-x: hidden;">
+        <div class="template-list-container w-100 mt-3 template-list-scroll">
           <div div class="row g-4">
 
             <!-- 1つめ -->
             <div class="col-12 col-sm-6 col-md-4">
-              <div class="template-card p-0 bg-white rounded shadow-sm h-100 d-flex flex-column align-items-center"
-                style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#templateEditModal">
+              <div class="template-card p-0 bg-white rounded shadow-sm h-100 d-flex flex-column align-items-center template-card-hover" data-bs-toggle="modal" data-bs-target="#templateEditModal">
                 <div class="template-title fs-4 mb-2">タイトル</div>
                 <div class="template-body w-100">テンプレート本文です</div>
               </div>
@@ -201,32 +195,28 @@
 
             <!-- 2つめ以降は同様に -->
             <div class="col-12 col-sm-6 col-md-4">
-              <div class="template-card p-0 bg-white rounded shadow-sm h-100 d-flex flex-column align-items-center"
-                style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#templateEditModal">
+              <div class="template-card p-0 bg-white rounded shadow-sm h-100 d-flex flex-column align-items-center template-card-hover" data-bs-toggle="modal" data-bs-target="#templateEditModal">
                 <div class="template-title fs-4 mb-2">タイトル</div>
                 <div class="template-body w-100">テンプレート本文だぜ</div>
               </div>
             </div>
 
             <div class="col-12 col-sm-6 col-md-4">
-              <div class="template-card p-0 bg-white rounded shadow-sm h-100 d-flex flex-column align-items-center"
-                style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#templateEditModal">
+              <div class="template-card p-0 bg-white rounded shadow-sm h-100 d-flex flex-column align-items-center template-card-hover" data-bs-toggle="modal" data-bs-target="#templateEditModal">
                 <div class="template-title fs-4 mb-2">タイトル</div>
                 <div class="template-body w-100">テンプレート本文よ</div>
               </div>
             </div>
 
             <div class="col-12 col-sm-6 col-md-4">
-              <div class="template-card p-0 bg-white rounded shadow-sm h-100 d-flex flex-column align-items-center"
-                style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#templateEditModal">
+              <div class="template-card p-0 bg-white rounded shadow-sm h-100 d-flex flex-column align-items-center template-card-hover" data-bs-toggle="modal" data-bs-target="#templateEditModal">
                 <div class="template-title fs-4 mb-2">タイトル</div>
                 <div class="template-body w-100">テンプレート本文ですわ</div>
               </div>
             </div>
 
             <div class="col-12 col-sm-6 col-md-4">
-              <div class="template-card p-0 bg-white rounded shadow-sm h-100 d-flex flex-column align-items-center"
-                style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#templateEditModal">
+              <div class="template-card p-0 bg-white rounded shadow-sm h-100 d-flex flex-column align-items-center template-card-hover" data-bs-toggle="modal" data-bs-target="#templateEditModal">
                 <div class="template-title fs-4 mb-2">タイトル</div>
                 <div class="template-body w-100">テンプレート本文だよ</div>
               </div>
