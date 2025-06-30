@@ -41,3 +41,18 @@ header {
 .input-group .form-control:focus {
   box-shadow: none;
 }
+
+/* 新規登録ページ用 追加スタイル */
+body.bg-light {
+    padding-top: 80px;
+}
+.logo-img {
+    width: 50px;
+}
+.account-img {
+    width: 50px;
+}
+.login-form {
+    max-width: 400px;
+    width: 100%;
+}

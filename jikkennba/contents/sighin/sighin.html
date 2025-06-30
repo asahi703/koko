@@ -13,15 +13,14 @@
     <link rel="stylesheet" href="styleSighin.css">
 </head>
 
-<body class="bg-light" style="padding-top: 80px;">
+<body class="bg-light">
     <!--モバイル時ヘッダー-->
     <header class="d-flex d-md-none w-100 navbar navbar-expand-md align-items-center py-4 fixed-top shadow-sm">
         <nav class="container d-flex justify-content-between">
             <!-- ブランドロゴとタイトル -->
             <a class="navbar-brand d-flex align-items-center position-absolute top-50 start-50 translate-middle"
                 href="#">
-                <img src="../../img/headerImg/logo.png" style="width: 50px"
-                    class="hd-img d-inline-block align-top img-fluid" alt="">
+                <img src="../../img/headerImg/logo.png" class="hd-img d-inline-block align-top img-fluid logo-img" alt="">
                 <h1 class="title ms-2 fs-md-3 mb-0"></h1>
             </a>
             <!-- ハンバーガーを右端に配置（スマホ表示） -->
@@ -61,10 +60,8 @@
         <nav class="container d-flex flex-column flex-md-row justify-content-between align-items-center-md">
             <!-- ブランドロゴとタイトル -->
             <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="../../img/headerImg/logo.png" style="width: 50px"
-                    class="hd-img d-inline-block align-top img-fluid" alt="">
-                <img src="../../img/headerImg/account.png" style="width: 50px"
-                    class="hd-img d-inline-block align-top img-fluid ms-4" alt="">
+                <img src="../../img/headerImg/logo.png" class="hd-img d-inline-block align-top img-fluid logo-img" alt="">
+                <img src="../../img/headerImg/account.png" class="hd-img d-inline-block align-top img-fluid ms-4 account-img" alt="">
             </a>
             <!-- メニュー -->
             <div class="d-flex flex-row fs-5">
@@ -86,8 +83,7 @@
             <div class="mb-3">
                 <h2>新規登録</h2>
             </div>
-            <form action="sighin.html" method="post" class="border rounded shadow p-4 w-100"
-                style="max-width: 400px; width: 100%;">
+            <form action="sighin.html" method="post" class="border rounded shadow p-4 w-100 login-form">
                 <input type="hidden" name="func" value="" />
                 <input type="hidden" name="param" value="" />
                 <div class="form-group my-2 px-2 w-100">
