@@ -116,12 +116,10 @@
             </nav>
 
             <!-- メインコンテンツ -->
-            <main
-                class="col-12 col-md-9 col-lg-10 px-md-4 d-flex flex-column align-items-center justify-content-center mx-auto"
-                style="margin-top: 10px; margin-bottom: 60px; max-width: 1200px; min-height: 80vh;">
+            <main class="main-page-content">
 
                 <div
-                    class="user-info d-flex flex-column flex-md-row align-items-center mb-5 w-100 justify-content-start ms-md-5 gap-3">
+                    class="d-flex flex-column flex-md-row align-items-center mb-1 w-75 justify-content-start ms-md-5 gap-3">
                     <label for="icon-upload" class="user-icon-label mb-0" style="cursor: pointer;">
                         <img src="../../img/headerImg/account.png" class="user-icon" id="userIconPreview"
                             alt="ユーザーアイコン">
@@ -131,18 +129,38 @@
                     </label>
                     <h2 class="user-name mb-0">ユーザー名</h2>
                 </div>
+                
+                <div class="d-flex flex-row justify-content-start align-items-start gap-4">
+                    <div class="admin-link d-flex flex-column align-items-start">
+                        <a href="#" title="権限付与">
+                            <img class="mypage-navbar-img"
+                                src="../../img/admin_panel_settings_24dp_999999_FILL0_wght400_GRAD0_opsz24.svg"
+                                alt="権限付与アイコン">
+                        </a>
+                        <span class="small text-muted">権限付与</span>
+                    </div>
+
+                    <div class="admin-link d-flex flex-column align-items-start">
+                        <a href="#" title="ログアウト">
+                            <img class="mypage-navbar-img"
+                                src="../../img/logout_24dp_D16D6A_FILL0_wght400_GRAD0_opsz24.svg"
+                                alt="ログアウトアイコン">
+                        </a>
+                        <span class="small text-muted text-danger">ログアウト</span>
+                    </div>
+                </div>
 
 
-                <div class="memo-section w-100 d-flex flex-column align-items-center">
+                <div class="w-100 d-flex flex-column align-items-center">
                     <h5 class="memo-title mb-2">メモ</h5>
                     <form class="w-100" style="max-width: 900px;">
-                        <textarea class="memo-textarea form-control" rows="6"
-                            placeholder="ここにメモを入力してください">ここにとても長いメモを書いても大丈夫！文章が長い場合も自動で折り返して表示されます。</textarea>
+                        <textarea class="memo-textarea form-control" rows="6" placeholder="ここにメモを入力してください"></textarea>
                         <div class="text-end mt-2">
                             <button type="submit" class="btn btn-primary px-4">保存</button>
                         </div>
                     </form>
                 </div>
+
             </main>
 
         </div>
