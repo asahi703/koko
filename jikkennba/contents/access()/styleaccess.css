@@ -1,109 +1,116 @@
-  /* グローバルリセット */
-  * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box; /* サイズ計算を統一 */
-  }
+/* グローバルリセット */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-  /* ヘッダーとオフキャンバスの背景色 */
-  header,
-  .offcanvas{
-      background-color: #867FEA;
-  }
+header,
+.offcanvas {
+    background-color: #867FEA;
+}
 
-  /* ヘッダーを固定 */
-  header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1030; /* Bootstrapのナビバーと重ならないように */
-  }
+.navbar-toggler {
+    border-color: rgba(0, 0, 0, 0);
+}
 
-  /* サイドバーのスタイル */
-  .sidebar {
-      position: fixed; /* サイドバーも固定 */
-      top: 60px; /* ヘッダーの高さと合わせて調整 */
-      left: 0;
-      height: calc(100vh - 60px); /* ヘッダーを除いた残りの高さ */
-      width: 100px; /* 固定幅 */
-      background-color: #867FEA;
-      overflow-y: auto; /* コンテンツがはみ出す場合にスクロールを許可 */
-      padding-top: 40px;
-      z-index: 1020; /* ヘッダーの下になるように */
-  }
+.hover-text:hover {
+    color: darkgray !important;
+}
 
-  .navbar-toggler {
-      border-color: rgba(0,0,0,0); /* 透明なボーダー */
-  }
+/* ホバー時の色変更 */
+.sidebar-content a:hover {
+    background-color: #5a4cbc;
+    color: white;
+    text-decoration: none;
+}
 
-  /* ホバー時の色変更（ヘッダーメニュー） */
-  .hover-text:hover{
-      color: darkgray !important;
-  }
+.nav-label {
+    font-size: 0.8rem;
+    color: white;
+    margin-top: 4px;
+}
 
-  /* ホバー時の色変更（サイドバーコンテンツ） */
-  .sidebar-content a:hover {
-      background-color: #c1bdfa;
-      color: white;
-      text-decoration: none;
-  }
+.input-group .form-control:focus {
+    box-shadow: none;
+}
 
-  /* アクティブリンクの強調（サイドバー） */
-  .sidebar-content a.active {
-      background-color: #0d6efd;
-      color: white;
-  }
 
-  /* サイドバーのナビゲーションラベル */
-  .nav-label {
-      font-size: 0.8rem;
-      color: white;
-      margin-top: 4px;
-  }
+.top-sidebar {
+    top: 75px;
+    /* ヘッダーの高さ */
+    left: 0;
+    width: 100px;
+    height: 100vh;
+    background-color: #867FEA;
+    position: fixed;
+    overflow-y: auto;
+    padding-top: 40px;
+}
 
 /* 権限付与とログアウトの新しいサイドバー要素のスタイル */
 .permission-logout-sidebar {
     position: fixed;
-    top: 60px; /* ヘッダーの高さに合わせる */
-    left: 100px; /* 既存のサイドバーの右隣に配置 */
-    width: 200px; /* 幅を広げてテキストが中央揃えに見えるように調整 */
-    height: calc(100vh - 60px); /* サイドバーと同じ高さ */
-    background-color: #ffffff; /* 画像の背景色に合わせる */
-    padding-top: 50px; /* 上部のパディング */
-    /* padding-left: 20px; */ /* 中央揃えにするため削除または調整 */
-    z-index: 1010; /* 他の要素との重なり順を調整 */
-    border-right: 1px solid #ccc; /* 必要であれば右側の境界線 */
-    display: flex; /* flexboxを適用 */
-    flex-direction: column; /* 縦方向に並べる */
-    align-items: center; /* 子要素を水平方向に中央揃え */
-    /* justify-content: flex-start; */ /* 垂直方向の配置（必要に応じて調整）*/
+    top: 60px;
+    /* ヘッダーの高さに合わせる */
+    left: 100px;
+    /* 既存のサイドバーの右隣に配置 */
+    width: 200px;
+    /* 幅を広げてテキストが中央揃えに見えるように調整 */
+    height: calc(100vh - 60px);
+    /* サイドバーと同じ高さ */
+    background-color: #ffffff;
+    /* 画像の背景色に合わせる */
+    padding-top: 50px;
+    /* 上部のパディング */
+    /* padding-left: 20px; */
+    /* 中央揃えにするため削除または調整 */
+    z-index: 1010;
+    /* 他の要素との重なり順を調整 */
+    border-right: 1px solid #ccc;
+    /* 必要であれば右側の境界線 */
+    display: flex;
+    /* flexboxを適用 */
+    flex-direction: column;
+    /* 縦方向に並べる */
+    align-items: center;
+    /* 子要素を水平方向に中央揃え */
+    /* justify-content: flex-start; */
+    /* 垂直方向の配置（必要に応じて調整）*/
 }
 
 .permission-logout-sidebar a {
-    color: black; /* 画像に合わせてテキスト色を黒に */
-    font-size: 1rem; /* フォントサイズ調整 */
-    margin-bottom: 15px; /* リンク間のスペース */
+    color: black;
+    /* 画像に合わせてテキスト色を黒に */
+    font-size: 1rem;
+    /* フォントサイズ調整 */
+    margin-bottom: 15px;
+    /* リンク間のスペース */
     text-decoration: none;
-    display: block; /* 各リンクを新しい行に配置 */
-    width: 100%; /* 親要素の幅いっぱいに広げてテキストの中央揃えを有効にする */
-    text-align: center; /* テキストを中央揃え */
+    display: block;
+    /* 各リンクを新しい行に配置 */
+    width: 100%;
+    /* 親要素の幅いっぱいに広げてテキストの中央揃えを有効にする */
+    text-align: center;
+    /* テキストを中央揃え */
 }
 
 .permission-logout-sidebar a:hover {
-    color: #867FEA; /* ホバー時のテキスト色 */
-    background-color: transparent; /* ホバー時に背景色を変えない */
+    color: #867FEA;
+    /* ホバー時のテキスト色 */
+    background-color: transparent;
+    /* ホバー時に背景色を変えない */
 }
 
 /* メインコンテンツ (権限付与画面) のスタイル */
 .main-content {
-    margin-top: 60px; /* ヘッダーの高さ分のマージン */
-    margin-left: 300px; /* サイドバー(100px) + 権限ログアウトサイドバー(200px) の合計幅 */
-    padding: 20px; /* デフォルトのパディング */
-    padding-top: 50px; /* コンテンツ全体を下にずらす */
-    background-color: #E6F3E6; /* 画像の背景色 */
-    min-height: calc(100vh - 60px); /* ヘッダーを除いた残りの高さ */
-    box-sizing: border-box; /* パディングを幅に含める */
+    margin-left: 100px;
+    width: calc(100vw - 120px);
+    min-height: 90vh;
+    padding: 10px 24px 60px 24px;
+    background: #fff;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .access-title {
@@ -113,7 +120,8 @@
 }
 
 .create-class-btn {
-    background-color: #72a5f5; /* 画像のボタンの色 */
+    background-color: #72a5f5;
+    /* 画像のボタンの色 */
     border-color: #72a5f5;
     color: white;
     padding: 8px 20px;
@@ -122,44 +130,58 @@
 }
 
 .create-class-btn:hover {
-    background-color: #5b8bd6; /* ホバー時の色 */
+    background-color: #5b8bd6;
+    /* ホバー時の色 */
     border-color: #5b8bd6;
 }
 
 .access-table-container {
     border: 1px solid #ddd;
     border-radius: 8px;
-    overflow: hidden; /* 角丸を適用するため */
+    overflow: hidden;
+    /* 角丸を適用するため */
 }
 
 .access-table-header {
-    background-color: #f8f9fa; /* ヘッダーの背景色 */
+    background-color: #f8f9fa;
+    /* ヘッダーの背景色 */
     font-weight: bold;
     color: #333;
-    display: flex; /* flexboxでカラムを整列 */
+    display: flex;
+    /* flexboxでカラムを整列 */
 }
 
 .access-table-row {
-    background-color: #ffffff; /* 行の背景色 */
+    background-color: #ffffff;
+    /* 行の背景色 */
     color: #555;
-    display: flex; /* flexboxでカラムを整列 */
+    display: flex;
+    /* flexboxでカラムを整列 */
 }
 
-.access-table-header > div,
-.access-table-row > div {
-    padding: 10px 0; /* カラム内のパディング */
-    /* text-align: left; */ /* 必要に応じてテキストの配置を調整 */
+.access-table-header>div,
+.access-table-row>div {
+    padding: 10px 0;
+    /* カラム内のパディング */
+    /* text-align: left; */
+    /* 必要に応じてテキストの配置を調整 */
 }
 
 /* カスタムトグルボタンのスタイル */
 .custom-toggle .form-check-input {
-    width: 2.2em; /* 幅を広げる */
-    height: 1.2em; /* 高さを調整 */
-    border-radius: 1.2em; /* 丸みを強くする */
-    background-color: #e9ecef; /* 未選択時の背景色 */
-    border-color: #e9ecef; /* 未選択時のボーダー色 */
+    width: 2.2em;
+    /* 幅を広げる */
+    height: 1.2em;
+    /* 高さを調整 */
+    border-radius: 1.2em;
+    /* 丸みを強くする */
+    background-color: #e9ecef;
+    /* 未選択時の背景色 */
+    border-color: #e9ecef;
+    /* 未選択時のボーダー色 */
     vertical-align: middle;
-    -webkit-appearance: none; /* デフォルトのスタイルを無効化 */
+    -webkit-appearance: none;
+    /* デフォルトのスタイルを無効化 */
     -moz-appearance: none;
     appearance: none;
     cursor: pointer;
@@ -168,7 +190,8 @@
 }
 
 .custom-toggle .form-check-input:checked {
-    background-color: #28a745; /* チェック時の背景色 (緑) */
+    background-color: #28a745;
+    /* チェック時の背景色 (緑) */
     border-color: #28a745;
 }
 
@@ -176,18 +199,24 @@
     content: '';
     position: absolute;
     top: 50%;
-    left: 2px; /* 丸の位置調整 */
+    left: 2px;
+    /* 丸の位置調整 */
     transform: translateY(-50%);
-    width: 1em; /* 丸のサイズ */
-    height: 1em; /* 丸のサイズ */
-    background-color: #fff; /* 丸の色 */
+    width: 1em;
+    /* 丸のサイズ */
+    height: 1em;
+    /* 丸のサイズ */
+    background-color: #fff;
+    /* 丸の色 */
     border-radius: 50%;
     transition: transform 0.2s ease-in-out;
 }
 
 .custom-toggle .form-check-input:checked::before {
-    transform: translate(calc(2.2em - 1em - 4px), -50%); /* 丸の移動 (幅 - 丸のサイズ - 左右のパディング) */
-    background-color: #fff; /* チェック時の丸の色 */
+    transform: translate(calc(2.2em - 1em - 4px), -50%);
+    /* 丸の移動 (幅 - 丸のサイズ - 左右のパディング) */
+    background-color: #fff;
+    /* チェック時の丸の色 */
 }
 
 /* 未選択時の丸の内側のアイコンはなし */
@@ -196,5 +225,28 @@
 }
 
 .custom-toggle .form-check-label {
-    display: none; /* ラベルは非表示 */
+    display: none;
+    /* ラベルは非表示 */
+}
+
+/* レスポンシブテーブル対応 */
+.responsive-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.access-table-container {
+    min-width: 600px;
+    /* 必要に応じて調整、カラムが多いなら広く */
+}
+
+@media (max-width: 767.98px) {
+    .main-content {
+        padding: 10px 2px 60px 2px;
+    }
+
+    .access-table-container {
+        min-width: 480px;
+        /* モバイル時は狭める */
+    }
 }
