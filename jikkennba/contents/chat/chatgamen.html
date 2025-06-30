@@ -13,14 +13,13 @@
   <link rel="stylesheet" href="styeChat.css">
 </head>
 
-<body class="bg-light" style="padding-top: 80px;">
+<body class="bg-light">
   <!--モバイル時ヘッダー-->
   <header class="d-flex d-md-none w-100 navbar navbar-expand-md align-items-center py-4 fixed-top shadow-sm">
     <nav class="container d-flex justify-content-between">
       <!-- ブランドロゴとタイトル -->
       <a class="navbar-brand d-flex align-items-center position-absolute top-50 start-50 translate-middle" href="#">
-        <img src="../../img/headerImg/logo.png" style="width: 50px" class="hd-img d-inline-block align-top img-fluid"
-          alt="">
+        <img src="../../img/headerImg/logo.png" class="hd-img d-inline-block align-top img-fluid logo-img" alt="">
         <h1 class="title ms-2 fs-md-3 mb-0"></h1>
       </a>
       <!-- ハンバーガーを右端に配置（スマホ表示） -->
@@ -60,10 +59,8 @@
     <nav class="container d-flex flex-column flex-md-row justify-content-between align-items-center-md">
       <!-- ブランドロゴとタイトル -->
       <a class="navbar-brand d-flex align-items-center" href="#">
-        <img src="../../img/headerImg/logo.png" style="width: 50px" class="hd-img d-inline-block align-top img-fluid"
-          alt="">
-        <img src="../../img/headerImg/account.png" style="width: 50px"
-          class="hd-img d-inline-block align-top img-fluid ms-4" alt="">
+        <img src="../../img/headerImg/logo.png" class="hd-img d-inline-block align-top img-fluid logo-img" alt="">
+        <img src="../../img/headerImg/account.png" class="hd-img d-inline-block align-top img-fluid ms-4 account-img" alt="">
       </a>
       <!-- メニュー -->
       <div class="d-flex flex-row fs-5">
@@ -82,7 +79,7 @@
   <div class="container-fluid">
     <div class="row">
       <!-- 左サイドバー（PCのみ表示） -->
-      <nav class="col-2 d-none d-md-flex flex-column align-items-center sidebar p-0"
+      <nav class="col-2 d-none d-md-flex flex-column align-items-center sidebar p-0 sidebar-fixed"
         style="top: 75px; left: 0; height: 100vh; background-color: #867FEA; position: fixed; z-index: 1030;">
         <ul class="nav flex-column sidebar-content w-100">
           <li class="nav-item mb-4 text-center">
@@ -117,9 +114,8 @@
       </nav>
 
       <!-- スマホ用トグルボタン（モバイルで表示、左上に固定・幅小さめ・ヘッダー考慮） -->
-      <button class="btn btn-primary d-md-none px-1 py-1" type="button" data-bs-toggle="offcanvas"
-        data-bs-target="#chatSidebarMobile" aria-controls="chatSidebarMobile"
-        style="position: fixed; top: 70px; left: 10px; font-size: 0.9rem; min-width: 32px; min-height: 28px; width: 40px; height: 32px;">
+      <button class="btn btn-primary d-md-none px-1 py-1 sidebar-toggle-btn" type="button" data-bs-toggle="offcanvas"
+        data-bs-target="#chatSidebarMobile" aria-controls="chatSidebarMobile">
         <span class="d-inline d-sm-none">☰</span>
       </button>
 
@@ -130,7 +126,7 @@
           <h5 class="offcanvas-title" id="chatSidebarMobileLabel">メニュー</h5>
           <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body d-flex flex-column px-0" style="height: 100%;">
+        <div class="offcanvas-body d-flex flex-column px-0 offcanvas-body-fullheight">
           <!-- 上部メニュー（固定） -->
           <div style="flex-shrink: 0;">
             <div class="d-flex justify-content-center align-items-center ms-2 py-2 border-bottom text-nowrap">
@@ -150,10 +146,8 @@
             <ul class="list-unstyled w-100">
               <li>
                 <a class="nav-link text-dark py-1 text-nowrap custom-hover d-flex align-items-center px-3" href="#">
-                  <img src="../../img/headerImg/account.png" style="width: 40px"
-                    class="hd-img d-inline-block align-top img-fluid" alt="">
-                  <span class="ms-2 d-flex align-items-center"
-                    style="max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">ユーザー名</span>
+                  <img src="../../img/headerImg/account.png" class="hd-img d-inline-block align-top img-fluid user-icon" alt="">
+                  <span class="ms-2 d-flex align-items-center user-name-ellipsis">ユーザー名</span>
                 </a>
               </li>
               <!-- 必要なだけ追加 -->
@@ -163,7 +157,7 @@
       </div>
 
       <!-- デスクトップ用サイドバー（現状のまま） -->
-      <nav class="d-none d-md-flex flex-column px-0"
+      <nav class="d-none d-md-flex flex-column px-0 desktop-sidebar"
         style="position: fixed; top: 75px; left: 100px; width: 250px; height: 100vh; background: #fff; border-right: 1px solid #eee; z-index: 1029;">
 
         <!-- 上部メニュー（固定） -->
@@ -185,10 +179,8 @@
           <ul class="list-unstyled w-100">
             <li>
               <a class="nav-link text-dark py-1 text-nowrap custom-hover d-flex align-items-center px-3" href="#">
-                <img src="../../img/headerImg/account.png" style="width: 40px"
-                  class="hd-img d-inline-block align-top img-fluid" alt="">
-                <span class="ms-2 d-flex align-items-center"
-                  style="max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">ユーザー名</span>
+                <img src="../../img/headerImg/account.png" class="hd-img d-inline-block align-top img-fluid user-icon" alt="">
+                <span class="ms-2 d-flex align-items-center user-name-ellipsis">ユーザー名</span>
               </a>
             </li>
           </ul>
@@ -199,7 +191,7 @@
       <main class="flex-grow-1 chat-container">
 
         <!-- チャット画面 -->
-        <div class="container mt-4" style="height: 500px; overflow-y: auto;">
+        <div class="container mt-4 chat-scroll-container" style="height: 500px; overflow-y: auto;">
           <div class="row flex-column">
             <!-- 左寄せメッセージ（受信） -->
             <div class="d-flex justify-content-start mb-2">
@@ -233,13 +225,10 @@
         <div class="row justify-content-center w-100 mt-4">
           <div class="col-12 col-md-6">
             <form class="chat-input">
-              <div class="input-group bg-white rounded-pill border px-3 py-1" style="height: 45px;">
-                <input type="text" name="" class="form-control rounded-pill" style="border: none; box-shadow: none;"
-                  placeholder="メッセージを入力">
-                <button type="submit"
-                  class="btn btn-primary rounded-pill ms-2 d-flex align-items-center justify-content-center"
-                  style="height: 100%; padding: 0 16px; border: none; background: none;">
-                  <img src="../../img/send_24dp_999999_FILL0_wght400_GRAD0_opsz24.svg" alt="送信" style="width: 24px; height: 24px;">
+              <div class="input-group bg-white rounded-pill border px-3 py-1 chat-input-group">
+                <input type="text" name="" class="form-control rounded-pill chat-input-text" placeholder="メッセージを入力">
+                <button type="submit" class="btn btn-primary rounded-pill ms-2 d-flex align-items-center justify-content-center chat-send-btn">
+                  <img src="../../img/send_24dp_999999_FILL0_wght400_GRAD0_opsz24.svg" alt="送信" class="send-icon">
                 </button>
               </div>
             </form>
