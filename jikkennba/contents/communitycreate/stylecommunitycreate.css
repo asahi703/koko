@@ -64,5 +64,39 @@ header {
   box-shadow: none;
 }
 
+body.bg-light {
+    padding-top: 80px;
+}
+.logo-img {
+    width: 50px;
+}
+.account-img {
+    width: 50px;
+}
+.sidebar-fixed {
+    top: 75px;
+    left: 0;
+    height: 100vh;
+    background-color: #867FEA;
+    position: fixed;
+}
+.main-content-community {
+    padding-top: 150px;
+}
+.card-community-create {
+    max-width: 800px;
+}
+@media (max-width: 900px) {
+    .main-content-community {
+        padding-top: 90px;
+    }
+    .card-community-create {
+        max-width: 98vw;
+        width: 98vw;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
 
 
