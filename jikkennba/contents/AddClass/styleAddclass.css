@@ -182,3 +182,21 @@ header,
 .hover-text:hover {
     color: darkgray !important;
 }
+
+
+/* 更新ボタン */
+.update-button {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+/* チェックボックスを大きく */
+.form-check-input.custom-checkbox-lg {
+    border-color: #d3d3d3;
+  width: 1.5em;
+  height: 1.5em;
+  /* 余白やクリック範囲拡大したい場合↓ */
+  margin-right: 0.5em;
+  cursor: pointer;
+}

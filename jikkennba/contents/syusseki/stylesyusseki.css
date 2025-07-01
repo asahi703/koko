@@ -131,12 +131,6 @@ h2.title {
 
 /* 更新ボタン */
 .update-button {
-  background-color: #867FEA;
-  color: white;
-  border: none;
-  border-radius: 30px;
-  padding: 10px 30px;
-  font-size: 1rem;
   position: fixed;
   top: 10px;
   right: 20px;

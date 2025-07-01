@@ -15,8 +15,23 @@
 
 <body class="bg-light" style="padding-top: 80px;">
     <!--モバイル時ヘッダー-->
-    <header class="d-flex d-md-none w-100 navbar navbar-expand-md align-items-center py-4 fixed-top shadow-sm">
+    <header class="d-flex d-md-none w-100 navbar navbar-expand-md align-items-center py-md-4 py-2 fixed-top shadow-sm">
         <nav class="container d-flex justify-content-between">
+            <!-- ブランドロゴとタイトル -->
+            <a class="navbar-brand d-flex align-items-center"
+                href="#">
+                <img src="../../img/headerImg/logo.png" style="width: 50px"
+                    class="hd-img d-inline-block align-top img-fluid" alt="">
+            </a>
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="../../img/headerImg/account.png" style="width: 50px"
+                    class="hd-img d-inline-block align-top img-fluid ms-4" alt="">
+            </a>
+    </header>
+
+    <!--PC時ヘッダー-->
+    <header class="d-none d-md-flex w-100 navbar navbar-expand-md align-items-center py-md-2 fixed-top shadow-sm">
+        <nav class="container d-flex flex-column flex-md-row justify-content-between align-items-center-md">
             <!-- ブランドロゴとタイトル -->
             <a class="navbar-brand d-flex align-items-center" href="#">
                 <img src="../../img/headerImg/logo.png" style="width: 50px"
@@ -29,24 +44,10 @@
         </nav>
     </header>
 
-    <!--PC時ヘッダー-->
-    <header class="d-none d-md-flex w-100 navbar navbar-expand-md align-items-center py-md-2 fixed-top shadow-sm">
-        <nav class="container d-flex flex-column flex-md-row justify-content-between align-items-center-md">
-            <!-- ブランドロゴとタイトル -->
-            <a class="navbar-brand d-flex align-items-center position-absolute top-50 start-50 translate-middle"
-                href="#">
-                <img src="../../img/headerImg/logo.png" style="width: 50px"
-                    class="hd-img d-inline-block align-top img-fluid" alt="">
-                <h1 class="title ms-2 fs-md-3 mb-0"></h1>
-            </a>
-        </nav>
-    </header>
-
-
-    <!-- メインラッパー -->
+    <!-- サイドバーとメインコンテンツ -->
     <div class="container-fluid">
         <div class="row">
-            <!-- トップサイドバー（PCのみ表示） -->
+            <!-- サイドバー（PCのみ表示） -->
             <nav class="top-sidebar d-none d-md-flex flex-column align-items-center p-0" style="width: 100px;">
                 <ul class="nav flex-column sidebar-content w-100">
                     <li class="nav-item mb-4 text-center">
@@ -77,6 +78,38 @@
                             style="user-select: none;">
                             <img src="../../img/sidebarImg/FAQ.png" class="icon-img img-fluid" width="50" alt="...">
                             <span class="nav-label">よくある質問</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- サイドバー（スマホ用ボトムナビ） -->
+            <nav class="d-md-none fixed-bottom bg-white border-top shadow-sm">
+                <ul class="nav justify-content-around py-1 mb-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-center p-0" href="#">
+                            <img src="../../img/sidebarImg/notifications.png" class="icon-img img-fluid" width="30"
+                                alt="...">
+                            <div class="small">通知</div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center p-0" href="#">
+                            <img src="../../img/sidebarImg/chat.png" class="icon-img img-fluid" width="30" alt="...">
+                            <div class="small">チャット</div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center p-0" href="#">
+                            <img src="../../img/sidebarImg/community.png" class="icon-img img-fluid" width="30"
+                                alt="...">
+                            <div class="small">コミュニティ</div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center p-0" href="#">
+                            <img src="../../img/sidebarImg/FAQ.png" class="icon-img img-fluid" width="30" alt="...">
+                            <div class="small">FAQ</div>
                         </a>
                     </li>
                 </ul>
