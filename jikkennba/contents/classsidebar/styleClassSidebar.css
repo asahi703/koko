@@ -1,9 +1,6 @@
-* {
-    margin: 0;
-    padding: 0;
-    border-collapse: collapse;
-}
-
+/* =========================
+   header関連のスタイル
+========================= */
 header,
 .offcanvas {
     background-color: #867FEA;
@@ -13,27 +10,18 @@ header,
     border-color: rgba(0, 0, 0, 0);
 }
 
-.hover-text:hover {
-    color: darkgray !important;
-}
-
 .hover-text {
     color: #5A709F !important;
 }
-
 .hover-text:hover {
     color: darkgray !important;
 }
 
-.offcanvas-header,
-.offcanvas-body {
-    background-color: #867FEA;
-}
-
-
+/* =========================
+   top-sidebar関連のスタイル
+========================= */
 .top-sidebar {
-    top: 75px;
-    /* ヘッダーの高さ */
+    top: 75px; /* ヘッダーの高さ */
     left: 0;
     width: 100px;
     height: 100vh;
@@ -43,10 +31,11 @@ header,
     padding-top: 40px;
 }
 
+/* =========================
+   class-sidebar関連のスタイル
+========================= */
 
-/* クラスサイドバーのスタイル */
-
-/* --- クラスサイドバーの共通スタイル --- */
+/* クラスサイドバーの共通スタイル */
 .custom-hover:hover {
     background-color: #f0f0f0;
     color: #000;
@@ -65,7 +54,6 @@ header,
         z-index: 1030;
         padding-top: 0;
     }
-
     main {
         margin-left: 220px;
     }
@@ -83,65 +71,37 @@ header,
         border-bottom: 1px solid #eee;
         background-color: #fff;
         z-index: 1;
-
     }
-
     #class-sidebar .nav-link {
         flex: 0 0 auto;
         padding: 10px 12px;
         border-right: 1px solid #ddd;
     }
-
     main {
         margin-left: 0 !important;
     }
-
     /* スクロールバーの見た目 */
     #class-sidebar::-webkit-scrollbar {
         height: 6px;
     }
-
     #class-sidebar::-webkit-scrollbar-thumb {
         background-color: #ccc;
         border-radius: 3px;
     }
-
     .class-main-content {
         margin-left: 0 !important;
         width: 100% !important;
     }
 }
 
-.cu-pt {
-    cursor: pointer;
-}
-
-
-* {
-    margin: 0;
-    padding: 0;
-}
-
-header,
-.offcanvas {
-    background-color: #867FEA;
-}
-
-.navbar-toggler {
-    border-color: rgba(0, 0, 0, 0);
-}
-
-.hover-text:hover {
-    color: darkgray !important;
-}
-
-/* ホバー時の色変更 */
+/* サイドバー内リンクのホバー */
 .sidebar-content a:hover {
     background-color: #5a4cbc;
     color: white;
     text-decoration: none;
 }
 
+/* ラベルやその他 */
 .nav-label {
     font-size: 0.8rem;
     color: white;
@@ -152,33 +112,15 @@ header,
     box-shadow: none;
 }
 
-
-.top-sidebar {
-    top: 75px;
-    /* ヘッダーの高さ */
-    left: 0;
-    width: 100px;
-    height: 100vh;
-    background-color: #867FEA;
-    position: fixed;
-    overflow-y: auto;
-    padding-top: 40px;
+.cu-pt {
+    cursor: pointer;
 }
 
+/* =========================
+   共通リセット
+========================= */
 * {
     margin: 0;
     padding: 0;
-}
-
-header,
-.offcanvas {
-    background-color: #867FEA;
-}
-
-.navbar-toggler {
-    border-color: rgba(0, 0, 0, 0);
-}
-
-.hover-text:hover {
-    color: darkgray !important;
+    border-collapse: collapse;
 }

@@ -78,6 +78,7 @@ header,
   @media screen and (max-width: 768px){
     width: 100%; /* モバイルでは全幅 */
     left: 0; /* 左側の余白をなくす */
+    bottom: 65px
   }
 
   @media screen and (min-width: 769px) {
