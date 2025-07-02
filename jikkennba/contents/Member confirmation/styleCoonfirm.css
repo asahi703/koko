@@ -30,7 +30,6 @@ header,
     background-color: #867FEA;
 }
 
-
 .top-sidebar {
   top: 75px; /* ヘッダーの高さ */
   left: 0;
@@ -41,7 +40,6 @@ header,
   overflow-y: auto;
   padding-top: 40px;
 }
-
 
 /* クラスサイドバーのスタイル */
 
@@ -82,7 +80,6 @@ header,
         border-bottom: 1px solid #eee;
         background-color: #fff;
         z-index: 1;
-
     }
 
     #class-sidebar .nav-link {
@@ -111,11 +108,16 @@ header,
     }
 }
 
+/* ここを追加：PC・スマホ共通でメインコンテンツの背景色を指定 */
+.class-main-content {
+    background-color: #f3e2e2; /* ← お好きな色に変更 */
+    border-radius: 12px;
+}
+
 .cu-pt {
     cursor: pointer;
 }
 
-  @media (max-width: 768px) {
-    
-  }
-  
+@media (max-width: 768px) {
+    /* 必要ならここに追加 */
+}
