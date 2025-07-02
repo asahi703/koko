@@ -45,36 +45,40 @@
         </div>
     </div>
 </header>
-
+ 
 <!--PC時ヘッダー-->
 <header class="d-none d-md-flex w-100 navbar navbar-expand-md align-items-center py-md-2 fixed-top shadow-sm">
-    <nav class="container d-flex flex-column flex-md-row justify-content-between align-items-center-md">
+ 
         <!-- ブランドロゴとタイトル -->
-        <a class="navbar-brand d-flex align-items-center" href="#">
-            <img src="../../img/headerImg/logo.png" class="hd-img d-inline-block align-top img-fluid logo-img" alt="">
-            <img src="../../img/headerImg/account.png" class="hd-img d-inline-block align-top img-fluid ms-4 account-img" alt="">
-        </a>
+        <nav class="d-flex flex-column flex-md-row align-items-center w-100 px-0">
+    <!-- ブランドロゴとタイトル -->
+    <a class="d-flex align-items-center ms-0 ps-0" href="#">
+        <img src="../../img/headerImg/logo.png" class="img-fluid logo-img" alt="ロゴ">
+        <img src="../../img/headerImg/account.png" class="img-fluid ms-2 account-img" alt="アカウント">
+    </a>
         <!-- メニュー -->
-        <div class="d-flex flex-row fs-5">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link hover-text" href="#">チームに参加</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link hover-text" href="#">チームを作成</a>
-                </li>
-            </ul>
-        </div>
+       <div class="d-flex flex-row fs-5 ms-auto">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link hover-text" href="#">チームに参加</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link hover-text" href="#">チームを作成</a>
+        </li>
+    </ul>
+</div>
+ 
     </nav>
 </header>
-
+ 
 <!-- メインコンテンツ -->
 <div class="container d-flex flex-column align-items-center justify-content-center vw-100">
-    <div class="d-flex flex-column justify-content-center align-items-center w-100 mt-md-3">
-        <div class="mb-3">
+    <div class="bg-form-area w-100 d-flex justify-content-center py-5">
+        <div class="d-flex flex-column justify-content-center align-items-center w-100 mt-md-3" style="max-width: 600px;">
+        <form action="sighin.html" method="post" class="border rounded shadow p-4 w-100 login-form">
+        <div class="mb-3 text-center">
             <h2>ログイン</h2>
         </div>
-        <form action="sighin.html" method="post" class="border rounded shadow p-4 w-100 login-form">
             <input type="hidden" name="func" value="" />
             <input type="hidden" name="param" value="" />
             <div class="form-group my-2 px-2 w-100">
