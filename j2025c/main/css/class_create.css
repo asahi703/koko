@@ -1,0 +1,79 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+header,
+.offcanvas{
+    background-color: #867FEA;
+}
+
+.navbar-toggler {
+    border-color: rgba(0,0,0,0);
+}
+
+.hover-text:hover{
+    color: darkgray !important;
+}
+
+/* ホバー時の色変更 */
+.sidebar-content a:hover {
+  background-color: #5a4cbc;
+  color: white;
+  text-decoration: none;
+}
+
+.nav-label {
+  font-size: 0.8rem;
+  color: white;
+  margin-top: 4px;
+}
+
+.input-group .form-control:focus {
+  box-shadow: none;
+}
+
+
+.top-sidebar {
+  top: 75px; /* ヘッダーの高さ */
+  left: 0;
+  width: 100px;
+  height: 100vh;
+  background-color: #867FEA;
+  position: fixed;
+  overflow-y: auto;
+  padding-top: 40px;
+}
+
+body.bg-light {
+    padding-top: 80px;
+}
+.logo-img {
+    width: 50px;
+}
+.account-img {
+    width: 50px;
+}
+.top-sidebar-fixed {
+    width: 100px;
+}
+.main-content-classcreate {
+    padding-top: 100px;
+}
+.card-classcreate {
+    max-width: 800px;
+}
+@media (max-width: 900px) {
+    .main-content-classcreate {
+        padding-top: 70px;
+    }
+    .card-classcreate {
+        max-width: 98vw;
+        width: 98vw;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .top-sidebar-fixed {
+        width: 60px;
+    }
+}

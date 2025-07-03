@@ -15,8 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         integrity="sha512-..." crossorigin="anonymous" />
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/Global.css">
+    <link rel="stylesheet" href="../main/css/header.css">
+    <link rel="stylesheet" href="../main/css/Global.css">
 </head>
 
 <!--PC時ヘッダー-->
@@ -25,9 +25,9 @@
         サイト共通のヘッダー
         <!-- ブランドロゴとタイトル -->
         <a class="navbar-brand d-flex align-items-center" href="#">
-            <img src="../../img/headerImg/logo.png" style="width: 50px" class="hd-img d-inline-block align-top img-fluid"
+            <img src="../main/img/headerImg/logo.png" style="width: 50px" class="hd-img d-inline-block align-top img-fluid"
                  alt="">
-            <img src="../../img/headerImg/account.png" style="width: 50px"
+            <img src="../main/img/headerImg/account.png" style="width: 50px"
                  class="hd-img d-inline-block align-top img-fluid ms-4" alt="">
         </a>
         <!-- メニュー -->

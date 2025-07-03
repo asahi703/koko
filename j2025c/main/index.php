@@ -39,7 +39,7 @@
                     <input type="submit" class="btn btn-primary w-100" value="ログイン">
                 </div>
                 <div class="form-group d-flex justify-content-center my-2 px-2 w-100">
-                    <a href="">新規登録はこちら</a>
+                    <a href="signin.php">新規登録はこちら</a>
                 </div>
             </form>
             <button>

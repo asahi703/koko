@@ -1,0 +1,209 @@
+* {
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+}
+
+header,
+.offcanvas {
+    background-color: #867FEA;
+}
+
+.navbar-toggler {
+    border-color: rgba(0, 0, 0, 0);
+}
+
+.hover-text:hover {
+    color: darkgray !important;
+}
+
+.hover-text {
+    color: #5A709F !important;
+}
+
+.hover-text:hover {
+    color: darkgray !important;
+}
+
+.offcanvas-header,
+.offcanvas-body {
+    background-color: #867FEA;
+}
+
+
+.top-sidebar {
+    top: 75px;
+    /* ヘッダーの高さ */
+    left: 0;
+    width: 100px;
+    height: 100vh;
+    background-color: #867FEA;
+    position: fixed;
+    overflow-y: auto;
+    padding-top: 40px;
+}
+
+
+/* クラスサイドバーのスタイル */
+
+/* --- クラスサイドバーの共通スタイル --- */
+.custom-hover:hover {
+    background-color: #f0f0f0;
+    color: #000;
+}
+
+/* --- PC表示（768px以上） --- */
+@media (min-width: 768px) {
+    #class-sidebar {
+        position: fixed !important;
+        top: 80px;
+        left: 100px;
+        width: 220px;
+        height: 100vh;
+        border-right: 1px solid #eee;
+        background-color: #fff;
+        z-index: 1030;
+        padding-top: 0;
+    }
+
+    main {
+        margin-left: 220px;
+    }
+}
+
+/* --- スマホ表示（〜767.98px） --- */
+@media (max-width: 767.98px) {
+    #class-sidebar {
+        position: static !important;
+        flex-direction: row;
+        overflow-x: auto;
+        width: 100%;
+        height: auto;
+        white-space: nowrap;
+        border-bottom: 1px solid #eee;
+        background-color: #fff;
+        z-index: 1;
+
+    }
+
+    #class-sidebar .nav-link {
+        flex: 0 0 auto;
+        padding: 10px 12px;
+        border-right: 1px solid #ddd;
+    }
+
+    main {
+        margin-left: 0 !important;
+    }
+
+    /* スクロールバーの見た目 */
+    #class-sidebar::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    #class-sidebar::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 3px;
+    }
+
+    .class-main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    /* カレンダー周囲の余白やフォントサイズを調整 */
+  #calendar {
+    font-size: 12px;
+    padding: 10px;
+    height: 600px;
+  }
+
+  /* ヘッダーのボタンを縦並びにするなど */
+  .fc-header-toolbar {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  /* カレンダーセルの高さを少し小さく */
+  .fc-daygrid-day-frame {
+    min-height: 60px;
+  }
+
+  /* ツールチップの文字サイズ調整（もし表示してるなら） */
+  .custom-tooltip {
+    font-size: 0.8rem;
+    max-width: 90vw;
+  }
+}
+
+.cu-pt {
+    cursor: pointer;
+}
+
+.fc-daygrid-day {
+    cursor: pointer;
+
+}
+
+.fc-daygrid-day:hover {
+    background-color: #eee;
+}
+
+/* 曜日ヘッダーのリンクから下線を消して黒字に（共通） */
+.fc-scrollgrid-sync-inner a {
+    text-decoration: none;
+    color: inherit;
+    /* 親要素の色を継承（赤や青が有効になる） */
+}
+
+/* 日付の数字：基本黒だけど、日曜・土曜は色付きに */
+.fc-daygrid-day-number {
+    text-decoration: none;
+}
+
+/* 日曜と土曜の数字の色 */
+.fc-day-sun .fc-daygrid-day-number {
+    color: red;
+}
+
+.fc-day-sat .fc-daygrid-day-number {
+    color: blue;
+}
+
+/* 曜日ヘッダー（文字）の色 */
+.fc .fc-col-header-cell:nth-child(1) {
+    color: red;
+}
+
+.fc .fc-col-header-cell:nth-child(7) {
+    color: blue;
+}
+
+/* ホバー時のカスタムツールチップ */
+.fc-event-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.custom-tooltip {
+    position: absolute;
+    background: #333;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    pointer-events: none;
+    z-index: 1000;
+    display: none;
+}
+
+.fc-daygrid-day:hover {
+    cursor: pointer;
+}
+
+.fc-event-title {
+  white-space: normal;
+  word-break: break-word;
+  font-size: 0.8em;
+}

@@ -1,0 +1,192 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #d8d8d8;
+    font-family: "Noto Sans JP", "Meiryo", sans-serif;
+    overflow: hidden;
+}
+
+.multi-title {
+    text-align: center;
+    color: #7a8bb7;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.multi-box {
+    background: #fff;
+    width: 90%;
+    max-width: 90vw;
+    margin: 0 auto;
+    padding: 40px 0 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.multi-list {
+    width: 90%;
+    margin: 0 auto 20px auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px 80px;
+    justify-content: flex-start;
+}
+
+.multi-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    max-width: 200px;
+}
+
+.multi-checkbox {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: #ddd;
+    margin-right: 16px;
+    border: none;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.multi-checkbox:checked::after {
+    content: "";
+    display: block;
+    width: 22px;
+    height: 22px;
+    background: #948cf0;
+    border-radius: 4px;
+    position: absolute;
+    top: 7px;
+    left: 7px;
+}
+
+.multi-label {
+    color: #222;
+    font-weight: 400;
+}
+
+.multi-input-wrap {
+    width: 90%;
+    margin: 30px auto 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.multi-input {
+    width: 100%;
+    border: none;
+    border-radius: 2vw;
+    background: #ededed;
+    font-size: 28px;
+    padding: 10px 24px;
+    outline: none;
+    color: #222;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header,
+.offcanvas {
+    background-color: #867FEA;
+}
+
+.navbar-toggler {
+    border-color: rgba(0, 0, 0, 0);
+}
+
+.hover-text:hover {
+    color: darkgray !important;
+}
+
+/* ホバー時の色変更 */
+.sidebar-content a:hover {
+    background-color: #5a4cbc;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-label {
+    font-size: 0.8rem;
+    color: white;
+    margin-top: 4px;
+}
+
+.input-group .form-control:focus {
+    box-shadow: none;
+}
+
+
+.top-sidebar {
+    top: 75px;
+    /* ヘッダーの高さ */
+    left: 0;
+    width: 100px;
+    height: 100vh;
+    background-color: #867FEA;
+    position: fixed;
+    overflow-y: auto;
+    padding-top: 40px;
+}
+
+
+.chat-input-multiple {
+    position: fixed;
+    width: 75%;
+    left: 200px;
+    bottom: 20px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.chat-multiple-arrowback {
+    position: absolute;
+    width: 50px;
+    top: 90px;
+    left: 110px;
+}
+
+.chat-multiple-arrowback img {
+    width: 40px;
+}
+
+/*スマホ画面時*/
+@media (max-width: 768px) {
+
+    .main-area,
+    .multi-box {
+        width: 100vw;
+        min-width: 0;
+    }
+
+    .multi-box {
+        padding: 30px 0 20px 0;
+    }
+
+    .multi-title {
+        font-size: 24px;
+    }
+
+    .multi-label {
+        font-size: 20px;
+    }
+
+    .chat-input-multiple {
+        bottom: 70px;
+        left: 1px;
+        width: 100%;
+    }
+
+    .chat-multiple-arrowback {
+        top: 90px;
+        left: 10px;
+    }
+}
