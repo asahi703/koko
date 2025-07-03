@@ -1,0 +1,158 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+header,
+.offcanvas{
+    background-color: #867FEA;
+}
+
+.navbar-toggler {
+    border-color: rgba(0,0,0,0);
+}
+
+.hover-text:hover{
+    color: darkgray !important;
+}
+
+/* ホバー時の色変更 */
+.sidebar-content a:hover {
+  background-color: #5a4cbc;
+  color: white;
+  text-decoration: none;
+}
+
+.nav-label {
+  font-size: 0.8rem;
+  color: white;
+  margin-top: 4px;
+}
+
+.input-group .form-control:focus {
+  box-shadow: none;
+}
+
+.sidebar {
+  top: 60px; /* ヘッダーの高さと合わせて調整 */
+  left: 0;
+  height: calc(100vh - 60px);
+  width: 100px; /* 固定幅 */
+  background-color: #867FEA;
+  overflow-y: auto;
+  padding-top: 40px;
+  z-index: 1020;
+}
+
+.chat-container {
+  @media screen and (max-width: 768px) {
+    margin-left: 0; /* モバイルでは左側の余白をなくす */
+    
+  }
+
+  /*pc画面時*/
+  @media screen and (min-width: 769px) {
+    margin-left: 350px; padding: 1rem; 
+    max-width: calc(100% - 350px);
+    overflow-x: hidden;
+  }
+}
+
+.chat-msg{
+  background-color: whitesmoke;
+  max-width: 75%; 
+  word-wrap: break-word;
+}
+
+.chat-msg-sbm{
+  background-color: skyblue;
+}
+
+.chat-input{
+  position: fixed;
+  bottom: 20px;
+  padding: 0 2rem;
+  width: calc(100% - 350px); /* サイドバーの幅を引く */
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+
+  @media screen and (max-width: 768px){
+    width: 100%; /* モバイルでは全幅 */
+    left: 0; /* 左側の余白をなくす */
+    bottom: 65px
+  }
+
+  @media screen and (min-width: 769px) {
+    left: 350px; /* サイドバーの幅を引く */
+  }
+}
+
+body.bg-light {
+    padding-top: 80px;
+}
+.logo-img {
+    width: 50px;
+}
+.account-img {
+    width: 50px;
+}
+.sidebar-fixed {
+    top: 75px;
+    left: 0;
+    height: 100vh;
+    background-color: #867FEA;
+    position: fixed;
+    z-index: 1030;
+}
+.sidebar-toggle-btn {
+    position: fixed;
+    top: 70px;
+    left: 10px;
+    font-size: 0.9rem;
+    min-width: 32px;
+    min-height: 28px;
+    width: 40px;
+    height: 32px;
+}
+.offcanvas-body-fullheight {
+    height: 100%;
+}
+.user-icon {
+    width: 40px;
+}
+.user-name-ellipsis {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.desktop-sidebar {
+    position: fixed;
+    top: 75px;
+    left: 100px;
+    width: 250px;
+    height: 100vh;
+    background: #fff;
+    border-right: 1px solid #eee;
+    z-index: 1029;
+}
+.chat-scroll-container {
+    height: 500px;
+    overflow-y: auto;
+}
+.chat-input-group {
+    height: 45px;
+}
+.chat-input-text {
+    border: none;
+    box-shadow: none;
+}
+.chat-send-btn {
+    height: 100%;
+    padding: 0 16px;
+    border: none;
+    background: none;
+}
+.send-icon {
+    width: 24px;
+    height: 24px;
+}

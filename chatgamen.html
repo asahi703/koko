@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Title</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/styeChat.css">
+</head>
+
+<body class="bg-light">
+  <!--モバイル時ヘッダー-->
+  <header class="d-flex d-md-none w-100 navbar navbar-expand-md align-items-center py-4 fixed-top shadow-sm">
+    <nav class="container d-flex justify-content-between">
+      <!-- ブランドロゴとタイトル -->
+      <a class="navbar-brand d-flex align-items-center position-absolute top-50 start-50 translate-middle" href="#">
+        <img src="../../img/headerImg/logo.png" class="hd-img d-inline-block align-top img-fluid logo-img" alt="">
+        <h1 class="title ms-2 fs-md-3 mb-0"></h1>
+      </a>
+      <!-- ハンバーガーを右端に配置（スマホ表示） -->
+      <button class="navbar-toggler position-absolute top-50 end-0 translate-middle-y" type="button"
+        data-bs-toggle="offcanvas" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false"
+        aria-label="メニューを切り替え">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
+    <!-- オフキャンバス（モバイル時） -->
+    <div class="offcanvas offcanvas-end d-md-none" tabindex="-1" id="navbarMenu">
+      <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title text-light">メニュー</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body ml-1 p-0">
+        <nav class="d-flex flex-column mt-1" id="sidebar-mobile">
+          <ul class="navbar-nav">
+            <li>
+              <a class="nav-link" href="#">
+                <h4>チームに参加</h4>
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" href="#">
+                <h4>チームを作成</h4>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!--PC時ヘッダー-->
+  <header class="d-none d-md-flex w-100 navbar navbar-expand-md align-items-center py-md-2 fixed-top shadow-sm">
+    <nav class="container d-flex flex-column flex-md-row justify-content-between align-items-center-md">
+      <!-- ブランドロゴとタイトル -->
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="../../img/headerImg/logo.png" class="hd-img d-inline-block align-top img-fluid logo-img" alt="">
+        <img src="../../img/headerImg/account.png" class="hd-img d-inline-block align-top img-fluid ms-4 account-img" alt="">
+      </a>
+      <!-- メニュー -->
+      <div class="d-flex flex-row fs-5">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link hover-text" href="#">チームに参加</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link hover-text" href="#">チームを作成</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- サイドバーとメインコンテンツ -->
+  <div class="container-fluid">
+    <div class="row">
+      <!-- 左サイドバー（PCのみ表示） -->
+      <nav class="col-2 d-none d-md-flex flex-column align-items-center sidebar p-0 sidebar-fixed"
+        style="top: 75px; left: 0; height: 100vh; background-color: #867FEA; position: fixed; z-index: 1030;">
+        <ul class="nav flex-column sidebar-content w-100">
+          <li class="nav-item mb-4 text-center">
+            <a class="nav-link p-0 d-flex flex-column align-items-center text-white hover-bg-dark" href="#"
+              style="user-select: none;">
+              <img src="../../img/sidebarImg/notifications.png" class="icon-img img-fluid" width="50" alt="...">
+              <span class="nav-label">通知</span>
+            </a>
+          </li>
+          <li class="nav-item mb-4 text-center">
+            <a class="nav-link p-0 d-flex flex-column align-items-center text-white hover-bg-dark" href="#"
+              style="user-select: none;">
+              <img src="../../img/sidebarImg/chat.png" class="icon-img img-fluid" width="50" alt="...">
+              <span class="nav-label">チャット</span>
+            </a>
+          </li>
+          <li class="nav-item mb-4 text-center">
+            <a class="nav-link p-0 d-flex flex-column align-items-center text-white hover-bg-dark" href="#"
+              style="user-select: none;">
+              <img src="../../img/sidebarImg/community.png" class="icon-img img-fluid" width="50" alt="...">
+              <span class="nav-label">コミュニティ</span>
+            </a>
+          </li>
+          <li class="nav-item text-center">
+            <a class="nav-link p-0 d-flex flex-column align-items-center text-white hover-bg-dark" href="#"
+              style="user-select: none;">
+              <img src="../../img/sidebarImg/FAQ.png" class="icon-img img-fluid" width="50" alt="...">
+              <span class="nav-label">よくある質問</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      
+      <!-- サイドバー（スマホ用ボトムナビ） -->
+      <nav class="d-md-none fixed-bottom bg-white border-top shadow-sm">
+        <ul class="nav justify-content-around py-1 mb-0">
+          <li class="nav-item">
+            <a class="nav-link text-center p-0" href="#">
+              <img src="../../img/sidebarImg/notifications.png" class="icon-img img-fluid" width="30" alt="...">
+              <div class="small">通知</div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-center p-0" href="#">
+              <img src="../../img/sidebarImg/chat.png" class="icon-img img-fluid" width="30" alt="...">
+              <div class="small">チャット</div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-center p-0" href="#">
+              <img src="../../img/sidebarImg/community.png" class="icon-img img-fluid" width="30" alt="...">
+              <div class="small">コミュニティ</div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-center p-0" href="#">
+              <img src="../../img/sidebarImg/FAQ.png" class="icon-img img-fluid" width="30" alt="...">
+              <div class="small">FAQ</div>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- スマホ用トグルボタン（モバイルで表示、左上に固定・幅小さめ・ヘッダー考慮） -->
+      <button class="btn btn-primary d-md-none px-1 py-1 sidebar-toggle-btn" type="button" data-bs-toggle="offcanvas"
+        data-bs-target="#chatSidebarMobile" aria-controls="chatSidebarMobile">
+        <span class="d-inline d-sm-none">☰</span>
+      </button>
+
+      <!-- モバイル用オフキャンバスサイドバー -->
+      <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="chatSidebarMobile"
+        aria-labelledby="chatSidebarMobileLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="chatSidebarMobileLabel">メニュー</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column px-0 offcanvas-body-fullheight">
+          <!-- 上部メニュー（固定） -->
+          <div style="flex-shrink: 0;">
+            <div class="d-flex justify-content-center align-items-center ms-2 py-2 border-bottom text-nowrap">
+              <a class="nav-link text-dark d-flex align-items-center" href="#">
+                <span class="fs-6">複数に送る</span>
+              </a>
+            </div>
+            <div class="d-flex justify-content-center align-items-center ms-2 py-2 border-bottom text-nowrap">
+              <a class="nav-link text-dark d-flex align-items-center" href="#">
+                <span class="fs-6">テンプレートを表示</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- ユーザーリスト（スクロール） -->
+          <div style="overflow-y: auto; flex-grow: 1; min-height: 0;">
+            <ul class="list-unstyled w-100">
+              <li>
+                <a class="nav-link text-dark py-1 text-nowrap custom-hover d-flex align-items-center px-3" href="#">
+                  <img src="../../img/headerImg/account.png" class="hd-img d-inline-block align-top img-fluid user-icon" alt="">
+                  <span class="ms-2 d-flex align-items-center user-name-ellipsis">ユーザー名</span>
+                </a>
+              </li>
+              <!-- 必要なだけ追加 -->
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- デスクトップ用サイドバー（現状のまま） -->
+      <nav class="d-none d-md-flex flex-column px-0 desktop-sidebar"
+        style="position: fixed; top: 75px; left: 100px; width: 250px; height: 100vh; background: #fff; border-right: 1px solid #eee; z-index: 1029;">
+
+        <!-- 上部メニュー（固定） -->
+        <div style="flex-shrink: 0;">
+          <div class="d-flex justify-content-center align-items-center ms-2 py-md-2 border-bottom text-nowrap">
+            <a class="nav-link text-dark d-flex align-items-center" href="#">
+              <span class="fs-5">複数に送る</span>
+            </a>
+          </div>
+          <div class="d-flex justify-content-center align-items-center ms-2 py-md-2 border-bottom text-nowrap">
+            <a class="nav-link text-dark d-flex align-items-center" href="#">
+              <span class="fs-5">テンプレートを表示</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- ユーザーリスト（スクロール） -->
+        <div style="overflow-y: auto; flex-grow: 1; min-height: 0;">
+          <ul class="list-unstyled w-100">
+            <li>
+              <a class="nav-link text-dark py-1 text-nowrap custom-hover d-flex align-items-center px-3" href="#">
+                <img src="../../img/headerImg/account.png" class="hd-img d-inline-block align-top img-fluid user-icon" alt="">
+                <span class="ms-2 d-flex align-items-center user-name-ellipsis">ユーザー名</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- メインコンテンツ -->
+      <main class="flex-grow-1 chat-container">
+
+        <!-- チャット画面 -->
+        <div class="container mt-4 chat-scroll-container" style="height: 500px; overflow-y: auto;">
+          <div class="row flex-column">
+            <!-- 左寄せメッセージ（受信） -->
+            <div class="d-flex justify-content-start mb-2">
+              <div class="chat-msg bg-white border rounded p-2">
+                <div>rgea これは左側に表示されるメッセージです。とても長いと自動で改行されます。hgireshigureshreuaikh</div>
+                <div class="opacity-50 small mt-1 text-end">06/16 10:32</div>
+              </div>
+            </div>
+
+            <!-- 左寄せメッセージ（受信） -->
+            <div class="d-flex justify-content-start mb-2">
+              <div class="chat-msg bg-white border rounded p-2">
+                <div>短いメッセージ</div>
+                <div class="opacity-50 small mt-1 text-end">06/16 10:35</div>
+              </div>
+            </div>
+
+            <!-- 右寄せメッセージ（送信） -->
+            <div class="d-flex justify-content-end mb-2">
+              <div class="chat-msg chat-msg-sbm border rounded p-2">
+                <div>右寄せのメッセージです。送信した内容がここに表示されます。</div>
+                <div class="opacity-50 small mt-1 text-end">06/16 10:36</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- チャット入力エリア -->
+        <!-- メッセージ入力フォーム -->
+        <div class="row justify-content-center w-100 mt-4">
+          <div class="col-12 col-md-6">
+            <form class="chat-input">
+              <div class="input-group bg-white rounded-pill border px-3 py-1 chat-input-group">
+                <input type="text" name="" class="form-control rounded-pill chat-input-text" placeholder="メッセージを入力">
+                <button type="submit" class="btn btn-primary rounded-pill ms-2 d-flex align-items-center justify-content-center chat-send-btn">
+                  <img src="../../img/send_24dp_999999_FILL0_wght400_GRAD0_opsz24.svg" alt="送信" class="send-icon">
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<script src="../../index.js"></script>
+
+</html>

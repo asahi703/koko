@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+  padding-top: 80px;
+}
+
+header,
+.offcanvas {
+    background-color: #867FEA;
+}
+
+.navbar-toggler {
+    border-color: rgba(0,0,0,0);
+}
+
+.hover-text:hover {
+    color: darkgray !important;
+}
+
+/* ホバー時の色変更 */
+.sidebar-content a:hover {
+  background-color: #5a4cbc;
+  color: white;
+  text-decoration: none;
+}
+
+.nav-label {
+  font-size: 0.8rem;
+  color: white;
+  margin-top: 4px;
+}
+
+.input-group .form-control:focus {
+  box-shadow: none;
+}
+
+.top-sidebar {
+  top: 75px; /* ヘッダーの高さ */
+  left: 0;
+  width: 100px;
+  height: 100vh;
+  background-color: #867FEA;
+  position: fixed;
+  overflow-y: auto;
+  padding-top: 40px;
+}
+
+.class-card {
+  background-color: #cccccc;
+  height: 150px;
+}
+
+.class-card:hover {
+  background-color: #dcdcdc;
+}
+
+.team-option {
+  position: absolute;
+  right: 50px;
+  top: 70px;
+}
+
+/* Styles moved from inline to CSS */
+.hd-img {
+  width: 50px;
+}
+
+.main-content-styles {
+  margin-top: 80px;
+  margin-bottom: 60px;
+  max-width: 1200px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.search-bar-styles {
+  height: 45px;
+}
+
+.search-bar-styles .form-control {
+  border: none;
+  box-shadow: none;
+}
+
+.community-image-placeholder {
+  width: 50px;
+  height: 50px;
+}
+
+.community-card-row {
+  max-height: 500px;
+}
+
+.nav-link[style="user-select: none;"] {
+  user-select: none;
+}

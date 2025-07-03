@@ -1,0 +1,58 @@
+*{
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+}
+
+header,
+.offcanvas{
+    background-color: #867FEA;
+}
+
+/* ヘッダーを固定 */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1030; /* Bootstrapのナビバーと重ならないように */
+}
+
+
+.navbar-toggler {
+    border-color: rgba(0,0,0,0);
+}
+
+.hover-text:hover{
+    color: darkgray !important;
+}
+
+.nav-label {
+  font-size: 0.8rem;
+  color: white;
+  margin-top: 4px;
+}
+
+.input-group.rounded-pill {
+  border: 1px solid #ccc;
+  border-radius: 50px;
+}
+
+.input-group .form-control:focus {
+  box-shadow: none;
+}
+
+/* ログインページ用 追加スタイル */
+body.bg-light {
+    padding-top: 80px;
+}
+.logo-img {
+    width: 50px;
+}
+.account-img {
+    width: 50px;
+}
+.login-form {
+    max-width: 400px;
+    width: 100%;
+}

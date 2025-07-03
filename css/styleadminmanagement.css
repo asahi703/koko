@@ -1,0 +1,178 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #867FEA;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1030;
+  height: 76px; /* ← 高さを明示 */
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #e5e5e5;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.content-area {
+  margin-left: 250px;
+  background: #e5e5e5;
+  padding: 0 60px;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% - 250px);
+  box-sizing: border-box;
+}
+
+.main-content {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.main-content h2 {
+  font-size: 28px;
+  font-weight: normal;
+  margin-bottom: 32px;
+  margin-left: 60px;
+  letter-spacing: 2px;
+}
+
+.admin-table-area {
+  margin-left: 0;
+  margin-right: 0;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+  overflow: hidden;
+  width: 100%;
+  max-width: none;
+}
+
+table {
+  width: 100%;
+  table-layout: fixed; /* 列幅を均等にする */
+}
+
+th,
+td {
+  width: 25%; /* 4列の場合 */
+  padding: 8px 6px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+td:last-child,
+th:last-child {
+  text-align: right;
+}
+
+th {
+  background: #fff;
+  font-weight: normal;
+  font-size: 16px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+td {
+  border-bottom: 2px solid #e0e0e0;
+  font-size: 16px;
+}
+
+/* 1列目（アカウントID）中央寄せ */
+th:nth-child(1),
+td:nth-child(1) {
+  text-align: center;
+}
+
+/* 2列目・3列目（アカウント名・メールアドレス）左寄せ */
+th:nth-child(2),
+td:nth-child(2),
+th:nth-child(3),
+td:nth-child(3) {
+  text-align: center;
+}
+
+/* ボタン列（4列目・5列目）右寄せ */
+th:nth-child(4),
+td:nth-child(4),
+th:nth-child(5),
+td:nth-child(5) {
+  text-align: right;
+}
+
+.btn {
+  border: none;
+  border-radius: 16px;
+  padding: 6px 24px; /* ← ボタン自体も少し小さく */
+  font-size: 14px;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 4px; /* ボタン間の余白を少しだけ */
+  transition: background 0.2s;
+}
+
+.btn-edit {
+  background: #ff7043;
+}
+
+.btn-edit:hover {
+  background: #ff5722;
+}
+
+.btn-delete {
+  background: #bdbdbd;
+}
+
+.btn-delete:hover {
+  background: #757575;
+}
+
+.desktop-sidebar {
+  position: fixed;
+  top: 76px; /* ← headerの高さと必ず合わせる */
+  left: 0;
+  width: 250px;
+  height: calc(100vh - 76px); /* ← headerの高さ分引く */
+  background: #fff;
+  z-index: 1020;
+  margin: 0;
+  padding: 0;
+  border-right: 1px solid #ddd;
+}
+
+@media (max-width: 1200px) {
+  .main-content h2,
+  .admin-table-area {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  th,
+  td {
+    font-size: 12px;
+    padding: 8px 4px;
+  }
+
+  .btn {
+    font-size: 10px;
+    padding: 4px 10px;
+  }
+}

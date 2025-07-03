@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../../css/styleLogin.css">
+    <link rel="stylesheet" href="css/styleLogin.css">
     <title>Title</title>
 <body class="bg-light">
 <!--モバイル時ヘッダー-->
@@ -92,6 +92,9 @@
                 <a href="">新規登録はこちら</a>
             </div>
         </form>
+        <button>
+            <a href="mainpage.php" class="btn btn-secondary mt-3 w-100">homepage(一時的)</a>
+        </button>
     </div>
 </div>
 </body>

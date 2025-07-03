@@ -1,0 +1,207 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+header,
+.offcanvas{
+    background-color: #867FEA;
+}
+
+/* ヘッダーを固定 */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1030; /* Bootstrapのナビバーと重ならないように */
+}
+
+.sidebar {
+    top: 60px;
+    left: 0;
+    height: calc(100vh - 60px);
+    width: 100px;
+    background-color: #867FEA;
+    overflow-y: auto;
+    padding-top: 40px;
+    z-index: 1020;
+}
+
+.navbar-toggler {
+    border-color: rgba(0,0,0,0);
+}
+
+.hover-text:hover{
+    color: darkgray !important;
+}
+
+/* ホバー時の色変更 */
+.sidebar-content a:hover {
+    background-color: #c1bdfa;
+    color: white;
+    text-decoration: none;
+}
+
+/* アクティブリンクの強調 */
+.sidebar-content a.active {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.nav-label {
+    font-size: 0.8rem;
+    color: white;
+    margin-top: 4px;
+}
+
+.input-group.rounded-pill {
+  border: 1px solid #ccc;
+  border-radius: 50px;
+}
+
+.input-group .form-control:focus {
+  box-shadow: none;
+}
+
+ html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+    font-family: "Noto Sans JP", "Meiryo", sans-serif;
+    overflow: hidden;
+}
+
+.main-area {
+    margin-left: 100px;
+    margin-top: 100px;
+    min-height: calc(100vh - 100px);
+    background: #ffffff;
+    padding: 0;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.main-content-area {
+    padding-top: 150px;
+}
+
+.card-template-create {
+    max-width: 800px;
+}
+
+.template-create-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 40px 0 0 60px;
+    position: relative;
+}
+
+.template-create-title {
+    font-size: 36px;
+    font-weight: 500;
+    color: #111;
+    margin-left: 180px;
+}
+
+.template-form {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.template-label {
+    font-size: 32px;
+    color: #111;
+    margin-left: 220px;
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+
+.template-input {
+    /* Bootstrap標準に近いサイズ */
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    font-size: 1rem;
+    height: 38px;
+    padding: 6px 12px;
+}
+
+.template-textarea {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    font-size: 1rem;
+    height: 100px;
+    padding: 6px 12px;
+}
+
+.template-create-btn {
+    width: 200px;
+    max-width: 100%;
+    margin-left: 0;
+    font-size: 1rem;
+    padding: 8px 0;
+}
+
+@media (max-width: 900px) {
+    .main-area {
+        margin-left: 0;
+        margin-top: 70px;
+    }
+    .main-content-area {
+        padding-top: 90px;
+    }
+    .card-template-create {
+        max-width: 98vw;
+        width: 98vw;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .template-create-header {
+        padding: 30px 0 0 10px;
+    }
+    .template-create-title {
+        font-size: 24px;
+        margin-left: 20px;
+    }
+    .template-label {
+        font-size: 20px;
+        margin-left: 0;
+        margin-bottom: 6px;
+    }
+    .template-input,
+    .template-textarea,
+    .template-create-btn {
+        margin-left: 0;
+        width: 90vw;
+        max-width: 90vw;
+        font-size: 16px;
+    }
+    .template-input {
+        height: 36px;
+        padding: 4px 8px;
+    }
+    .template-textarea {
+        height: 60px;
+        padding: 4px 8px;
+    }
+    .template-create-btn {
+        padding: 8px 0;
+        font-size: 16px;
+        width: 60vw;
+        max-width: 90vw;
+        margin: 0 auto;
+        display: block;
+    }
+}
+
+
