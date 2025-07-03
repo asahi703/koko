@@ -12,11 +12,16 @@
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   <link rel="stylesheet" href="css/stylemainpage.css">
 </head>
+<!--ヘッダー-->
 <?php include 'common/header.html'; ?>
+
 <body class="bg-light">
   <div class="container-fluid">
     <div class="row">
+
+        <!-- サイドバー（PCのみ表示） -->
       <?php include 'common/sidebar.php'; ?>
+
       <!-- メインコンテンツ -->
       <main class="col-12 col-md-9 col-lg-10 px-md-4 d-flex flex-column align-items-center justify-content-center text-center mx-auto main-content-styles">
         <div class="team-option d-flex flex-row flex-column flex-md-row fs-5 justify-content-center mb-3">

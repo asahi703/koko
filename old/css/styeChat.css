@@ -1,0 +1,81 @@
+.group-sidebar {
+    min-width: 220px;
+    max-width: 320px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.group-list-scroll {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;
+    height: 0;
+}
+
+.chat-main-area {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 80px; /* 入力欄分の余白 */
+}
+
+.chat-history-scroll {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;
+    height: 0;
+    background: #f4f6fa;
+}
+
+.chat-msg {
+    max-width: 60%;
+    word-break: break-all;
+    background: #fff;
+}
+
+.chat-msg-sbm {
+    background: #e3f2fd;
+}
+
+.chat-input-box {
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1050;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+    background: #fff;
+}
+
+.main-content-area,
+.main-content-area-in-sidebar {
+    height: 100vh;
+}
+
+@media (max-width: 991.98px) {
+    .main-content-area {
+        margin-left: 0;
+    }
+    .main-content-area-in-sidebar {
+        margin-left: 0;
+        padding-top: 70px;
+    }
+    .chat-input-box {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .group-sidebar {
+        min-width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+    .chat-main-area {
+        height: auto;
+        padding-bottom: 80px;
+    }
+}
