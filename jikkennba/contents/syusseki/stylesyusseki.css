@@ -258,3 +258,8 @@ header,
     cursor: pointer;
 }
 
+.class-main-content {
+    background-color: #aebeea; /* ← お好きな色に変更 */
+    border-radius: 12px;       /* 角丸が欲しい場合は追加（任意） */
+}
+
