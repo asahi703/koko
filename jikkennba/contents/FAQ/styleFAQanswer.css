@@ -64,5 +64,13 @@ header {
   box-shadow: none;
 }
 
+/* メインコンテンツの背景色を変更 */
+main.col-md-9 {
+    background-color: #bbfd5e; /* ← お好きな色に変更 */
+    border-radius: 12px;        /* 角丸が欲しい場合は追加（任意） */
+    padding-bottom: 20px;       /* 下余白を追加（任意） */
+}
 
-
+body.bg-light {
+    background-color: #bbfd5e !important; /* お好きな色に変更 */
+}
