@@ -125,9 +125,11 @@ $all_classes = $stmt->fetchAll();
             <?php if (count($all_classes) > 0): ?>
                 <?php foreach ($all_classes as $class): ?>
                     <div class="col-12 col-md-6 col-lg-4 mb-2">
-                        <div class="card p-3">
-                            <div class="fw-bold"><?php echo htmlspecialchars($class['class_name']); ?></div>
-                        </div>
+                        <a href="class_chat.php?id=<?php echo $class['class_id']; ?>" class="text-decoration-none">
+                            <div class="card p-3 hover-shadow">
+                                <div class="fw-bold"><?php echo htmlspecialchars($class['class_name']); ?></div>
+                            </div>
+                        </a>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
