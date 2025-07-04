@@ -332,6 +332,23 @@ INSERT INTO `users` (`user_id`, `user_name`, `user_mailaddress`, `user_password`
 (2, 'name', 'm@c', 'ee18e3f6a485f0fd0d4185f050c15be2623a37a0', NULL, 0, NULL, 'm@c'),
 (3, 'a', 'a@b.c', 'dd8b23ea0e2d32cbe01542b5ac5ad5285d91a0df', NULL, 0, NULL, 'a@b.c');
 
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `community_invite_codes`
+--
+
+CREATE TABLE `community_invite_codes` (
+  `invite_id` int NOT NULL AUTO_INCREMENT,
+  `community_id` int NOT NULL,
+  `invite_code` varchar(32) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`invite_id`),
+  UNIQUE KEY `invite_code` (`invite_code`),
+  KEY `community_id` (`community_id`),
+  CONSTRAINT `community_invite_codes_ibfk_1` FOREIGN KEY (`community_id`) REFERENCES `communities` (`community_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 --
 -- ダンプしたテーブルのインデックス
 --
@@ -450,6 +467,14 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `user_login` (`user_login`);
 
 --
+-- テーブルのインデックス `community_invite_codes`
+--
+ALTER TABLE `community_invite_codes`
+  ADD PRIMARY KEY (`invite_id`),
+  ADD UNIQUE KEY `invite_code` (`invite_code`),
+  ADD KEY `community_id` (`community_id`);
+
+--
 -- ダンプしたテーブルの AUTO_INCREMENT
 --
 
@@ -532,6 +557,12 @@ ALTER TABLE `users`
   MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- テーブルの AUTO_INCREMENT `community_invite_codes`
+--
+ALTER TABLE `community_invite_codes`
+  MODIFY `invite_id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- ダンプしたテーブルの制約
 --
 
@@ -607,6 +638,12 @@ ALTER TABLE `questions`
 --
 ALTER TABLE `temprates`
   ADD CONSTRAINT `temprates_ibfk_1` FOREIGN KEY (`temprate_user`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- テーブルの制約 `community_invite_codes`
+--
+ALTER TABLE `community_invite_codes`
+  ADD CONSTRAINT `community_invite_codes_ibfk_1` FOREIGN KEY (`community_id`) REFERENCES `communities` (`community_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

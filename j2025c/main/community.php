@@ -1,6 +1,58 @@
 <?php
 include 'includes/header.php';
 include 'includes/sidebar.php';
+require_once('common/dbmanager.php');
+require_once('common/session.php');
+
+$user = get_login_user();
+$error = '';
+$success = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['community_name'])) {
+    if (!$user) {
+        $error = 'ログインしてください。';
+    } elseif (empty($_POST['community_name'])) {
+        $error = 'コミュニティ名を入力してください。';
+    } else {
+        try {
+            $db = new cdb();
+            $stmt = $db->prepare('INSERT INTO communities (community_name, community_description, community_owner) VALUES (?, ?, ?)');
+            $stmt->execute([
+                $_POST['community_name'],
+                $_POST['community_description'] ?? '',
+                $user['uuid']
+            ]);
+            $success = 'コミュニティを作成しました。';
+            // ページリロードでフォーム再送信防止
+            header("Location: community.php?created=1");
+            exit;
+        } catch (PDOException $e) {
+            $error = 'コミュニティ作成に失敗しました。';
+        }
+    }
+}
+if (isset($_GET['created'])) {
+    $success = 'コミュニティを作成しました。';
+}
+
+// 参加している or オーナーのコミュニティ一覧取得
+$communities = [];
+if ($user) {
+    try {
+        $db = new cdb();
+        $stmt = $db->prepare(
+            'SELECT DISTINCT c.*
+             FROM communities c
+             LEFT JOIN community_users cu ON c.community_id = cu.community_id
+             WHERE cu.user_id = ? OR c.community_owner = ?
+             ORDER BY c.community_id DESC'
+        );
+        $stmt->execute([$user['uuid'], $user['uuid']]);
+        $communities = $stmt->fetchAll();
+    } catch (PDOException $e) {
+        $error = 'コミュニティ一覧の取得に失敗しました。';
+    }
+}
 ?>
 <head>
     <title>コミュニティ選択</title>
@@ -11,7 +63,7 @@ include 'includes/sidebar.php';
 
         <button type="button" class="btn btn-primary position-fixed class-create-button" data-bs-toggle="modal"
                 data-bs-target="#exampleModal">
-            クラス作成
+            コミュニティ作成
         </button>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -19,14 +71,18 @@ include 'includes/sidebar.php';
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">クラス作成</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">コミュニティ作成</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form>
+                    <form method="post" action="community.php">
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="communityName" class="form-label">クラス名<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control shadow" id="communityName" required>
+                                <label for="communityName" class="form-label">コミュニティ名<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control shadow" id="communityName" name="community_name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="communityDesc" class="form-label">説明</label>
+                                <textarea class="form-control shadow" id="communityDesc" name="community_description"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -38,78 +94,45 @@ include 'includes/sidebar.php';
             </div>
         </div>
 
-        <div class="w-100 d-flex justify-content-start align-items-start mb-3 community-name-display">
-            <p class="mb-0 fs-3">選択されているコミュニティを表示</p>
-        </div>
+        <?php if ($error): ?>
+            <div class="alert alert-danger mt-3"><?php echo htmlspecialchars($error); ?></div>
+        <?php endif; ?>
+        <?php if ($success): ?>
+            <div class="alert alert-success mt-3"><?php echo htmlspecialchars($success); ?></div>
+        <?php endif; ?>
 
-        <div class="row justify-content-center w-100">
-            <div class="col-12 col-md-6">
-                <form class="mt-4">
-                    <div class="input-group bg-white rounded-pill border px-3 py-1 search-bar-styles">
-                        <div class="d-flex justify-content-center align-items-center">🔍</div>
-                        <input type="text" name="" class="form-control rounded-pill search-input-style" placeholder="検索">
-                    </div>
-                </form>
-            </div>
+        <div class="w-100 d-flex justify-content-start align-items-start mb-3 community-name-display">
+            <p class="mb-0 fs-3">参加中またはオーナーのコミュニティ一覧</p>
         </div>
 
         <div class="container mt-4 class-card-container-styles">
             <div class="row">
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <a href="" class="nav-link">
-                        <div class="class-card rounded d-flex align-items-center p-3 shadow-sm w-100 class-card-style">
-                            <div class="rounded me-3 class-card-image-placeholder"></div>
-                            <div class="flex-grow-1">
-                                <p class="mb-0 fw-bold">一組</p>
-                            </div>
+                <?php if ($user && count($communities) > 0): ?>
+                    <?php foreach ($communities as $community): ?>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                            <a href="class_select.php?id=<?php echo $community['community_id']; ?>" class="nav-link">
+                                <div class="class-card rounded d-flex align-items-center p-3 shadow-sm w-100 class-card-style">
+                                    <div class="rounded me-3 class-card-image-placeholder"></div>
+                                    <div class="flex-grow-1 text-start">
+                                        <p class="mb-0 fw-bold"><?php echo htmlspecialchars($community['community_name']); ?></p>
+                                        <small class="text-muted"><?php echo htmlspecialchars($community['community_description']); ?></small>
+                                        <?php if ($community['community_owner'] == $user['uuid']): ?>
+                                            <span class="badge bg-primary ms-2">オーナー</span>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <a href="" class="nav-link">
-                        <div class="class-card rounded d-flex align-items-center p-3 shadow-sm w-100 class-card-style">
-                            <div class="rounded me-3 class-card-image-placeholder"></div>
-                            <div class="flex-grow-1">
-                                <p class="mb-0 fw-bold">二組</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <a href="" class="nav-link">
-                        <div class="class-card rounded d-flex align-items-center p-3 shadow-sm w-100 class-card-style">
-                            <div class="rounded me-3 class-card-image-placeholder"></div>
-                            <div class="flex-grow-1">
-                                <p class="mb-0 fw-bold">三組</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <a href="" class="nav-link">
-                        <div class="class-card rounded d-flex align-items-center p-3 shadow-sm w-100 class-card-style">
-                            <div class="rounded me-3 class-card-image-placeholder"></div>
-                            <div class="flex-grow-1">
-                                <p class="mb-0 fw-bold">四組</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <a href="" class="nav-link">
-                        <div class="class-card rounded d-flex align-items-center p-3 shadow-sm w-100 class-card-style">
-                            <div class="rounded me-3 class-card-image-placeholder"></div>
-                            <div class="flex-grow-1">
-                                <p class="mb-0 fw-bold">五組</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
+                    <?php endforeach; ?>
+                <?php elseif ($user): ?>
+                    <div class="col-12">
+                        <div class="alert alert-info">参加中またはオーナーのコミュニティがありません。</div>
+                    </div>
+                <?php else: ?>
+                    <div class="col-12">
+                        <div class="alert alert-warning">ログインしてください。</div>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </main>
