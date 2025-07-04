@@ -21,10 +21,9 @@
 
 <!--PC時ヘッダー-->
 <header class="d-none d-md-flex w-100 navbar navbar-expand-md align-items-center py-md-2 fixed-top shadow-sm">
-    <nav class="container d-flex flex-column flex-md-row justify-content-between align-items-center-md">
-        サイト共通のヘッダー
+    <nav class="container-fluid d-flex flex-row justify-content-between align-items-center">
         <!-- ブランドロゴとタイトル -->
-        <a class="navbar-brand d-flex align-items-center" href="#">
+        <a class="navbar-brand d-flex align-items-center me-auto ms-3" href="#">
             <img src="../main/img/headerImg/logo.png" style="width: 50px" class="hd-img d-inline-block align-top img-fluid"
                  alt="">
             <img src="../main/img/headerImg/account.png" style="width: 50px"
