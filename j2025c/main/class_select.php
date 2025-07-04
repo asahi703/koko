@@ -39,7 +39,7 @@ include 'includes/sidebar.php';
         </div>
 
         <div class="w-100 d-flex justify-content-start align-items-start mb-3 community-name-display">
-            <p class="mb-0 fs-3">選択されているコミュニティ名を表示</p>
+            <p class="mb-0 fs-3">選択されているクラスを表示</p>
         </div>
 
         <div class="row justify-content-center w-100">
