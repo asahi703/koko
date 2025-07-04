@@ -23,7 +23,7 @@
             </a>
         </li>
         <li class="nav-item text-center">
-            <a class="nav-link p-0 d-flex flex-column align-items-center text-white hover-bg-dark" href="../main/FAQ.php">
+            <a class="nav-link p-0 d-flex flex-column align-items-center text-white hover-bg-dark" href="../main/faq.php">
                 <img src="../main/img/sidebarImg/FAQ.png" class="icon-img img-fluid" width="50" alt="...">
                 <span class="nav-label">よくある質問</span>
             </a>
