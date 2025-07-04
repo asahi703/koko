@@ -1,3 +1,38 @@
+<?php
+require_once('common/config.php');
+require_once('common/dbmanager.php');
+require_once('common/session.php');
+
+$error = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $mail = $_POST['user_mailaddress'] ?? '';
+    $pass = $_POST['user_password'] ?? '';
+    if ($mail && $pass) {
+        try {
+            $db = new cdb();
+            $stmt = $db->prepare('SELECT * FROM users WHERE user_mailaddress = ?');
+            $stmt->execute([$mail]);
+            $user = $stmt->fetch();
+            if ($user && $user['user_password'] === sha1($pass)) {
+                // ログイン成功
+                login_user([
+                    'uuid' => $user['user_id'],
+                    'name' => $user['user_name'],
+                    'mail' => $user['user_mailaddress']
+                ]);
+                header('Location: home.php');
+                exit;
+            } else {
+                $error = 'メールアドレスまたはパスワードが違います。';
+            }
+        } catch (Exception $e) {
+            $error = 'ログイン処理でエラーが発生しました。';
+        }
+    } else {
+        $error = 'メールアドレスとパスワードを入力してください。';
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -24,7 +59,12 @@
             <div class="mb-3">
                 <h2>ログイン</h2>
             </div>
-            <form action="sighin.html" method="post" class="border rounded shadow p-4 w-100 login-form">
+            <?php if (!empty($error)): ?>
+                <div class="alert alert-danger" role="alert">
+                    <?php echo htmlspecialchars($error); ?>
+                </div>
+            <?php endif; ?>
+            <form action="index.php" method="post" class="border rounded shadow p-4 w-100 login-form">
                 <input type="hidden" name="func" value="" />
                 <input type="hidden" name="param" value="" />
                 <div class="form-group my-2 px-2 w-100">

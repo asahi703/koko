@@ -1,3 +1,34 @@
+<?php
+require_once('common/config.php');
+require_once('common/dbmanager.php');
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        $db = new cdb();
+
+        // パスワードをSHA-1でハッシュ化
+        $hashed_password = sha1($_POST['user_password']);
+
+        // ユーザー情報をデータベースに登録
+        $stmt = $db->prepare('INSERT INTO users (user_name, user_mailaddress, user_password, user_login) VALUES (?, ?, ?, ?)');
+        $stmt->execute([
+            $_POST['user_name'],
+            $_POST['user_mailaddress'],
+            $hashed_password,
+            $_POST['user_mailaddress'] // user_loginにはメールアドレスを使用
+        ]);
+
+        // 登録成功時はログインページにリダイレクト
+        header('Location: index.php');
+        exit;
+    } catch (PDOException $e) {
+        $error = 'ユーザー登録に失敗しました。';
+        if ($e->getCode() == 23000) { // 重複エラーの場合
+            $error = 'このメールアドレスは既に登録されています。';
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -24,7 +55,7 @@
             <div class="mb-3">
                 <h2>新規登録</h2>
             </div>
-            <form action="sighin.html" method="post" class="border rounded shadow p-4 w-100 login-form">
+            <form action="signin.php" method="post" class="border rounded shadow p-4 w-100 login-form">
                 <input type="hidden" name="func" value="" />
                 <input type="hidden" name="param" value="" />
                 <div class="form-group my-2 px-2 w-100">
@@ -48,6 +79,11 @@
                 <div class="form-group d-flex justify-content-center my-2 px-2 w-100">
                     <a href="index.php">ログインはこちら</a>
                 </div>
+                <?php if (isset($error)): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo htmlspecialchars($error); ?>
+                    </div>
+                <?php endif; ?>
             </form>
         </div>
     </div>
