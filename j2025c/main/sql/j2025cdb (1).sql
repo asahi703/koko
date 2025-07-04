@@ -349,6 +349,26 @@ CREATE TABLE `community_invite_codes` (
   CONSTRAINT `community_invite_codes_ibfk_1` FOREIGN KEY (`community_id`) REFERENCES `communities` (`community_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `class_chats`
+--
+
+CREATE TABLE `class_chats` (
+  `chat_id` int NOT NULL AUTO_INCREMENT,
+  `class_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `message` text NOT NULL,
+  `file_path` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`chat_id`),
+  KEY `class_id` (`class_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `class_chats_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `classes` (`class_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `class_chats_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 --
 -- ダンプしたテーブルのインデックス
 --
@@ -475,6 +495,14 @@ ALTER TABLE `community_invite_codes`
   ADD KEY `community_id` (`community_id`);
 
 --
+-- テーブルのインデックス `class_chats`
+--
+ALTER TABLE `class_chats`
+  ADD PRIMARY KEY (`chat_id`),
+  ADD KEY `class_id` (`class_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- ダンプしたテーブルの AUTO_INCREMENT
 --
 
@@ -563,6 +591,12 @@ ALTER TABLE `community_invite_codes`
   MODIFY `invite_id` int NOT NULL AUTO_INCREMENT;
 
 --
+-- テーブルの AUTO_INCREMENT `class_chats`
+--
+ALTER TABLE `class_chats`
+  MODIFY `chat_id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- ダンプしたテーブルの制約
 --
 
@@ -644,6 +678,13 @@ ALTER TABLE `temprates`
 --
 ALTER TABLE `community_invite_codes`
   ADD CONSTRAINT `community_invite_codes_ibfk_1` FOREIGN KEY (`community_id`) REFERENCES `communities` (`community_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- テーブルの制約 `class_chats`
+--
+ALTER TABLE `class_chats`
+  ADD CONSTRAINT `class_chats_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `classes` (`class_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `class_chats_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
