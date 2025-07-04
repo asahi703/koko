@@ -1,6 +1,13 @@
 <?php
 require_once(__DIR__ . '/../common/session.php');
 $user = get_login_user();
+
+// ログアウト処理
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
+    logout_user();
+    header('Location: index.php');
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -49,6 +56,9 @@ $user = get_login_user();
             <div class="ms-4 d-flex align-items-center">
                 <span class="me-2 fw-bold"><?php echo htmlspecialchars($user['name']); ?></span>
                 <span class="text-secondary small"><?php echo htmlspecialchars($user['mail']); ?></span>
+                <form method="post" style="display: inline;">
+                    <button type="submit" name="logout" class="btn btn-outline-secondary btn-sm ms-3">ログアウト</button>
+                </form>
             </div>
         <?php else: ?>
             <div class="ms-4">
