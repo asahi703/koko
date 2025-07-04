@@ -1,3 +1,7 @@
+<?php
+require_once(__DIR__ . '/../common/session.php');
+$user = get_login_user();
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -40,6 +44,17 @@
                 </li>
             </ul>
         </div>
+        <!-- ユーザー情報表示 -->
+        <?php if ($user): ?>
+            <div class="ms-4 d-flex align-items-center">
+                <span class="me-2 fw-bold"><?php echo htmlspecialchars($user['name']); ?></span>
+                <span class="text-secondary small"><?php echo htmlspecialchars($user['mail']); ?></span>
+            </div>
+        <?php else: ?>
+            <div class="ms-4">
+                <span class="text-secondary small">未ログイン</span>
+            </div>
+        <?php endif; ?>
     </nav>
 </header>
 </html>
