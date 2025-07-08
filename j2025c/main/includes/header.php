@@ -40,17 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
             <img src="../main/img/headerImg/account.png" style="width: 50px"
                  class="hd-img d-inline-block align-top img-fluid ms-4" alt="">
         </a>
-        <!-- メニュー -->
-        <div class="d-flex flex-row fs-5">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link hover-text" href="#">チームに参加</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link hover-text" href="#">チームを作成</a>
-                </li>
-            </ul>
-        </div>
         <!-- ユーザー情報表示 -->
         <?php if ($user): ?>
             <div class="ms-4 d-flex align-items-center">
