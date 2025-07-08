@@ -1,6 +1,6 @@
 /* ホバー時の色変更 */
 .sidebar-content a:hover {
-    background-color: #5a4cbc;
+    background-color: #50C878;
     color: white;
     text-decoration: none;
 }
@@ -21,7 +21,7 @@
     left: 0;
     width: 100px;
     height: 100vh;
-    background-color: #867FEA;
+    background-color: #50C878;
     position: fixed;
     overflow-y: auto;
     padding-top: 40px;
