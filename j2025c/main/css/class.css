@@ -4,11 +4,6 @@
     border-collapse: collapse;
 }
 
-header,
-.offcanvas {
-    background-color: #867FEA;
-}
-
 .navbar-toggler {
     border-color: rgba(0, 0, 0, 0);
 }
@@ -36,7 +31,6 @@ header,
   left: 0;
   width: 100px;
   height: 100vh;
-  background-color: #867FEA;
   position: fixed;
   overflow-y: auto;
   padding-top: 40px;
@@ -134,6 +128,12 @@ header,
 
   @media screen and (min-width: 769px) {
     left: 350px; /* サイドバーの幅を引く */
+  }
+}
+
+.post-word{
+    word-wrap: break-word;
+}
   }
 }
 

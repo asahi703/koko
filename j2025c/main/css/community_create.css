@@ -3,12 +3,11 @@
     padding: 0;
 }
 
-header,
+/* header,
 .offcanvas{
     background-color: #50C878;
-}
+} */
 
-/* ヘッダーを固定 */
 header {
   position: fixed;
   top: 0;
@@ -17,12 +16,22 @@ header {
   z-index: 1030; /* Bootstrapのナビバーと重ならないように */
 }
 
-.sidebar {
-  top: 60px; /* ヘッダーの高さと合わせて調整 */
+/* .sidebar {
+  top: 60px; 
   left: 0;
   height: calc(100vh - 60px);
-  width: 100px; /* 固定幅 */
+  width: 100px; 
   background-color: #50C878;
+  overflow-y: auto;
+  padding-top: 40px;
+  z-index: 1020;
+} */
+.sidebar {
+  top: 60px;
+  left: 0;
+  height: calc(100vh - 60px);
+  width: 100px;
+  /* background-color: #50C878; 削除 */
   overflow-y: auto;
   padding-top: 40px;
   z-index: 1020;

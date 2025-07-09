@@ -95,44 +95,12 @@ body {
     padding: 0;
 }
 
-header,
-.offcanvas {
-    background-color: #867FEA;
-}
-
-.navbar-toggler {
-    border-color: rgba(0, 0, 0, 0);
-}
-
-.hover-text:hover {
-    color: darkgray !important;
-}
-
-/* ホバー時の色変更 */
-.sidebar-content a:hover {
-    background-color: #5a4cbc;
-    color: white;
-    text-decoration: none;
-}
-
-.nav-label {
-    font-size: 0.8rem;
-    color: white;
-    margin-top: 4px;
-}
-
-.input-group .form-control:focus {
-    box-shadow: none;
-}
-
-
 .top-sidebar {
     top: 75px;
     /* ヘッダーの高さ */
     left: 0;
     width: 100px;
     height: 100vh;
-    background-color: #867FEA;
     position: fixed;
     overflow-y: auto;
     padding-top: 40px;

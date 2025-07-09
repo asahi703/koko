@@ -4,10 +4,10 @@
     border-collapse: collapse;
 }
 
-header,
+/* header,
 .offcanvas {
     background-color: #867FEA;
-}
+} */
 
 .navbar-toggler {
     border-color: rgba(0, 0, 0, 0);
@@ -37,7 +37,7 @@ header,
     left: 0;
     width: 100px;
     height: 100vh;
-    background-color: #867FEA;
+    /* background-color: #867FEA; 削除 */
     position: fixed;
     overflow-y: auto;
     padding-top: 40px;

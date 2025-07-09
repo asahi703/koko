@@ -8,31 +8,70 @@ $user = get_login_user();
 $error = '';
 $success = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['community_name'])) {
-    if (!$user) {
-        $error = 'ログインしてください。';
-    } elseif (empty($_POST['community_name'])) {
-        $error = 'コミュニティ名を入力してください。';
-    } else {
-        try {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['community_name'])) {
+        // コミュニティ作成処理
+        if (!$user) {
+            $error = 'ログインしてください。';
+        } elseif (empty($_POST['community_name'])) {
+            $error = 'コミュニティ名を入力してください。';
+        } else {
+            try {
+                $db = new cdb();
+                $stmt = $db->prepare('INSERT INTO communities (community_name, community_description, community_owner) VALUES (?, ?, ?)');
+                $stmt->execute([
+                    $_POST['community_name'],
+                    $_POST['community_description'] ?? '',
+                    $user['uuid']
+                ]);
+                $success = 'コミュニティを作成しました。';
+                // ページリロードでフォーム再送信防止
+                header("Location: community.php?created=1");
+                exit;
+            } catch (PDOException $e) {
+                $error = 'コミュニティ作成に失敗しました。';
+            }
+        }
+    } elseif (isset($_POST['invite_code'])) {
+        // コミュニティ参加処理
+        $invite_code = trim($_POST['invite_code']);
+        if (!$user) {
+            $error = 'ログインしてください。';
+        } elseif ($invite_code === '') {
+            $error = '招待コードを入力してください。';
+        } else {
             $db = new cdb();
-            $stmt = $db->prepare('INSERT INTO communities (community_name, community_description, community_owner) VALUES (?, ?, ?)');
-            $stmt->execute([
-                $_POST['community_name'],
-                $_POST['community_description'] ?? '',
-                $user['uuid']
-            ]);
-            $success = 'コミュニティを作成しました。';
-            // ページリロードでフォーム再送信防止
-            header("Location: community.php?created=1");
-            exit;
-        } catch (PDOException $e) {
-            $error = 'コミュニティ作成に失敗しました。';
+            // コードが有効か確認
+            $stmt = $db->prepare('SELECT community_id FROM community_invite_codes WHERE invite_code = ?');
+            $stmt->execute([$invite_code]);
+            $row = $stmt->fetch();
+            if ($row) {
+                $community_id = $row['community_id'];
+                // 既に参加していないか確認
+                $stmt2 = $db->prepare('SELECT * FROM community_users WHERE user_id = ? AND community_id = ?');
+                $stmt2->execute([$user['uuid'], $community_id]);
+                if (!$stmt2->fetch()) {
+                    // 参加処理
+                    $stmt3 = $db->prepare('INSERT INTO community_users (user_id, community_id) VALUES (?, ?)');
+                    $stmt3->execute([$user['uuid'], $community_id]);
+                    $success = 'コミュニティに参加しました。';
+                    header("Location: community.php?joined=1"); // 参加後のリダイレクト
+                    exit;
+                } else {
+                    $error = 'すでにこのコミュニティに参加しています。';
+                }
+            } else {
+                $error = '招待コードが無効です。';
+            }
         }
     }
 }
+
 if (isset($_GET['created'])) {
     $success = 'コミュニティを作成しました。';
+}
+if (isset($_GET['joined'])) {
+    $success = 'コミュニティに参加しました。';
 }
 
 // 参加している or オーナーのコミュニティ一覧取得
@@ -61,17 +100,20 @@ if ($user) {
 <div class="main-content-wrapper">
     <main class="col-12 col-md-9 col-lg-10 px-md-4 d-flex flex-column align-items-center justify-content-center text-center mx-auto main-content-styles">
 
-        <button type="button" class="btn btn-primary position-fixed class-create-button" data-bs-toggle="modal"
-                data-bs-target="#exampleModal">
-            コミュニティ作成
-        </button>
+        <div class="d-flex justify-content-center gap-3 position-fixed class-create-button" style="top: 150px; right: 20px;">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCommunityModal">
+                コミュニティ作成
+            </button>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#joinCommunityModal">
+                コミュニティに参加
+            </button>
+        </div>
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
+        <div class="modal fade" id="createCommunityModal" tabindex="-1" aria-labelledby="createCommunityModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">コミュニティ作成</h5>
+                        <h5 class="modal-title" id="createCommunityModalLabel">コミュニティ作成</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form method="post" action="community.php">
@@ -88,6 +130,29 @@ if ($user) {
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
                             <button type="submit" class="btn btn-primary px-5">作成</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="joinCommunityModal" tabindex="-1" aria-labelledby="joinCommunityModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="joinCommunityModalLabel">コミュニティに参加</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="post" action="community.php">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="inviteCode" class="form-label">招待コード<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control shadow" id="inviteCode" name="invite_code" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                            <button type="submit" class="btn btn-success px-5">参加</button>
                         </div>
                     </form>
                 </div>
