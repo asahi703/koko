@@ -9,7 +9,7 @@ include 'includes/sidebar.php';
             <!-- タイトルとボタン（横並び） -->
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="mb-0">よくある質問一覧</h2>
-                <a href="#" class="btn btn-primary">
+                <a href="faq_create.php" class="btn btn-primary">
                     <i class="fas fa-plus"></i> 質問をする
                 </a>
             </div>
