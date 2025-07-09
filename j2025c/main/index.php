@@ -18,7 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 login_user([
                     'uuid' => $user['user_id'],
                     'name' => $user['user_name'],
-                    'mail' => $user['user_mailaddress']
+                    'mail' => $user['user_mailaddress'],
+                    'user_is_teacher' => $user['user_is_teacher'] // 先生かどうかの情報を追加
                 ]);
                 header('Location: community.php');
                 exit;

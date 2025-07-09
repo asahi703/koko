@@ -8,11 +8,19 @@ require_once('common/session.php');
 $user = get_login_user();
 $error = '';
 
+// 先生以外はアクセス不可
+if (!$user || empty($user['user_is_teacher'])) {
+    $error = 'コミュニティ作成権限がありません。';
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$user) {
         $error = 'ログインしてください。';
     } elseif (empty($_POST['community_name'])) {
         $error = 'コミュニティ名を入力してください。';
+    } elseif (empty($user['user_is_teacher'])) {
+        // 先生でなければ作成不可
+        $error = 'コミュニティ作成権限がありません。';
     } else {
         try {
             $db = new cdb();
@@ -43,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if ($error): ?>
             <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
+        <?php if (!$error): ?>
         <div class="card bg-secondary-subtle mx-auto w-100 card-community-create">
             <div class="card-body">
                 <form method="post">
@@ -60,5 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
             </div>
         </div>
+        <?php endif; ?>
     </main>
 </div>

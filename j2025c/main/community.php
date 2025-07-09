@@ -14,6 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'ログインしてください。';
         } elseif (empty($_POST['community_name'])) {
             $error = 'コミュニティ名を入力してください。';
+        } elseif (empty($user['user_is_teacher'])) {
+            // 先生でなければ作成不可
+            $error = 'コミュニティ作成権限がありません。';
         } else {
             try {
                 $db = new cdb();
@@ -102,14 +105,17 @@ include 'includes/sidebar.php';
     <main class="col-12 col-md-9 col-lg-10 px-md-4 d-flex flex-column align-items-center justify-content-center text-center mx-auto main-content-styles">
 
         <div class="d-flex justify-content-center gap-3 position-fixed class-create-button" style="top: 150px; right: 20px;">
+            <?php if ($user && !empty($user['user_is_teacher'])): ?>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCommunityModal">
                 コミュニティ作成
             </button>
+            <?php endif; ?>
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#joinCommunityModal">
                 コミュニティに参加
             </button>
         </div>
 
+        <?php if ($user && !empty($user['user_is_teacher'])): ?>
         <div class="modal fade" id="createCommunityModal" tabindex="-1" aria-labelledby="createCommunityModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -136,6 +142,7 @@ include 'includes/sidebar.php';
                 </div>
             </div>
         </div>
+        <?php endif; ?>
 
         <div class="modal fade" id="joinCommunityModal" tabindex="-1" aria-labelledby="joinCommunityModalLabel" aria-hidden="true">
             <div class="modal-dialog">

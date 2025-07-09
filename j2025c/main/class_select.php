@@ -23,8 +23,13 @@ if (!$community) {
     exit;
 }
 
-// クラス作成処理（オーナーのみ）
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['class_name']) && $community['community_owner'] == $user['uuid']) {
+// クラス作成処理（オーナーかつ先生のみ）
+if (
+    $_SERVER['REQUEST_METHOD'] === 'POST'
+    && isset($_POST['class_name'])
+    && $community['community_owner'] == $user['uuid']
+    && !empty($user['user_is_teacher'])
+) {
     $class_name = trim($_POST['class_name']);
     if ($class_name === '') {
         $error = 'クラス名を入力してください。';
@@ -39,9 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['class_name']) && $com
     }
 }
 
-// 招待コード生成・削除処理（オーナーのみ）
+// 招待コード生成・削除処理（オーナーかつ先生のみ）
 $invite_code = null;
-if ($community['community_owner'] == $user['uuid']) {
+if ($community['community_owner'] == $user['uuid'] && !empty($user['user_is_teacher'])) {
     // コード生成
     if (isset($_POST['generate_invite_code'])) {
         // ランダムなコード生成
@@ -97,7 +102,7 @@ $all_classes = $stmt->fetchAll();
             <div class="alert alert-success"><?php echo htmlspecialchars($success); ?></div>
         <?php endif; ?>
 
-        <?php if ($community['community_owner'] == $user['uuid']): ?>
+        <?php if ($community['community_owner'] == $user['uuid'] && !empty($user['user_is_teacher'])): ?>
             <!-- クラス作成フォーム -->
             <form method="post" class="mb-4">
                 <div class="input-group">

@@ -1,6 +1,15 @@
 <?php
 include 'includes/header.php';
 include 'includes/sidebar.php';
+
+require_once('common/session.php');
+$user = get_login_user();
+$error = '';
+
+// 先生以外はアクセス不可
+if (!$user || empty($user['user_is_teacher'])) {
+    $error = 'クラス作成権限がありません。';
+}
 ?>
 <head>
     <title>クラス作成</title>
@@ -11,6 +20,9 @@ include 'includes/sidebar.php';
         <div class="text-center mb-4">
             <h2 class="fs-5 fw-bold">クラス作成</h2>
         </div>
+        <?php if ($error): ?>
+            <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
+        <?php else: ?>
         <div class="card bg-secondary-subtle mx-auto w-100 card-classcreate">
             <div class="card-body">
                 <form>
@@ -24,5 +36,6 @@ include 'includes/sidebar.php';
                 </form>
             </div>
         </div>
+        <?php endif; ?>
     </main>
 </div>
