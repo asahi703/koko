@@ -1,13 +1,12 @@
 <?php
-include 'includes/header.php';
-include 'includes/sidebar.php';
-require_once('common/dbmanager.php');
 require_once('common/session.php');
+require_once('common/dbmanager.php');
 
 $user = get_login_user();
 $error = '';
 $success = '';
 
+// POST処理・リダイレクトは出力より前に
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['community_name'])) {
         // コミュニティ作成処理
@@ -24,8 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_POST['community_description'] ?? '',
                     $user['uuid']
                 ]);
-                $success = 'コミュニティを作成しました。';
-                // ページリロードでフォーム再送信防止
+                // リダイレクトは出力前に
                 header("Location: community.php?created=1");
                 exit;
             } catch (PDOException $e) {
@@ -54,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // 参加処理
                     $stmt3 = $db->prepare('INSERT INTO community_users (user_id, community_id) VALUES (?, ?)');
                     $stmt3->execute([$user['uuid'], $community_id]);
-                    $success = 'コミュニティに参加しました。';
                     header("Location: community.php?joined=1"); // 参加後のリダイレクト
                     exit;
                 } else {
@@ -92,6 +89,10 @@ if ($user) {
         $error = 'コミュニティ一覧の取得に失敗しました。';
     }
 }
+
+// 出力はここから
+include 'includes/header.php';
+include 'includes/sidebar.php';
 ?>
 <head>
     <title>コミュニティ選択</title>
@@ -202,3 +203,19 @@ if ($user) {
         </div>
     </main>
 </div>
+<?php if (!empty($openModal)): ?>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var modal = new bootstrap.Modal(document.getElementById('<?php echo $openModal; ?>'));
+    modal.show();
+});
+</script>
+<?php endif; ?>
+<script>
+// ページロード時にモーダルの背景やbodyクラスが残っていたら消す
+document.addEventListener('DOMContentLoaded', function() {
+    document.body.classList.remove('modal-open');
+    var backdrops = document.querySelectorAll('.modal-backdrop');
+    backdrops.forEach(function(bd){ bd.parentNode.removeChild(bd); });
+});
+</script>
