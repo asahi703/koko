@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'name' => $user['user_name'],
                     'mail' => $user['user_mailaddress']
                 ]);
-                header('Location: home.php');
+                header('Location: community.php');
                 exit;
             } else {
                 $error = 'メールアドレスまたはパスワードが違います。';
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </form>
             <button>
-                <a href="home.php" class="btn btn-secondary mt-3 w-100">homepage(一時的)</a>
+                <a href="community.php" class="btn btn-secondary mt-3 w-100">homepage(一時的)</a>
             </button>
         </div>
     </div>
