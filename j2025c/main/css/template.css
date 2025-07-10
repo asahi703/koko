@@ -1,0 +1,63 @@
+.arrow-back-btn{
+    position: absolute;
+    top: 100px;
+    left: 120px;
+}
+
+.template-card {
+    min-width: 200px;
+    min-height: 140px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px #0001;
+    text-align: center;
+    cursor: pointer;
+}
+
+.template-body {
+  text-align: left;
+  width: 100%;
+  padding: 0 1rem 1rem 1rem;
+  /* ↓↓↓ ここからがポイント ↓↓↓ */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;      /* 最大3行まで表示（好きな行数に調整OK） */
+  line-clamp: 3;              /* 標準プロパティも追加 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tmp-create-btn{
+    position: absolute;
+    top: 90px;
+    right: 20px;
+}
+
+.tmp-dlt-btn{
+    position: absolute;
+    top: -19px;
+    right: -110px;
+}
+
+/*スマホ画面時*/
+@media (max-width: 768px) {
+    .chat-multiple-arrowback {
+        top: 90px;
+        left: 10px;
+    }
+}
+
+@media (max-width: 900px) {
+    .main-content-template {
+        margin-top: 70px;
+        padding-left: 0;
+        padding-right: 0;
+        max-width: 100vw;
+    }
+    .template-list-scroll {
+        height: 300px;
+    }
+    .top-sidebar {
+        width: 60px;
+    }
+}
