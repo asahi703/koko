@@ -1,6 +1,6 @@
 /* ホバー時の色変更 */
 .sidebar-content a:hover {
-    background-color: #50C878;
+    background-color: #bebaf0;
     color: white;
     text-decoration: none;
 }

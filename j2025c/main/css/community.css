@@ -53,7 +53,7 @@ header {
 
 /* ホバー時の色変更 */
 .sidebar-content a:hover {
-  background-color: #c1bdfa;
+  background-color: #bebaf0;
   color: white;
   text-decoration: none;
 }
