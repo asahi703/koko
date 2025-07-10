@@ -126,15 +126,22 @@ include 'includes/sidebar.php';
     <div class="container-fluid h-100">
         <div class="row vh-100 gx-0">
             <!-- グループ選択サイドバー -->
-            <nav class="col-12 col-md-3 col-lg-3 px-0 group-sidebar d-flex flex-column">
-                <div class="p-3 border-bottom">
-                    <h5 class="mb-3">グループ</h5>
+            <nav class="col-12 col-md-3 col-lg-3 px-0 group-sidebar d-flex flex-column bg-light border-end">
+                <!-- テンプレート編集ボタン -->
+                <div class="p-3 border-bottom bg-white">
+                    <button class="btn btn-success w-100 mb-2" onclick="location.href='#'">
+                        テンプレート編集
+                    </button>
+                </div>
+                
+                <div class="p-3 border-bottom bg-white">
+                    <h5 class="mb-3 text-primary">グループ</h5>
                     <!-- 新規グループ作成ボタン -->
                     <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#createGroupModal">＋ 新規グループ</button>
                 </div>
-                <ul class="list-group list-group-flush flex-grow-1 overflow-auto group-list-scroll">
+                <ul class="list-group list-group-flush flex-grow-1 overflow-auto group-list-scroll bg-light px-2">
                     <?php foreach ($group_list as $group): ?>
-                        <li class="list-group-item list-group-item-action<?php if ($selected_group_id == $group['group_id']) echo ' active'; ?>"
+                        <li class="list-group-item list-group-item-action border-0 rounded my-1<?php if ($selected_group_id == $group['group_id']) echo ' active'; ?>"
                             onclick="location.href='chat.php?group_id=<?php echo $group['group_id']; ?>'">
                             <?php echo htmlspecialchars($group['group_name']); ?>
                         </li>
@@ -143,9 +150,9 @@ include 'includes/sidebar.php';
             </nav>
 
             <!-- チャット画面 -->
-            <main class="col-12 col-md-9 col-lg-9 px-0 d-flex flex-column chat-main-area position-relative">
+            <main class="col-12 col-md-9 col-lg-9 px-0 d-flex flex-column chat-main-area position-relative bg-white">
                 <!-- チャット履歴 -->
-                <div class="flex-grow-1 overflow-auto chat-history p-4 chat-history-scroll">
+                <div class="flex-grow-1 overflow-auto chat-history p-4 chat-history-scroll bg-light">
                     <?php foreach ($chats as $chat): ?>
                         <?php
                         // グループチャットかどうかでキーを分岐
@@ -169,7 +176,7 @@ include 'includes/sidebar.php';
                     <?php endforeach; ?>
                 </div>
                 <!-- 入力欄（ページ下部に固定） -->
-                <form class="chat-input-box border-top p-3 bg-white" method="post" autocomplete="off">
+                <form class="chat-input-box border-top p-3 bg-white shadow-sm" method="post" autocomplete="off">
                     <div class="input-group">
                         <input type="text" name="message" class="form-control rounded-pill" placeholder="メッセージを入力" required>
                         <button type="submit" class="btn btn-primary rounded-pill ms-2">
