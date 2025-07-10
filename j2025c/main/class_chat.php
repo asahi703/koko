@@ -79,8 +79,6 @@ $messages = $stmt->fetchAll();
                         <?php echo htmlspecialchars($class['community_name']); ?>
                     </a>
                 </small>
-                <br>
-                <a href="class_calendar.php?id=<?php echo $class_id; ?>" class="btn btn-outline-secondary btn-sm mt-2">予定表を見る</a>
             </div>
         </div>
 
