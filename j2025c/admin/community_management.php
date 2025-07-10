@@ -58,8 +58,8 @@ $users = $user_stmt->fetchAll();
         </button>
     </div>
     <h2>コミュニティ一覧</h2>
-    <table class="table table-bordered table-hover mt-3">
-        <thead class="table-light">
+    <table class="table table-striped table-hover mt-3">
+        <thead class="table-light section-header">
             <tr>
                 <th>コミュニティ名</th>
                 <th>説明</th>

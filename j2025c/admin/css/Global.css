@@ -1,3 +1,9 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 /* サイドバーの余白調整用グローバルスタイル */
 .main-content-wrapper {
     padding-left: 300px;
@@ -7,6 +13,12 @@
 .login-wrapper {
     padding-left: 0;
     padding-top: 85px;
+}
+
+.section-header {
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
 }
 
 @media (max-width: 991.98px) {

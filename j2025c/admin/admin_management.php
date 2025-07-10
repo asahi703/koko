@@ -54,8 +54,8 @@ $admins = $stmt->fetchAll();
         </button>
       </div>
       <h2>管理者一覧</h2>
-      <table class="table table-bordered table-hover mt-3">
-        <thead class="table-light">
+      <table class="table table-striped table-hover mt-3">
+        <thead class="table-light section-header">
           <tr>
             <th>管理者名</th>
             <th>メールアドレス</th>

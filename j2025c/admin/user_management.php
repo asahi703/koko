@@ -54,9 +54,9 @@ $users = $stmt->fetchAll();
                     ユーザーを追加
                 </button>
             </div>
-            <h2>ユーザー管理</h2>
-            <table class="table table-bordered table-hover mt-3">
-                <thead class="table-light">
+            <h2>ユーザー一覧</h2>
+            <table class="table table-striped table-hover mt-3">
+                <thead class="table-light section-header">
                     <tr>
                         <th>ユーザー名</th>
                         <th>メールアドレス</th>
