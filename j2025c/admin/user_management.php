@@ -11,9 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
     $name = trim($_POST['user_name'] ?? '');
     $mail = trim($_POST['user_mailaddress'] ?? '');
     $pass = $_POST['user_password'] ?? '';
+    $is_teacher = isset($_POST['user_is_teacher']) ? 1 : 0;
     if ($name && $mail && $pass) {
-        $stmt = $db->prepare('INSERT INTO users (user_name, user_mailaddress, user_password) VALUES (?, ?, ?)');
-        $stmt->execute([$name, $mail, sha1($pass)]);
+        $stmt = $db->prepare('INSERT INTO users (user_name, user_mailaddress, user_password, user_is_teacher, user_login) VALUES (?, ?, ?, ?, ?)');
+        $stmt->execute([$name, $mail, sha1($pass), $is_teacher, $mail]);
     }
 }
 
@@ -25,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_user_id'])) {
 }
 
 // ユーザー一覧取得
-$stmt = $db->prepare('SELECT user_id, user_name, user_mailaddress FROM users');
+$stmt = $db->prepare('SELECT user_id, user_name, user_mailaddress, user_is_teacher FROM users');
 $stmt->execute();
 $users = $stmt->fetchAll();
 ?>
@@ -60,6 +61,7 @@ $users = $stmt->fetchAll();
                     <tr>
                         <th>ユーザー名</th>
                         <th>メールアドレス</th>
+                        <th>アカウント種別</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -68,6 +70,11 @@ $users = $stmt->fetchAll();
                         <tr>
                             <td><?php echo htmlspecialchars($user['user_name']); ?></td>
                             <td><?php echo htmlspecialchars($user['user_mailaddress']); ?></td>
+                            <td>
+                                <span class="badge <?php echo $user['user_is_teacher'] ? 'bg-primary' : 'bg-success'; ?>">
+                                    <?php echo $user['user_is_teacher'] ? '教師' : '保護者'; ?>
+                                </span>
+                            </td>
                             <td>
                                 <form method="post" onsubmit="return confirm('本当に削除しますか？');" style="display:inline;">
                                     <input type="hidden" name="delete_user_id" value="<?php echo $user['user_id']; ?>">
@@ -95,13 +102,20 @@ $users = $stmt->fetchAll();
                         </div>
                         <div class="mb-3">
                             <label for="user_mailaddress" class="form-label">メールアドレス</label>
-                            <input type="email" class="form-control" id="user_mailaddress" name="user_mailaddress"
-                                required>
+                            <input type="email" class="form-control" id="user_mailaddress" name="user_mailaddress" required>
                         </div>
                         <div class="mb-3">
                             <label for="user_password" class="form-label">パスワード</label>
-                            <input type="password" class="form-control" id="user_password" name="user_password"
-                                required>
+                            <input type="password" class="form-control" id="user_password" name="user_password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">アカウント種別</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="user_is_teacher" name="user_is_teacher">
+                                <label class="form-check-label" for="user_is_teacher">
+                                    教師アカウント（チェックしない場合は保護者アカウント）
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
