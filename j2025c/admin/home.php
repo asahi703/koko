@@ -18,7 +18,7 @@ require_once('../main/common/adminsession.php');//session
 <body>
 <?php include 'includes/header.php'; ?>
 <?php include 'includes/sidebar.php'; ?>
-<main class="main-content-wrapper">
+<main class="main-content-wrapper bg-primary">
     
 </main>
 

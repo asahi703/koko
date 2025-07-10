@@ -3,9 +3,8 @@
     padding: 0;
 }
 
-header,
-.offcanvas{
-    background-color: #867FEA;
+header{
+    height: 80px;
 }
 
 .navbar-toggler {

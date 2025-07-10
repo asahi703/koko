@@ -1,31 +1,18 @@
-<head>
-    <link rel="stylesheet" href="../main/css/sidebar.css"/>
-</head>
-<nav class="top-sidebar d-none d-md-flex flex-column align-items-center p-0" style="width: 100px;">
+<nav class="top-sidebar d-none d-md-flex flex-column align-items-center p-0 shadow">
     <ul class="nav flex-column sidebar-content w-100">
-        サイト共通のサイドバー
-        <li class="nav-item mb-4 text-center">
-            <a class="nav-link p-0 d-flex flex-column align-items-center text-white hover-bg-dark" href="../main/notification.php">
-                <img src="../main/img/sidebarImg/notifications.png" class="icon-img img-fluid" width="50" alt="...">
-                <span class="nav-label">通知</span>
+        <li class="nav-item py-4 text-center border-bottom">
+            <a class="nav-link p-0 d-flex flex-column align-items-center text-dark" href="user_management.php">
+                <h5>ユーザー管理</h5>
             </a>
         </li>
-        <li class="nav-item mb-4 text-center">
-            <a class="nav-link p-0 d-flex flex-column align-items-center text-white hover-bg-dark" href="../main/chat.php">
-                <img src="../main/img/sidebarImg/chat.png" class="icon-img img-fluid" width="50" alt="...">
-                <span class="nav-label">チャット</span>
+        <li class="nav-item py-4 text-center border-bottom">
+            <a class="nav-link p-0 d-flex flex-column align-items-center text-dark" href="admin_management.php">
+                <h5>管理者管理</h5>
             </a>
         </li>
-        <li class="nav-item mb-4 text-center">
-            <a class="nav-link p-0 d-flex flex-column align-items-center text-white hover-bg-dark" href="../main/community.php">
-                <img src="../main/img/sidebarImg/community.png" class="icon-img img-fluid" width="50" alt="...">
-                <span class="nav-label">コミュニティ</span>
-            </a>
-        </li>
-        <li class="nav-item text-center">
-            <a class="nav-link p-0 d-flex flex-column align-items-center text-white hover-bg-dark" href="../main/FAQ.php">
-                <img src="../main/img/sidebarImg/FAQ.png" class="icon-img img-fluid" width="50" alt="...">
-                <span class="nav-label">よくある質問</span>
+        <li class="nav-item py-4 text-center border-bottom">
+            <a class="nav-link p-0 d-flex flex-column align-items-center text-dark" href="community_management.php">
+                <h5>コミュニティ管理</h5>
             </a>
         </li>
     </ul>
