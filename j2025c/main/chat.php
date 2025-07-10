@@ -224,10 +224,14 @@ include 'includes/sidebar.php';
     </form>
   </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ページロード時にモーダルの背景やbodyクラスが残っていたら消す
+document.addEventListener('DOMContentLoaded', function() {
+    document.body.classList.remove('modal-open');
+    var backdrops = document.querySelectorAll('.modal-backdrop');
+    backdrops.forEach(function(bd){ bd.parentNode.removeChild(bd); });
+});
+</script>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
