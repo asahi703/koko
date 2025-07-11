@@ -70,8 +70,8 @@ $messages = $stmt->fetchAll();
 <?php include 'includes/header.php'; ?>
 <?php include 'includes/sidebar.php'; ?>
 <div class="main-content-wrapper">
-    <main class="container-fluid py-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+    <main class="container-fluid py-4 d-flex flex-column" style="height: calc(100vh - 56px);">
+        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
             <div>
                 <h2 class="mb-0"><?php echo htmlspecialchars($class['class_name']); ?></h2>
                 <small class="text-muted">
@@ -85,7 +85,7 @@ $messages = $stmt->fetchAll();
         </div>
 
         <!-- チャットメッセージ表示エリア -->
-        <div class="chat-messages bg-light rounded p-3 mb-4" style="height: calc(100vh - 250px); overflow-y: auto;">
+        <div class="chat-messages bg-light rounded p-3 mb-4 flex-grow-1" style="overflow-y: auto;">
             <?php foreach (array_reverse($messages) as $message): ?>
                 <div class="card mb-3">
                     <div class="card-header bg-white d-flex justify-content-between align-items-center py-2">
@@ -110,14 +110,12 @@ $messages = $stmt->fetchAll();
         </div>
 
         <!-- メッセージ入力フォーム -->
-        <div class="fixed-bottom bg-white border-top" style="margin-left: 250px;">
-            <div class="container-fluid py-3">
-                <form method="post" class="d-flex align-items-center">
-                    <textarea class="form-control me-2" name="message" rows="1"
-                              placeholder="メッセージを入力" required></textarea>
-                    <button type="submit" class="btn btn-primary">送信</button>
-                </form>
-            </div>
+        <div class="mt-auto bg-white border-top py-3">
+            <form method="post" class="d-flex align-items-center">
+                <textarea class="form-control me-2" name="message" rows="1"
+                          placeholder="メッセージを入力" required></textarea>
+                <button type="submit" class="btn btn-primary">送信</button>
+            </form>
         </div>
     </main>
 </div>
@@ -130,6 +128,8 @@ $messages = $stmt->fetchAll();
         chatMessages.scrollTop = chatMessages.scrollHeight;
     };
 </script>
+</body>
+</html>
 </body>
 </html>
 
