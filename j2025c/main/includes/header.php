@@ -34,11 +34,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 <header class="d-none d-md-flex w-100 navbar navbar-expand-md align-items-center py-md-2 fixed-top shadow-sm">
     <nav class="container-fluid d-flex flex-row justify-content-between align-items-center">
         <!-- ブランドロゴとタイトル -->
-        <a class="navbar-brand d-flex align-items-center me-auto ms-3" href="#">
+        <a class="navbar-brand d-flex align-items-center me-auto ms-3" href="community.php">
             <img src="../main/img/headerImg/logo.png" style="width: 50px" class="hd-img d-inline-block align-top img-fluid"
                  alt="">
-            <img src="../main/img/headerImg/account.png" style="width: 50px"
-                 class="hd-img d-inline-block align-top img-fluid ms-4" alt="">
+            <a href="mypage.php">
+                <img src="../main/img/headerImg/account.png" style="width: 50px"
+                     class="hd-img d-inline-block align-top img-fluid ms-4" alt="" style="cursor: pointer;">
+            </a>
         </a>
         <!-- ユーザー情報表示 -->
         <?php if ($user): ?>
