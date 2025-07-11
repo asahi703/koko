@@ -82,7 +82,7 @@ include 'includes/sidebar.php';
                         <input type="password" class="form-control shadow-sm" id="password_confirm" name="password_confirm" required>
                     </div>
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-info px-5 mt-3">作成</button>
+                        <button type="submit" class="btn btn-primary px-5 mt-3">作成</button>
                     </div>
                 </form>
             </div>
