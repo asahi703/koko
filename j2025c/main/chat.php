@@ -119,6 +119,13 @@ if ($selected_group_id) {
     }
 }
 
+// ユーザーのテンプレート一覧取得
+$stmt = $db->prepare('SELECT temprate_id, temprate_title, temprate_text FROM temprates WHERE temprate_user = ? ORDER BY temprate_id DESC');
+$stmt->execute([$login_user_id]);
+$templates = $stmt->fetchAll();
+
+
+
 include 'includes/header.php';
 include 'includes/sidebar.php';
 ?>
@@ -129,19 +136,21 @@ include 'includes/sidebar.php';
             <nav class="col-12 col-md-3 col-lg-3 px-0 group-sidebar d-flex flex-column bg-light border-end">
                 <!-- テンプレート編集ボタン -->
                 <div class="p-3 border-bottom bg-white">
-                    <button class="btn btn-success w-100 mb-2" onclick="location.href='#'">
+                    <button class="btn btn-success w-100 mb-2" onclick="location.href='template.php'">
                         テンプレート編集
                     </button>
                 </div>
-                
+
                 <div class="p-3 border-bottom bg-white">
                     <h5 class="mb-3 text-primary">グループ</h5>
                     <!-- 新規グループ作成ボタン -->
-                    <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#createGroupModal">＋ 新規グループ</button>
+                    <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal"
+                        data-bs-target="#createGroupModal">＋ 新規グループ</button>
                 </div>
                 <ul class="list-group list-group-flush flex-grow-1 overflow-auto group-list-scroll bg-light px-2">
                     <?php foreach ($group_list as $group): ?>
-                        <li class="list-group-item list-group-item-action border-0 rounded my-1<?php if ($selected_group_id == $group['group_id']) echo ' active'; ?>"
+                        <li class="list-group-item list-group-item-action border-0 rounded my-1<?php if ($selected_group_id == $group['group_id'])
+                            echo ' active'; ?>"
                             onclick="location.href='chat.php?group_id=<?php echo $group['group_id']; ?>'">
                             <?php echo htmlspecialchars($group['group_name']); ?>
                         </li>
@@ -162,8 +171,10 @@ include 'includes/sidebar.php';
                         $from_id = $is_group ? $chat['user_id'] : ($chat['from_chat'] ?? 0);
                         $sent_at = $is_group ? $chat['sent_at'] : ($chat['sent_at'] ?? '');
                         ?>
-                        <div class="d-flex <?php echo $from_id == $login_user_id ? 'justify-content-end' : 'justify-content-start'; ?> mb-2">
-                            <div class="chat-msg <?php echo $from_id == $login_user_id ? 'chat-msg-sbm' : 'bg-white'; ?> border rounded p-2">
+                        <div
+                            class="d-flex <?php echo $from_id == $login_user_id ? 'justify-content-end' : 'justify-content-start'; ?> mb-2">
+                            <div
+                                class="chat-msg <?php echo $from_id == $login_user_id ? 'chat-msg-sbm' : 'bg-white'; ?> border rounded p-2">
                                 <div>
                                     <span class="fw-bold"><?php echo htmlspecialchars($user_name); ?></span><br>
                                     <?php echo nl2br(htmlspecialchars($message_text)); ?>
@@ -175,15 +186,34 @@ include 'includes/sidebar.php';
                         </div>
                     <?php endforeach; ?>
                 </div>
+
                 <!-- 入力欄（ページ下部に固定） -->
-                <form class="chat-input-box border-top p-3 bg-white shadow-sm" method="post" autocomplete="off">
-                    <div class="input-group">
-                        <input type="text" name="message" class="form-control rounded-pill" placeholder="メッセージを入力" required>
-                        <button type="submit" class="btn btn-primary rounded-pill ms-2">
-                            送信
-                        </button>
+                <form method="post" class="input-form" >
+                    <div class="mb-3 input-group" style="position: fixed !important; bottom: 2% !important; left: 410px !important; width: 65% !important;">
+                        <input type="text" id="chatInput" name="message" class="form-control" placeholder="メッセージを入力">
+                        <!-- +アイコンとドロップダウン -->
+                        <div class="dropdown">
+                            <button class="btn btn-link px-2" type="button" id="templateDropdownBtn"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-plus fa-lg"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="templateDropdownBtn"
+                                style="max-height:200px;overflow-y:auto;">
+                                <?php foreach ($templates as $template): ?>
+                                    <li>
+                                        <!--テンプレートドロップダウンメニュー-->
+                                        <a class="dropdown-item template-insert-btn" href="#"
+                                            data-body="<?php echo htmlspecialchars($template['temprate_text'], ENT_QUOTES); ?>">
+                                            <?php echo htmlspecialchars($template['temprate_title']); ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                        <button class="btn btn-primary" type="submit">送信</button>
                     </div>
                 </form>
+
             </main>
         </div>
     </div>
@@ -191,47 +221,56 @@ include 'includes/sidebar.php';
 
 <!-- 新規グループ作成モーダル -->
 <div class="modal fade" id="createGroupModal" tabindex="-1" aria-labelledby="createGroupModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <form method="post" class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="createGroupModalLabel">新規グループ作成</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-3">
-          <label class="form-label">グループ名</label>
-          <input type="text" name="group_name" class="form-control" placeholder="グループ名" required>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">参加ユーザー</label>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="<?php echo $login_user_id; ?>" id="user_self" checked disabled>
-            <label class="form-check-label" for="user_self">自分</label>
-          </div>
-          <?php foreach ($all_users as $user): ?>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="group_members[]" value="<?php echo $user['user_id']; ?>" id="user_<?php echo $user['user_id']; ?>">
-              <label class="form-check-label" for="user_<?php echo $user['user_id']; ?>">
-                <?php echo htmlspecialchars($user['user_name']); ?>
-              </label>
+    <div class="modal-dialog">
+        <form method="post" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createGroupModalLabel">新規グループ作成</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
             </div>
-          <?php endforeach; ?>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">作成</button>
-      </div>
-    </form>
-  </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">グループ名</label>
+                    <input type="text" name="group_name" class="form-control" placeholder="グループ名" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">参加ユーザー</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="<?php echo $login_user_id; ?>"
+                            id="user_self" checked disabled>
+                        <label class="form-check-label" for="user_self">自分</label>
+                    </div>
+                    <?php foreach ($all_users as $user): ?>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="group_members[]"
+                                value="<?php echo $user['user_id']; ?>" id="user_<?php echo $user['user_id']; ?>">
+                            <label class="form-check-label" for="user_<?php echo $user['user_id']; ?>">
+                                <?php echo htmlspecialchars($user['user_name']); ?>
+                            </label>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">作成</button>
+            </div>
+        </form>
+    </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// ページロード時にモーダルの背景やbodyクラスが残っていたら消す
-document.addEventListener('DOMContentLoaded', function() {
-    document.body.classList.remove('modal-open');
-    var backdrops = document.querySelectorAll('.modal-backdrop');
-    backdrops.forEach(function(bd){ bd.parentNode.removeChild(bd); });
-});
+    // ページロード時にモーダルの背景やbodyクラスが残っていたら消す
+    document.addEventListener('DOMContentLoaded', function () {
+        document.body.classList.remove('modal-open');
+        var backdrops = document.querySelectorAll('.modal-backdrop');
+        backdrops.forEach(function (bd) { bd.parentNode.removeChild(bd); });
+    });
+
+    document.querySelectorAll('.template-insert-btn').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const body = btn.getAttribute('data-body');
+            document.getElementById('chatInput').value = body;
+        });
+    });
 </script>
-</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
