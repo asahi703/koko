@@ -188,8 +188,9 @@ include 'includes/sidebar.php';
                 </div>
 
                 <!-- 入力欄（ページ下部に固定） -->
-                <form method="post" class="input-form" >
-                    <div class="mb-3 input-group" style="position: fixed !important; bottom: 2% !important; left: 410px !important; width: 65% !important;">
+                <form method="post" class="input-form">
+                    <div class="mb-3 input-group"
+                        style="position: fixed !important; bottom: 2% !important; left: 33% !important; width: 65% !important;">
                         <input type="text" id="chatInput" name="message" class="form-control" placeholder="メッセージを入力">
                         <!-- +アイコンとドロップダウン -->
                         <div class="dropdown">
@@ -257,20 +258,101 @@ include 'includes/sidebar.php';
     </div>
 </div>
 
+<div class="modal fade" id="myModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">テンプレート編集・差し替え</h5>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
+    // プレースホルダを全部抜き出す
+    function extractPlaceholders(template) {
+        const regex = /{([^{}]+)}/g;
+        let match;
+        const results = new Set();
+        while ((match = regex.exec(template)) !== null) {
+            results.add(match[1]);
+        }
+        return Array.from(results);
+    }
+
+    // 置換
+    function fillTemplate(template, values) {
+        return template.replace(/{([^{}]+)}/g, (m, key) => values[key] ?? m);
+    }
+
+
+
     // ページロード時にモーダルの背景やbodyクラスが残っていたら消す
     document.addEventListener('DOMContentLoaded', function () {
         document.body.classList.remove('modal-open');
         var backdrops = document.querySelectorAll('.modal-backdrop');
         backdrops.forEach(function (bd) { bd.parentNode.removeChild(bd); });
-    });
 
-    document.querySelectorAll('.template-insert-btn').forEach(function (btn) {
-        btn.addEventListener('click', function (e) {
-            e.preventDefault();
-            const body = btn.getAttribute('data-body');
-            document.getElementById('chatInput').value = body;
+        // テンプレートを入力欄に挿入する
+        document.querySelectorAll('.template-insert-btn').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const originalTemplate = btn.getAttribute('data-body');
+                // プレースホルダ重複排除（SetでOK）
+                const regex = /{([^{}]+)}/g;
+                let match;
+                const placeholderSet = new Set();
+                while ((match = regex.exec(originalTemplate)) !== null) {
+                    placeholderSet.add(match[1]);
+                }
+                const placeholders = Array.from(placeholderSet);
+
+                // 編集可能本文
+                let formHtml = `
+            <div class="mb-3">
+                <label>本文（書き換え可）</label>
+                <textarea id="modalTemplateText" class="form-control" rows="4">${originalTemplate}</textarea>
+            </div>
+            <form id="placeholderForm">
+                <table class="table table-sm">
+                  <thead><tr><th>項目</th><th>値</th></tr></thead><tbody>
+        `;
+                placeholders.forEach(ph => {
+                    formHtml += `
+                <tr>
+                  <td>${ph}</td>
+                  <td><input type="text" class="form-control" name="${ph}"></td>
+                </tr>
+            `;
+                });
+                formHtml += `
+                  </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary mt-2">反映</button>
+            </form>
+        `;
+                document.getElementById('modal-body').innerHTML = formHtml;
+                const modal = new bootstrap.Modal(document.getElementById('myModal'));
+                modal.show();
+
+                // サブミット時
+                document.getElementById('placeholderForm').onsubmit = function (e) {
+                    e.preventDefault();
+                    const values = {};
+                    placeholders.forEach(ph => values[ph] = this.elements[ph].value);
+                    // 最新の本文で置換
+                    const currentTemplate = document.getElementById('modalTemplateText').value;
+                    document.getElementById('chatInput').value = fillTemplate(currentTemplate, values);
+                    modal.hide();
+                };
+            });
         });
     });
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

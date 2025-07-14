@@ -79,7 +79,7 @@ $templates = $stmt->fetchAll();
     <a href="chat.php" class="arrow-back-btn">
         <i class="fa-solid fa-arrow-left fa-2xl"></i>
     </a>
-    
+
     <div class="container-fluid">
         <div class="row">
             <!-- サイドバーはincludes/sidebar.phpで出力済み -->
@@ -136,6 +136,15 @@ $templates = $stmt->fetchAll();
                                         <textarea class="form-control" id="templateBody" name="temprate_text" rows="4"
                                             placeholder="テンプレート本文" required></textarea>
                                     </div>
+                                    <!--プレースホルダー入力欄-->
+                                    <div class="mb-3 d-flex align-items-center">
+                                        <input type="text" id="placeholderName" class="form-control w-auto me-2"
+                                            placeholder="プレースホルダ名">
+                                        <button type="button" class="btn btn-outline-secondary btn-sm"
+                                            id="insertPlaceholderBtn">差し込み</button>
+                                        <span class="ms-2 text-muted">例: {名前}, {日付} など</span>
+                                    </div>
+                                    <div class="mt-2" id="placeholderList"></div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
@@ -165,12 +174,27 @@ $templates = $stmt->fetchAll();
                                         <input type="text" class="form-control" id="editTemplateTitle"
                                             name="edit_temprate_title" required>
                                     </div>
+                                    <!--プレースホルダ-->
                                     <div class="mb-3">
-                                        <label for="editTemplateBody" class="form-label">本文<span
-                                                class="text-danger">*</span></label>
+                                        <label for="editTemplateBody" class="form-label">
+                                            本文 <span class="text-danger">*</span>
+                                        </label>
                                         <textarea class="form-control" id="editTemplateBody" name="edit_temprate_text"
-                                            rows="4" required></textarea>
+                                            rows="5" required></textarea>
                                     </div>
+                                    <div class="row g-2 align-items-center mb-2">
+                                        <div class="col">
+                                            <input type="text" id="editPlaceholderName" class="form-control"
+                                                placeholder="プレースホルダ名">
+                                        </div>
+                                        <div class="col-auto">
+                                            <button type="button" class="btn btn-outline-secondary"
+                                                id="insertEditPlaceholderBtn">
+                                                差し込み
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3" id="editPlaceholderList"></div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
@@ -193,8 +217,8 @@ $templates = $stmt->fetchAll();
                                     <div
                                         class="template-title fs-4 mb-2 d-flex align-items-center justify-content-center w-100">
                                         <?php echo htmlspecialchars($template['temprate_title']); ?>
-                                        <form method="post" class="ms-2 d-inline position-relative" onsubmit="return confirm('本当に削除しますか？');"
-                                            style="margin-bottom:0;">
+                                        <form method="post" class="ms-2 d-inline position-relative"
+                                            onsubmit="return confirm('本当に削除しますか？');" style="margin-bottom:0;">
                                             <input type="hidden" name="delete_template_id"
                                                 value="<?php echo $template['temprate_id']; ?>">
                                             <button type="submit" class="tmp-dlt-btn btn btn-link p-0 ms-2 text-danger"
@@ -215,23 +239,104 @@ $templates = $stmt->fetchAll();
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // 編集モーダルに値をセット
+
+        // 共通のUIセットアップ関数
+        function setupPlaceholderUI(config) {
+            const textarea = document.getElementById(config.textareaId);
+            const phInput = document.getElementById(config.inputId);
+            const insertBtn = document.getElementById(config.buttonId);
+            const phListDiv = document.getElementById(config.listDivId);
+
+            // 差し込み
+            insertBtn.addEventListener('click', function () {
+                let ph = phInput.value.trim();
+                if (!ph) return;
+                insertPlaceholder(textarea, ph);
+                phInput.value = '';
+                updatePlaceholderList();
+            });
+
+            // テキストエリアから{〇〇}を抽出してボタンを表示
+            function updatePlaceholderList() {
+                const placeholders = extractPlaceholders(textarea.value);
+                phListDiv.innerHTML = '';
+                placeholders.forEach(ph => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'btn btn-sm btn-info me-2 mb-2';
+                    btn.textContent = `{${ph}}`;
+                    btn.onclick = function () {
+                        insertPlaceholder(textarea, ph);
+                        updatePlaceholderList();
+                    };
+                    phListDiv.appendChild(btn);
+                });
+            }
+
+            // 入力やコピペでも反映
+            textarea.addEventListener('input', updatePlaceholderList);
+
+            // 初期化
+            updatePlaceholderList();
+        }
+
+        // プレースホルダー抽出
+        function extractPlaceholders(text) {
+            const regex = /{([^{}]+)}/g;
+            const set = new Set();
+            let match;
+            while ((match = regex.exec(text)) !== null) {
+                set.add(match[1]);
+            }
+            return Array.from(set);
+        }
+
+        // カーソル位置に差し込む
+        function insertPlaceholder(textarea, ph) {
+            const phString = `{${ph}}`;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            textarea.value = textarea.value.substring(0, start) + phString + textarea.value.substring(end);
+            textarea.selectionStart = textarea.selectionEnd = start + phString.length;
+            textarea.focus();
+        }
+
+        // 作成画面用
+        setupPlaceholderUI({
+            textareaId: 'templateBody',
+            inputId: 'placeholderName',
+            buttonId: 'insertPlaceholderBtn',
+            listDivId: 'placeholderList'
+        });
+
+        // 編集画面用
+        setupPlaceholderUI({
+            textareaId: 'editTemplateBody',
+            inputId: 'editPlaceholderName',
+            buttonId: 'insertEditPlaceholderBtn',
+            listDivId: 'editPlaceholderList'
+        });
+
+        // 編集モーダルに値セット（カード等クリック時）
         document.querySelectorAll('.template-card').forEach(function (card) {
             card.addEventListener('click', function () {
-                // カード内のデータ属性から値を取得
-                const id = card.getAttribute('data-id');
-                const title = card.getAttribute('data-title');
-                const body = card.getAttribute('data-body');
-
-                // モーダルのinput, textareaに値をセット
-                document.getElementById('editTemplateId').value = id;
-                document.getElementById('editTemplateTitle').value = title;
-                document.getElementById('editTemplateBody').value = body;
+                document.getElementById('editTemplateId').value = card.getAttribute('data-id');
+                document.getElementById('editTemplateTitle').value = card.getAttribute('data-title');
+                document.getElementById('editTemplateBody').value = card.getAttribute('data-body');
+                // プレースホルダーUIも更新
+                // 再セット後にupdate
+                setTimeout(() => {
+                    const textarea = document.getElementById('editTemplateBody');
+                    const event = new Event('input');
+                    textarea.dispatchEvent(event);
+                }, 0);
             });
         });
+
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
