@@ -18,15 +18,31 @@ if ($class_id > 0) {
     <link rel="stylesheet" href="css/class_calendar.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    <style>
+        .calendar-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        #calendar {
+            min-height: 0;
+        }
+        /* スクロールバー非表示 */
+        #calendar ::-webkit-scrollbar {
+            display: none;
+        }
+        #calendar {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+    </style>
 </head>
 <div class="main-content-wrapper">
     <?php include 'includes/class_sidebar.php'?>
 
     <!-- メインコンテンツ -->
-    <main class="class-main-content col-12 col-md-9 col-lg-10 p-5"
-          style="min-height: 100vh; margin-left: 320px; width: calc(100% - 320px);">
+    <main class="class-main-content p-0" style="min-height: 100vh; width: 100%;">
         <div class="calendar-container">
-            <h2>行事予定カレンダー</h2>
+            <h2 class="text-center mb-4">行事予定カレンダー</h2>
             <div id="calendar" class="w-100"></div>
             <div id="tooltip" class="custom-tooltip"></div>
         </div>
@@ -100,6 +116,10 @@ document.addEventListener('DOMContentLoaded', function() {
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
             locale: 'ja',
+            // カレンダーを大きくしない
+            height: 'auto',
+            contentHeight: 'auto',
+            aspectRatio: 1.5,
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
@@ -127,6 +147,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         calendar.render();
     }
+});
+</script>
 });
 </script>
 });
