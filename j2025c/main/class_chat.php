@@ -79,6 +79,7 @@ $messages = $stmt->fetchAll();
                         <?php echo htmlspecialchars($class['community_name']); ?>
                     </a>
                 </small>
+                <a href="class_calender.php?id=<?php echo $class_id; ?>" class="btn btn-outline-primary btn-sm ms-3">行事予定表</a>
             </div>
         </div>
 
