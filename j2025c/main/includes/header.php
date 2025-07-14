@@ -15,9 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-            crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
@@ -34,13 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 <header class="d-none d-md-flex w-100 navbar navbar-expand-md align-items-center py-md-2 fixed-top shadow-sm">
     <nav class="container-fluid d-flex flex-row justify-content-between align-items-center">
         <!-- ブランドロゴとタイトル -->
-        <a class="navbar-brand d-flex align-items-center me-auto ms-3" href="community.php">
+        <a class="navbar-brand d-flex align-items-center me-auto ms-3" href="#">
             <img src="../main/img/headerImg/logo.png" style="width: 50px" class="hd-img d-inline-block align-top img-fluid"
                  alt="">
-            <a href="mypage.php">
-                <img src="../main/img/headerImg/account.png" style="width: 50px"
-                     class="hd-img d-inline-block align-top img-fluid ms-4" alt="" style="cursor: pointer;">
-            </a>
+            <img src="../main/img/headerImg/account.png" style="width: 50px"
+                 class="hd-img d-inline-block align-top img-fluid ms-4" alt="">
         </a>
         <!-- ユーザー情報表示 -->
         <?php if ($user): ?>

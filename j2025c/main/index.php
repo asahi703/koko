@@ -83,9 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <a href="signin.php">新規登録はこちら</a>
                 </div>
             </form>
-            <button>
-                <a href="community.php" class="btn btn-secondary mt-3 w-100">homepage(一時的)</a>
-            </button>
         </div>
     </div>
 </div>
