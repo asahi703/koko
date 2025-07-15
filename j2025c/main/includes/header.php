@@ -32,10 +32,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     <nav class="container-fluid d-flex flex-row justify-content-between align-items-center">
         <!-- ブランドロゴとタイトル -->
         <a class="navbar-brand d-flex align-items-center me-auto ms-3" href="#">
-            <img src="../main/img/headerImg/logo.png" style="width: 50px" class="hd-img d-inline-block align-top img-fluid"
-                 alt="">
-            <img src="../main/img/headerImg/account.png" style="width: 50px"
-                 class="hd-img d-inline-block align-top img-fluid ms-4" alt="">
+            <img src="../main/img/headerImg/logo.png" style="width: 50px" class="hd-img d-inline-block align-top img-fluid" alt="">
+        </a>
+        <a href="../main/mypage.php">
+            <?php
+            // ユーザーアイコンのパスを取得（なければデフォルト）
+            $icon_file = !empty($user['user_icon']) && file_exists(__DIR__ . '/../../img/user_icons/' . $user['user_icon'])
+                ? '../../img/user_icons/' . $user['user_icon']
+                : '../main/img/headerImg/account.png';
+            ?>
+            <img src="<?php echo htmlspecialchars($icon_file); ?>" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #667eea;"
+                 class="hd-img d-inline-block align-top img-fluid ms-2" alt="プロフィールアイコン">
         </a>
         <!-- ユーザー情報表示 -->
         <?php if ($user): ?>

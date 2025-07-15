@@ -139,3 +139,39 @@ header {
 .user-select-none-style {
   user-select: none;
 }
+
+/* メンバーボタンのスタイル */
+.position-relative .btn {
+    z-index: 10;
+}
+
+.stretched-link {
+    z-index: 1;
+}
+
+/* メンバーカウント表示 */
+.bi-people-fill {
+    margin-right: 4px;
+}
+
+/* メンバーモーダル内のプロフィール */
+.modal-body .border {
+    transition: all 0.2s ease;
+}
+
+.modal-body .border:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* カード内のメンバー数表示 */
+.class-card .text-muted {
+    font-size: 0.85rem;
+}
+
+/* メンバーボタンのホバー効果 */
+.btn-outline-primary:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}

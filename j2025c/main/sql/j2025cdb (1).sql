@@ -317,7 +317,7 @@ CREATE TABLE `users` (
   `user_name` varchar(255) NOT NULL,
   `user_mailaddress` varchar(255) NOT NULL,
   `user_password` varchar(255) NOT NULL,
-  `user_icon` blob,
+  `user_icon` varchar(255),
   `user_is_teacher` tinyint(1) NOT NULL DEFAULT '0',
   `user_text` text,
   `user_login` varchar(50) NOT NULL

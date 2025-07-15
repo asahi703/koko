@@ -88,48 +88,54 @@ END_BLOCK;
 		echo "/UUID:" . $uuid;
 		*/
 		$echo_str .= <<< END_BLOCK
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/~j2025i/main">
-                <img src="/~j2025i/main/images/header/TENOHIRA_WEB_HEADER_LOGO.png" alt="Bootstrap" style="height:46px; object-fit:contain;">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <!--
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/~j2025i/main/faq.php">FAQ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/~j2025i/main/register.php">register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/~j2025i/main/home.php">home</a>
-                    </li>
-                -->
-                </ul>
-                <div class="d-flex">
-                    <form class="d-flex" role="search" method="get" action="/~j2025i/main/search.php">
-                        <input class="form-control me-2" type="search" name="q" placeholder="記事、商品を検索" aria-label="Search">
-                        <button class="text-nowrap  btn btn-outline-success me-2" type="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                            </svg>
-                            検索
-                        </button>
-                    </form>
-                </div>
-                <div class="vr me-2"></div>
-                <div class="d-flex">
-                    <button class="btn btn-outline-success me-2 text-nowrap" type="submit" onclick="location.href='/~j2025i/main/post.php'">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
-                        </svg>
-                        今すぐ投稿
-                    </button>
-                </div>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-..." crossorigin="anonymous" />
+    <link rel="stylesheet" href="../main/css/header.css">
+    <link rel="stylesheet" href="../main/css/Global.css">
+</head>
+
+<!--PC時ヘッダー-->
+<header class="d-none d-md-flex w-100 navbar navbar-expand-md align-items-center py-md-2 fixed-top shadow-sm">
+    <nav class="container-fluid d-flex flex-row justify-content-between align-items-center">
+        <!-- ブランドロゴとタイトル -->
+        <a class="navbar-brand d-flex align-items-center me-auto ms-3" href="#">
+            <img src="../main/img/headerImg/logo.png" style="width: 50px" class="hd-img d-inline-block align-top img-fluid" alt="">
+        </a>
+        <a href="../main/mypage.php">
+            <?php
+            // ユーザーアイコンのパスを取得（なければデフォルト）
+            $icon_file = !empty($user['user_icon']) && file_exists(__DIR__ . '/../../' . $user['user_icon'])
+                ? $user['user_icon']
+                : '../main/img/headerImg/account.png';
+            ?>
+            <img src="<?php echo htmlspecialchars($icon_file); ?>" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #667eea;"
+                 class="hd-img d-inline-block align-top img-fluid ms-2" alt="プロフィールアイコン">
+        </a>
+        <!-- ユーザー情報表示 -->
+        <?php if ($user): ?>
+            <div class="ms-4 d-flex align-items-center">
+                <span class="me-2 fw-bold"><?php echo htmlspecialchars($user['name']); ?></span>
+                <span class="text-secondary small"><?php echo htmlspecialchars($user['mail']); ?></span>
+                <form method="post" style="display: inline;">
+                    <button type="submit" name="logout" class="btn btn-outline-secondary btn-sm ms-3">ログアウト</button>
+                </form>
+            </div>
+        <?php else: ?>
+            <div class="ms-4">
+                <span class="text-secondary small">未ログイン</span>
+            </div>
+        <?php endif; ?>
+    </nav>
+</header>
 END_BLOCK;
 		// 右側ユーザー名ボタン（ログイン時のみ表示）
 		if ($is_logged_in) {
