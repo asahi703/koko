@@ -535,6 +535,26 @@ END_BLOCK;
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
+	@brief	指定ユーザー以外のすべてのユーザー取得
+	@param[in]	$debug	デバッグ出力をするかどうか
+	@param[in]	$user_id	除外するユーザーID
+	@return	ユーザー配列
+	*/
+	//--------------------------------------------------------------------------------------
+	public function get_all_except_user($debug, $user_id) {
+		$arr = array();
+		$query = <<< END_BLOCK
+SELECT * FROM users WHERE uuid != :user_id ORDER BY user_id ASC
+END_BLOCK;
+		$prep_arr = array(':user_id' => $user_id);
+		$this->select_query($debug, $query, $prep_arr);
+		while($row = $this->fetch_assoc()){
+			$arr[] = $row;
+		}
+		return $arr;
+	}
+	//--------------------------------------------------------------------------------------
+	/*!
 	@brief	デストラクタ
 	*/
 	//--------------------------------------------------------------------------------------
@@ -753,6 +773,40 @@ END_BLOCK;
 		$this->select_query($debug, $query, $prep_arr);
 		$row = $this->fetch_assoc();
 		return $row ? $row['community_id'] : false;
+	}
+	//--------------------------------------------------------------------------------------
+	/*!
+	@brief	コミュニティIDから招待コード取得
+	@param[in]	$debug	デバッグ出力をするかどうか
+	@param[in]	$community_id	コミュニティID
+	@return	招待コード、失敗の場合false
+	*/
+	//--------------------------------------------------------------------------------------
+	public function get_invite_code_by_community($debug, $community_id) {
+		$query = <<< END_BLOCK
+SELECT invite_code FROM community_invite_codes 
+WHERE community_id = :community_id
+END_BLOCK;
+		$prep_arr = array(':community_id' => $community_id);
+		$this->select_query($debug, $query, $prep_arr);
+		$row = $this->fetch_assoc();
+		return $row ? $row['invite_code'] : false;
+	}
+	//--------------------------------------------------------------------------------------
+	/*!
+	@brief	招待コード削除
+	@param[in]	$debug	デバッグ出力をするかどうか
+	@param[in]	$community_id	コミュニティID
+	@return	成功の場合true、失敗の場合false
+	*/
+	//--------------------------------------------------------------------------------------
+	public function delete_invite_code($debug, $community_id) {
+		$query = <<< END_BLOCK
+DELETE FROM community_invite_codes 
+WHERE community_id = :community_id
+END_BLOCK;
+		$prep_arr = array(':community_id' => $community_id);
+		return $this->exec_query($debug, $query, $prep_arr);
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
