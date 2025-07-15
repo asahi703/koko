@@ -39,139 +39,73 @@ class cheader extends cnode {
 		require_once(__DIR__ . '/session.php');
 		$is_logged_in = is_logged_in();
 		$user = get_login_user();
-		$username = $is_logged_in ? htmlspecialchars($user['username']) : '';
-		$uuid = $is_logged_in ? htmlspecialchars($user['uuid']) : '';
-		$user_id = $is_logged_in ? htmlspecialchars($user['user_id']) : '';
-		$email = $is_logged_in ? htmlspecialchars($user['email']) : '';
-		$echo_str =
-			<<< END_BLOCK
+		$username = $is_logged_in && isset($user['name']) ? htmlspecialchars($user['name']) : '';
+		$uuid = $is_logged_in && isset($user['uuid']) ? htmlspecialchars($user['uuid']) : '';
+		$user_id = $uuid; // user_idはuuidと同じ値
+		$email = $is_logged_in && isset($user['mail']) ? htmlspecialchars($user['mail']) : '';
+
+		// ログアウト処理
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
+			logout_user();
+			header('Location: index.php');
+			exit;
+		}
+
+		$echo_str = <<< END_BLOCK
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>
-        (function(d) {
-            var config = {
-                    kitId: 'uqx7pie',
-                    scriptTimeout: 3000,
-                    async: true
-                },
-                h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-        })(document);
-    </script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/~j2025i/main/css/global.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-..." crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/Global.css">
 </head>
-<header class="header">
+
+<!--PC時ヘッダー-->
+<header class="d-none d-md-flex w-100 navbar navbar-expand-md align-items-center py-md-2 fixed-top shadow-sm">
+    <nav class="container-fluid d-flex flex-row justify-content-between align-items-center">
+        <!-- ブランドロゴとタイトル -->
+        <a class="navbar-brand d-flex align-items-center me-auto ms-3" href="#">
+            <img src="img/headerImg/logo.png" style="width: 50px" class="hd-img d-inline-block align-top img-fluid"
+                 alt="">
+            <img src="img/headerImg/account.png" style="width: 50px"
+                 class="hd-img d-inline-block align-top img-fluid ms-4" alt="">
+        </a>
+        <!-- ユーザー情報表示 -->
 END_BLOCK;
-		/*
-		if($is_logged_in) {
-			// ログインユーザー情報を取得
-			$user_id = htmlspecialchars($user['user_id']);
-			$username = htmlspecialchars($user['username']);
-			$email = htmlspecialchars($user['email']);
-			$uuid = htmlspecialchars($user['uuid']);
-		} else {
-			// 非ログイン時のデフォルト値
-			$user_id = '';
-			$username = '';
-			$email = '';
-			$uuid = '';
-		}
-		// デバッグ用ログインステータス表示（修正版）
-		echo "ログイン状態:" . ($is_logged_in ? 'ログイン中' : 'ログインしていません');
-		echo "/ユーザーID:" . $user_id;
-		echo "/ユーザー名:" . $username;
-		echo "/メールアドレス:" . $email;
-		echo "/UUID:" . $uuid;
-		*/
-		$echo_str .= <<< END_BLOCK
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/~j2025i/main">
-                <img src="/~j2025i/main/images/header/TENOHIRA_WEB_HEADER_LOGO.png" alt="Bootstrap" style="height:46px; object-fit:contain;">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <!--
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/~j2025i/main/faq.php">FAQ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/~j2025i/main/register.php">register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/~j2025i/main/home.php">home</a>
-                    </li>
-                -->
-                </ul>
-                <div class="d-flex">
-                    <form class="d-flex" role="search" method="get" action="/~j2025i/main/search.php">
-                        <input class="form-control me-2" type="search" name="q" placeholder="記事、商品を検索" aria-label="Search">
-                        <button class="text-nowrap  btn btn-outline-success me-2" type="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                            </svg>
-                            検索
-                        </button>
-                    </form>
-                </div>
-                <div class="vr me-2"></div>
-                <div class="d-flex">
-                    <button class="btn btn-outline-success me-2 text-nowrap" type="submit" onclick="location.href='/~j2025i/main/post.php'">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
-                        </svg>
-                        今すぐ投稿
-                    </button>
-                </div>
-END_BLOCK;
-		// 右側ユーザー名ボタン（ログイン時のみ表示）
-		if ($is_logged_in) {
+
+		if ($is_logged_in && $user) {
 			$echo_str .= <<< END_BLOCK
-                <div class="d-flex">
-                    <button class="btn btn-outline-success me-2 text-nowrap" type="submit" onclick="location.href='/~j2025i/main/cart.php'">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
-						  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-						</svg>
-                        カート
-                    </button>
-                </div>
-                <div class="d-flex align-items-center">
-                    <button class="btn btn-outline-success me-2 text-nowrap fw-bold" type="button" onclick="location.href='/~j2025i/main/mypage.php'">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                        	<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                        </svg>
-						{$username}
-                    </button>
-                </div>
-END_BLOCK;
-		}
-		// ログインボタン（非ログイン時のみ表示）
-		if (!$is_logged_in) {
-			$echo_str .= <<< END_BLOCK
-                <div class="d-flex">
-                    <button class="btn btn-outline-success me-2 text-nowrap" type="submit" onclick="location.href='/~j2025i/main/login.php'">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0z"/>
-                            <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708z"/>
-                        </svg>
-                        ログイン/新規登録
-                    </button>
-                </div>
-END_BLOCK;
-		}
-		$echo_str .= <<< END_BLOCK
+            <div class="ms-4 d-flex align-items-center">
+                <span class="me-2 fw-bold">{$username}</span>
+                <span class="text-secondary small">{$email}</span>
+                <form method="post" style="display: inline;">
+                    <button type="submit" name="logout" class="btn btn-outline-secondary btn-sm ms-3">ログアウト</button>
+                </form>
             </div>
-        </div>
+END_BLOCK;
+		} else {
+			$echo_str .= <<< END_BLOCK
+            <div class="ms-4">
+                <span class="text-secondary small">未ログイン</span>
+            </div>
+END_BLOCK;
+		}
+
+		$echo_str .= <<< END_BLOCK
     </nav>
 </header>
 END_BLOCK;
+
 		echo $echo_str;
 	}
 	//--------------------------------------------------------------------------------------
@@ -475,6 +409,132 @@ class caddress extends cnode {
 
 <?php 
 //PHPブロック再開
+	}
+	//--------------------------------------------------------------------------------------
+	/*!
+	@brief	デストラクタ
+	*/
+	//--------------------------------------------------------------------------------------
+	public function __destruct(){
+		//親クラスのデストラクタを呼ぶ
+		parent::__destruct();
+	}
+}
+
+//--------------------------------------------------------------------------------------
+///	サイドバーノード
+//--------------------------------------------------------------------------------------
+class csidebar extends cnode {
+	//--------------------------------------------------------------------------------------
+	/*!
+	@brief	構築時の処理(継承して使用)
+	@return	なし
+	*/
+	//--------------------------------------------------------------------------------------
+	public function create(){
+	}
+	//--------------------------------------------------------------------------------------
+	/*!
+	@brief  表示(継承して使用)
+	@return なし
+	*/
+	//--------------------------------------------------------------------------------------
+	public function display(){
+		//PHPブロック終了
+		?>
+<head>
+    <link rel="stylesheet" href="css/sidebar.css"/>
+</head>
+<nav class="top-sidebar d-none d-md-flex flex-column align-items-center p-0" style="width: 100px;">
+    <ul class="nav flex-column sidebar-content w-100">
+ 
+        <li class="nav-item mb-4 text-center">
+            <a class="nav-link p-0 d-flex flex-column align-items-center text-white hover-bg-dark" href="notification.php">
+                <img src="img/sidebarImg/notifications.png" class="icon-img img-fluid" width="50" alt="...">
+                <span class="nav-label">通知</span>
+            </a>
+        </li>
+        <li class="nav-item mb-4 text-center">
+            <a class="nav-link p-0 d-flex flex-column align-items-center text-white hover-bg-dark" href="chat.php">
+                <img src="img/sidebarImg/chat.png" class="icon-img img-fluid" width="50" alt="...">
+                <span class="nav-label">チャット</span>
+            </a>
+        </li>
+        <li class="nav-item mb-4 text-center">
+            <a class="nav-link p-0 d-flex flex-column align-items-center text-white hover-bg-dark" href="community.php">
+                <img src="img/sidebarImg/community.png" class="icon-img img-fluid" width="50" alt="...">
+                <span class="nav-label">コミュニティ</span>
+            </a>
+        </li>
+        <li class="nav-item text-center">
+            <a class="nav-link p-0 d-flex flex-column align-items-center text-white hover-bg-dark" href="faq.php">
+                <img src="img/sidebarImg/FAQ.png" class="icon-img img-fluid" width="50" alt="...">
+                <span class="nav-label">よくある質問</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<?php 
+		//PHPブロック再開
+	}
+	//--------------------------------------------------------------------------------------
+	/*!
+	@brief	デストラクタ
+	*/
+	//--------------------------------------------------------------------------------------
+	public function __destruct(){
+		//親クラスのデストラクタを呼ぶ
+		parent::__destruct();
+	}
+}
+
+//--------------------------------------------------------------------------------------
+///	クラスサイドバーノード
+//--------------------------------------------------------------------------------------
+class cclass_sidebar extends cnode {
+	//--------------------------------------------------------------------------------------
+	/*!
+	@brief	構築時の処理(継承して使用)
+	@return	なし
+	*/
+	//--------------------------------------------------------------------------------------
+	public function create(){
+	}
+	//--------------------------------------------------------------------------------------
+	/*!
+	@brief  表示(継承して使用)
+	@return なし
+	*/
+	//--------------------------------------------------------------------------------------
+	public function display(){
+		//PHPブロック終了
+		?>
+<head>
+    <link rel="stylesheet" href="css/class_sidebar.css">
+</head>
+<!-- クラスサイドバー -->
+<nav id="class-sidebar" class="d-none d-md-block flex-column px-0" style="border:none;">
+    <div class="d-flex flex-row justify-content-start align-items-center ms-2 py-md-2 text-nowrap" style="border:none;">
+        <!-- ← だけ残す（枠線なし） -->
+        <a class="nav-link text-dark d-flex align-items-center" href="javascript:history.back();">
+            <img src="img/sidebarImg/arrow_back_25dp_999999_FILL0_wght400_GRAD0_opsz24.svg" alt=""
+                 class="me-2" style="width: 24px; height: 24px;">
+        </a>
+    </div>
+</nav>
+
+<!-- スマホ用(ヘッダーの直下に置く) -->
+<div class="d-flex d-md-none bg-white py-2 px-3 justify-content-between align-items-center sticky-top"
+     style="top: 80px; z-index: 1020; border:none;">
+    <!-- 左：戻る（←だけ残す、枠線なし） -->
+    <a href="javascript:history.back();" class="text-dark text-decoration-none d-flex align-items-center">
+        <img src="img/sidebarImg/arrow_back_25dp_999999_FILL0_wght400_GRAD0_opsz24.svg" alt="戻る"
+             style="width: 24px; height: 24px;">
+    </a>
+    <!-- 中央・右は非表示 -->
+</div>
+<?php 
+		//PHPブロック再開
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
