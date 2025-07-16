@@ -21,5 +21,7 @@ require_once("contents_func.php");
 //コンテンツに合わせ定義されるもの
 require_once("contents_db.php");
 require_once("contents_nodes.php");
+//管理者セッション管理
+require_once("adminsession.php");
 
 
