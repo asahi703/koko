@@ -24,9 +24,15 @@ try {
 // 選択中グループID取得
 $selected_group_id = isset($_GET['group_id']) ? intval($_GET['group_id']) : 0;
 
-// グループ一覧取得
+// グループ一覧取得（自分が参加しているグループのみ表示）
 try {
-    $group_stmt = $db->query('SELECT group_id, group_name FROM group_chats');
+    $group_stmt = $db->prepare('
+        SELECT gc.group_id, gc.group_name
+        FROM group_chats gc
+        INNER JOIN group_chat_members gcm ON gc.group_id = gcm.group_id
+        WHERE gcm.user_id = ?
+    ');
+    $group_stmt->execute([$login_user_id]);
     $group_list = $group_stmt->fetchAll();
 } catch (PDOException $e) {
     $error = 'グループ一覧の取得に失敗しました。';
