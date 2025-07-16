@@ -25,7 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $tmp_name = $_FILES['user_icon']['tmp_name'];
         $orig_name = $_FILES['user_icon']['name'];
         $ext = strtolower(pathinfo($orig_name, PATHINFO_EXTENSION));
-        if (empty($ext)) {
+        
+        // ファイルサイズチェック（2MB制限）
+        if ($_FILES['user_icon']['size'] > 2 * 1024 * 1024) {
+            $error = '画像ファイルのサイズは2MB以下にしてください。';
+        } else if (empty($ext)) {
             $error = '画像ファイルの拡張子が取得できません。jpg, jpeg, png, gif 形式でアップロードしてください。';
         } else if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif'])) {
             // 保存先ディレクトリのパス設定
@@ -34,30 +38,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             // ディレクトリ存在確認と作成
             if (!is_dir($icon_dir_absolute)) {
-                // まず親ディレクトリを作成
-                $parent_dir = dirname($icon_dir_absolute);
-                if (!is_dir($parent_dir)) {
-                    mkdir($parent_dir, 0777, true);
-                }
-                
-                // ユーザーアイコンディレクトリを作成
-                if (!mkdir($icon_dir_absolute, 0777, true)) {
+                if (!mkdir($icon_dir_absolute, 0755, true)) {
                     $error = 'アップロード用ディレクトリを作成できませんでした。管理者にお問い合わせください。';
-                } else {
-                    // パーミッション設定
-                    chmod($icon_dir_absolute, 0777);
                 }
             }
             
             if (empty($error)) {
                 // user_idを使ってファイル名を生成
-                $filename = $user['user_id'] . '.' . $ext;
+                $filename = ($user['user_id'] ?? '') . '.' . $ext;
                 $icon_filename = $icon_dir_relative . $filename;
                 $save_path = $icon_dir_absolute . $filename;
                 
                 // 既存画像の削除処理
                 foreach (['jpg', 'jpeg', 'png', 'gif'] as $old_ext) {
-                    $old_file = $icon_dir_absolute . $user['user_id'] . '.' . $old_ext;
+                    $old_file = $icon_dir_absolute . ($user['user_id'] ?? '') . '.' . $old_ext;
                     if (file_exists($old_file)) {
                         @unlink($old_file);
                     }
@@ -79,6 +73,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $error = '画像は jpg, jpeg, png, gif のみ対応です。';
         }
+    } else if (isset($_FILES['user_icon']) && $_FILES['user_icon']['error'] !== UPLOAD_ERR_NO_FILE) {
+        // アップロードエラーの詳細
+        switch ($_FILES['user_icon']['error']) {
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                $error = 'ファイルサイズが大きすぎます。';
+                break;
+            case UPLOAD_ERR_PARTIAL:
+                $error = 'ファイルのアップロードが中断されました。';
+                break;
+            default:
+                $error = 'ファイルのアップロードに失敗しました。';
+        }
     }
 
     if (empty($name) || empty($mail)) {
@@ -97,23 +104,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $params[] = sha1($password);
                 }
             }
-            // アイコン更新
-            if (!empty($icon_filename)) {
+            // アイコン更新（ファイルがアップロードされた場合のみ）
+            if (!empty($icon_filename) && $icon_filename !== ($user['user_icon'] ?? '')) {
                 $sql .= ', user_icon = ?';
                 $params[] = $icon_filename;
             }
 
             if (empty($error)) {
                 $sql .= ' WHERE user_id = ?';
-                $params[] = $user['uuid'];
+                $params[] = $user['user_id'] ?? 0;
 
                 $stmt = $db->prepare($sql);
                 $stmt->execute($params);
 
                 // セッション情報も更新
-                $_SESSION['user']['name'] = $name;
-                $_SESSION['user']['mail'] = $mail;
-                if (!empty($icon_filename)) {
+                $_SESSION['user']['user_name'] = $name;
+                $_SESSION['user']['user_mailaddress'] = $mail;
+                if (!empty($icon_filename) && $icon_filename !== ($user['user_icon'] ?? '')) {
                     $_SESSION['user']['user_icon'] = $icon_filename;
                 }
 
@@ -155,20 +162,43 @@ include 'includes/sidebar.php';
                     <div class="mb-3 text-center">
                         <label class="form-label">プロフィール画像</label><br>
                         <?php
-                        $icon_path = !empty($user['user_icon']) && file_exists(__DIR__ . '/../' . $user['user_icon'])
-                            ? $user['user_icon']
-                            : 'img/headerImg/account.png';
+                        $user_icon = $user['user_icon'] ?? '';
+                        $icon_path = !empty($user_icon) && file_exists(__DIR__ . '/../' . $user_icon)
+                            ? $user_icon
+                            : 'main/img/headerImg/account.png';
                         ?>
-                        <img src="<?php echo htmlspecialchars($icon_path); ?>" alt="プロフィール画像" style="width:80px; height:80px; border-radius:50%; object-fit:cover; border:2px solid #667eea; margin-bottom:10px;" id="profilePreview">
-                        <input type="file" name="user_icon" accept="image/*" class="form-control mt-2" style="max-width:300px; margin:auto;" id="iconInput">
+                        <div class="mb-3">
+                            <img src="<?php echo htmlspecialchars($icon_path); ?>" alt="プロフィール画像" 
+                                 style="width:80px; height:80px; border-radius:50%; object-fit:cover; border:2px solid #667eea; margin-bottom:10px;" 
+                                 id="profilePreview">
+                        </div>
+                        <input type="file" name="user_icon" accept="image/*" class="form-control mt-2" 
+                               style="max-width:300px; margin:auto;" id="iconInput">
+                        <small class="form-text text-muted">jpg, jpeg, png, gif形式（2MB以下）</small>
                     </div>
                     <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         const input = document.getElementById('iconInput');
                         const preview = document.getElementById('profilePreview');
+                        
                         input.addEventListener('change', function(e) {
                             const file = e.target.files[0];
                             if (file) {
+                                // ファイルサイズチェック（2MB制限）
+                                if (file.size > 2 * 1024 * 1024) {
+                                    alert('ファイルサイズは2MB以下にしてください。');
+                                    this.value = '';
+                                    return;
+                                }
+                                
+                                // ファイル形式チェック
+                                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+                                if (!allowedTypes.includes(file.type)) {
+                                    alert('jpg, jpeg, png, gif形式のファイルをアップロードしてください。');
+                                    this.value = '';
+                                    return;
+                                }
+                                
                                 const reader = new FileReader();
                                 reader.onload = function(ev) {
                                     preview.src = ev.target.result;
@@ -180,11 +210,11 @@ include 'includes/sidebar.php';
                     </script>
                     <div class="mb-3 text-start">
                         <label for="name" class="form-label">名前<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control shadow-sm" id="name" name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
+                        <input type="text" class="form-control shadow-sm" id="name" name="name" value="<?php echo htmlspecialchars($user['user_name'] ?? ''); ?>" required>
                     </div>
                     <div class="mb-3 text-start">
                         <label for="mail" class="form-label">メールアドレス<span class="text-danger">*</span></label>
-                        <input type="email" class="form-control shadow-sm" id="mail" name="mail" value="<?php echo htmlspecialchars($user['mail']); ?>" required>
+                        <input type="email" class="form-control shadow-sm" id="mail" name="mail" value="<?php echo htmlspecialchars($user['user_mailaddress'] ?? ''); ?>" required>
                         <label for="password" class="form-label">新しいパスワード (変更する場合のみ)</label>
                         <input type="password" class="form-control shadow-sm" id="password" name="password">
                     </div>
@@ -197,7 +227,7 @@ include 'includes/sidebar.php';
                     </div>
                 </form>
                 
-                <?php if (!empty($user['user_is_teacher'])): ?>
+                <?php if (!empty($user['user_is_teacher'] ?? 0)): ?>
                 <hr>
                 <div class="mt-3">
                     <a href="create_teacher.php" class="btn btn-info">教師アカウント作成ページへ</a>
@@ -209,9 +239,5 @@ include 'includes/sidebar.php';
     </main>
 </div>
 <?php
-// include 'includes/footer.php';
-?>
-// include 'includes/footer.php';
-?>
 // include 'includes/footer.php';
 ?>

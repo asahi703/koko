@@ -1,6 +1,7 @@
 <?php
 require_once('common/dbmanager.php');
 require_once('common/session.php');
+require_once('common/notification_helper.php');
 
 $user = get_login_user();
 $class_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
@@ -37,6 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message'])) {
                 VALUES (?, ?, ?)
             ');
             $stmt->execute([$class_id, $user['uuid'], $message]);
+            
+            // チャットメッセージ通知を送信
+            $sender_name = $user['user_name'] ?? $user['name'] ?? 'ユーザー';
+            notify_chat_message($class_id, $user['uuid'], $sender_name, $message);
+            
             header('Location: ' . $_SERVER['REQUEST_URI']);
             exit;
         } catch (PDOException $e) {
@@ -89,11 +95,12 @@ $messages = $stmt->fetchAll();
                 <div class="card mb-3">
                     <div class="card-header bg-white d-flex justify-content-between align-items-center py-2">
                         <div class="d-flex align-items-center">
-                            <?php if ($message['user_icon']): ?>
-                                <img src="data:image/jpeg;base64,<?php echo base64_encode($message['user_icon']); ?>"
+                            <?php if (!empty($message['user_icon'])): ?>
+                                <img src="../<?php echo htmlspecialchars($message['user_icon']); ?>"
                                      class="rounded-circle me-2" style="width: 32px; height: 32px;" alt="">
                             <?php else: ?>
-                                <div class="bg-secondary rounded-circle me-2" style="width: 32px; height: 32px;"></div>
+                                <img src="../main/img/headerImg/account.png"
+                                     class="rounded-circle me-2" style="width: 32px; height: 32px;" alt="">
                             <?php endif; ?>
                             <span class="fw-bold"><?php echo htmlspecialchars($message['user_name']); ?></span>
                         </div>

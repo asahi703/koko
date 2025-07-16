@@ -1,0 +1,430 @@
+/* FAQページ専用スタイル */
+.main-content-wrapper {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    padding-left: 90px;
+    padding-right: 10px;
+}
+
+.main-content-styles {
+    margin-top: 60px;
+    margin-bottom: 20px;
+    padding: 0;
+    max-width: none;
+}
+
+.container-fluid {
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin: 0 !important;
+}
+
+/* ヘッダー */
+.faq-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.faq-title {
+    color: #2c3e50;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 0;
+}
+
+.faq-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* 情報エリア */
+.faq-info {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border: 1px solid #2196f3;
+    border-radius: 12px;
+    color: #1565c0;
+    font-size: 0.95rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* アコーディオンコンテナ */
+.faq-accordion {
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* セクションヘッダー */
+.faq-section-header {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    padding: 1rem 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.faq-section-header h4 {
+    margin: 0;
+    color: #856404;
+    font-weight: 700;
+}
+
+/* FAQアイテム */
+.faq-item {
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    transition: all 0.3s ease;
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+/* FAQクエスチョンヘッダー */
+.faq-question-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 60px;
+}
+
+.faq-item.pending .faq-question-header {
+    background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+    color: white;
+}
+
+.faq-item.answered .faq-question-header {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+}
+
+.faq-item.common .faq-question-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.faq-question-header:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+/* アイコン */
+.faq-icon {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    width: 24px;
+    justify-content: center;
+}
+
+/* タイトルコンテンツ */
+.faq-title-content {
+    min-width: 0;
+    flex: 1;
+}
+
+.faq-title-content strong {
+    display: block;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* メタ情報 */
+.faq-meta {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+/* アクション */
+.faq-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.delete-btn {
+    background: rgba(220, 53, 69, 0.9);
+    border: none;
+    color: white;
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.delete-btn:hover {
+    background: #dc3545;
+    transform: scale(1.05);
+}
+
+/* トグル */
+.faq-toggle {
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-toggle {
+    transform: rotate(180deg);
+}
+
+/* FAQコンテンツ */
+.faq-content {
+    display: none;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-top: 3px solid #667eea;
+}
+
+.faq-item.answered .faq-content {
+    border-top-color: #28a745;
+}
+
+.faq-item.pending .faq-content {
+    border-top-color: #ffc107;
+}
+
+.faq-item.active .faq-content {
+    display: block;
+    animation: slideDown 0.3s ease-in-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 500px;
+    }
+}
+
+/* 質問・回答エリア */
+.faq-question, .faq-answer {
+    margin-bottom: 1.5rem;
+}
+
+.faq-question:last-child, .faq-answer:last-child {
+    margin-bottom: 0;
+}
+
+.content-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+}
+
+.content-header strong {
+    color: #2d3748;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.content-text {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 1rem;
+    line-height: 1.6;
+    color: #2d3748;
+}
+
+.faq-question .content-text {
+    border-left: 3px solid #007bff;
+}
+
+.faq-answer.answered .content-text {
+    border-left: 3px solid #28a745;
+}
+
+.faq-answer.pending .content-text {
+    border-left: 3px solid #17a2b8;
+    font-style: italic;
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+}
+
+/* ステップアイテム */
+.answer-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.step-item:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-left-color: #667eea;
+    transform: translateX(5px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.step-item i {
+    margin-right: 0.75rem;
+    font-size: 1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.step-item span {
+    color: #4a5568;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* 空の状態 */
+.faq-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #1565c0;
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border: 1px solid #2196f3;
+    border-radius: 12px;
+}
+
+/* ボタンスタイル */
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #218838 0%, #17a085 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .main-content-wrapper {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    
+    .main-content-styles {
+        padding: 0 0.5rem;
+        margin-top: 40px;
+    }
+    
+    .faq-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .faq-accordion {
+        margin: 0 0.5rem;
+    }
+    
+    .faq-question-header {
+        grid-template-columns: auto 1fr auto;
+        grid-template-rows: auto auto;
+        gap: 0.5rem;
+        padding: 0.75rem;
+    }
+    
+    .faq-title-content {
+        grid-column: 1 / -1;
+        grid-row: 1;
+    }
+    
+    .faq-meta {
+        grid-column: 1 / 2;
+        grid-row: 2;
+        font-size: 0.7rem;
+        max-width: none;
+    }
+    
+    .faq-actions {
+        grid-column: 2;
+        grid-row: 2;
+        justify-self: end;
+    }
+    
+    .faq-toggle {
+        grid-column: 3;
+        grid-row: 1;
+    }
+    
+    .delete-btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+    }
+    
+    .faq-content {
+        padding: 1rem;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+    .main-content-wrapper {
+        padding-left: 85px;
+        padding-right: 10px;
+    }
+    
+    .main-content-styles {
+        padding: 0 1rem;
+        margin-top: 50px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .main-content-wrapper {
+        padding-left: 90px;
+        padding-right: 10px;
+    }
+    
+    .main-content-styles {
+        padding: 0 2rem;
+        margin-top: 60px;
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+}

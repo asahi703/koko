@@ -319,13 +319,25 @@ function loadMembers(communityId, communityName) {
                 if (data.members && data.members.length > 0) {
                     let html = '<div class="row">';
                     data.members.forEach((member, index) => {
+                        // アイコンパスの処理
+                        let iconSrc;
+                        if (member.user_icon && member.user_icon.trim() !== '') {
+                            if (member.user_icon.startsWith('img/user_icons/')) {
+                                iconSrc = '../' + member.user_icon;
+                            } else {
+                                iconSrc = '../img/user_icons/' + member.user_icon;
+                            }
+                        } else {
+                            iconSrc = '../main/img/headerImg/account.png';
+                        }
+                        
                         html += `
                             <div class="col-12 col-md-6 mb-3">
                                 <div class="d-flex align-items-center p-3 border rounded member-card">
                                     <!-- プロフィール画像（ドロップダウン付き） -->
                                     <div class="dropdown position-relative">
-                                        <img src="../main/img/headerImg/account.png" 
-                                             style="width: 50px; height: 50px; border-radius: 50%; cursor: pointer;" 
+                                        <img src="${iconSrc}" 
+                                             style="width: 50px; height: 50px; border-radius: 50%; cursor: pointer; object-fit: cover;" 
                                              alt="プロフィール画像"
                                              id="memberProfile${index}"
                                              data-bs-toggle="dropdown" 
@@ -337,8 +349,8 @@ function loadMembers(communityId, communityName) {
                                             aria-labelledby="memberProfile${index}" 
                                             style="min-width: 280px;">
                                             <li class="d-flex align-items-center mb-3">
-                                                <img src="../main/img/headerImg/account.png" 
-                                                     style="width: 60px; height: 60px; border-radius: 50%;" 
+                                                <img src="${iconSrc}" 
+                                                     style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;" 
                                                      alt="プロフィール画像">
                                                 <div class="ms-3">
                                                     <h6 class="mb-1 fw-bold">${member.user_name || 'ユーザー名なし'}</h6>

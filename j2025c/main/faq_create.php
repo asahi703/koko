@@ -1,6 +1,7 @@
 <?php
 require_once('common/session.php');
 require_once('common/dbmanager.php');
+require_once('common/notification_helper.php');
 
 $user = get_login_user();
 if (!$user) {
@@ -38,6 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ');
                 
                 if ($stmt->execute([$title, $question, $user['uuid']])) {
+                    $faq_id = $db->lastInsertId();
+                    
+                    // 教師への質問通知を送信
+                    $questioner_name = $user['user_name'] ?? $user['name'] ?? 'ユーザー';
+                    notify_faq_question($faq_id, $user['uuid'], $questioner_name, $title);
+                    
                     $message = '質問を投稿しました。回答をお待ちください。';
                     $title = ''; // フォームをリセット
                     $question = ''; // フォームをリセット

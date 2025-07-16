@@ -1,6 +1,7 @@
 <?php
 require_once('common/session.php');
 require_once('common/dbmanager.php');
+require_once('common/notification_helper.php');
 
 // 教師権限チェック
 $user = get_login_user();
@@ -22,14 +23,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reply_submit'])) {
     } else {
         try {
             $db = new cdb();
-            $stmt = $db->prepare('UPDATE faq SET 
-                faq_answer = ?,
-                faq_answered_at = NOW(),
-                faq_answered_by = ?
-                WHERE faq_id = ?');
-            $stmt->execute([$reply_text, $user['user_id'], $question_id]);
             
-            $success = '返信を送信しました。';
+            // 質問者の情報を取得
+            $question_stmt = $db->prepare('SELECT faq_user_id, faq_title FROM faq WHERE faq_id = ?');
+            $question_stmt->execute([$question_id]);
+            $question_data = $question_stmt->fetch();
+            
+            if ($question_data) {
+                $stmt = $db->prepare('UPDATE faq SET 
+                    faq_answer = ?,
+                    faq_answered_at = NOW(),
+                    faq_answered_by = ?
+                    WHERE faq_id = ?');
+                $stmt->execute([$reply_text, $user['user_id'], $question_id]);
+                
+                // FAQ回答通知を送信
+                $responder_name = $user['user_name'] ?? $user['name'] ?? '先生';
+                notify_faq_answer(
+                    $question_id, 
+                    $question_data['faq_user_id'], 
+                    $user['user_id'], 
+                    $responder_name, 
+                    $question_data['faq_title']
+                );
+                
+                $success = '返信を送信しました。';
+            } else {
+                $error = '質問が見つかりません。';
+            }
         } catch (PDOException $e) {
             $error = '返信の送信に失敗しました: ' . $e->getMessage();
             error_log('返信送信エラー: ' . $e->getMessage());

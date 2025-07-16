@@ -114,7 +114,7 @@ END_BLOCK;
             <?php
             // ユーザーアイコンのパスを取得（なければデフォルト）
             $icon_file = !empty($user['user_icon']) && file_exists(__DIR__ . '/../../' . $user['user_icon'])
-                ? $user['user_icon']
+                ? '../' . $user['user_icon']
                 : '../main/img/headerImg/account.png';
             ?>
             <img src="<?php echo htmlspecialchars($icon_file); ?>" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #667eea;"

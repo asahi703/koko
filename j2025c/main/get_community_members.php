@@ -52,7 +52,7 @@ try {
     
     // 1. オーナー情報を取得（現在のユーザーでない場合のみ）
     if ($community['community_owner'] != $user_id) {
-        $stmt = $db->prepare('SELECT user_id, user_name, user_mailaddress as user_email, user_is_teacher FROM users WHERE user_id = ?');
+        $stmt = $db->prepare('SELECT user_id, user_name, user_mailaddress as user_email, user_is_teacher, user_icon FROM users WHERE user_id = ?');
         $stmt->execute([$community['community_owner']]);
         $owner = $stmt->fetch();
         
@@ -64,7 +64,7 @@ try {
     
     // 2. メンバー情報を取得（オーナーと現在のユーザー以外）
     $stmt = $db->prepare(
-        'SELECT u.user_id, u.user_name, u.user_mailaddress as user_email, u.user_is_teacher
+        'SELECT u.user_id, u.user_name, u.user_mailaddress as user_email, u.user_is_teacher, u.user_icon
          FROM users u
          JOIN community_users cu ON u.user_id = cu.user_id
          WHERE cu.community_id = ? AND u.user_id != ? AND u.user_id != ?
