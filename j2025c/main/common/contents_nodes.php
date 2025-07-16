@@ -546,3 +546,75 @@ class cclass_sidebar extends cnode {
 		parent::__destruct();
 	}
 }
+
+//--------------------------------------------------------------------------------------
+///	シンプルヘッダノード（ロゴのみ）
+//--------------------------------------------------------------------------------------
+class csimple_header extends cnode {
+	//--------------------------------------------------------------------------------------
+	/*!
+	@brief	コンストラクタ
+	*/
+	//--------------------------------------------------------------------------------------
+	public function __construct() {
+		//親クラスのコンストラクタを呼ぶ
+		parent::__construct();
+	}
+	//--------------------------------------------------------------------------------------
+	/*!
+	@brief	構築時の処理(継承して使用)
+	@return	なし
+	*/
+	//--------------------------------------------------------------------------------------
+	public function create(){
+	}
+	//--------------------------------------------------------------------------------------
+	/*!
+	@brief  表示(継承して使用)
+	@return なし
+	*/
+	//--------------------------------------------------------------------------------------
+	public function display(){
+//PHPブロック終了
+?>
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-..." crossorigin="anonymous" />
+    <link rel="stylesheet" href="../main/css/header.css">
+    <link rel="stylesheet" href="../main/css/Global.css">
+</head>
+
+<!--PC時ヘッダー（ロゴのみ）-->
+<header class="d-none d-md-flex w-100 navbar navbar-expand-md align-items-center py-md-2 fixed-top shadow-sm">
+    <nav class="container-fluid d-flex flex-row justify-content-between align-items-center">
+        <!-- ブランドロゴ -->
+        <a class="navbar-brand d-flex align-items-center me-auto ms-3" href="index.php">
+            <img src="../main/img/headerImg/logo.png" style="width: 50px" class="hd-img d-inline-block align-top img-fluid"
+                 alt="">
+        </a>
+    </nav>
+</header>
+<?php 
+//PHPブロック再開
+	}
+	//--------------------------------------------------------------------------------------
+	/*!
+	@brief	デストラクタ
+	*/
+	//--------------------------------------------------------------------------------------
+	public function __destruct(){
+		//親クラスのデストラクタを呼ぶ
+		parent::__destruct();
+	}
+}

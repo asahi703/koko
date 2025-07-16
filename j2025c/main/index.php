@@ -228,30 +228,13 @@ END_BLOCK;
 	public function display(){
 //PHPブロック終了
 ?>
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>ログイン</title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-            crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-          integrity="sha512-..." crossorigin="anonymous" />
-    <link rel="stylesheet" href="css/Global.css">
-</head>
-
 <!-- コンテンツ　-->
+<head>
+    <title>ログイン</title>
+</head>
 <div class="contents">
 <?= $this->get_err_flag(); ?>
+<?= $this->get_error_display(); ?>
 
 <div class="main-content-wrapper">
     <div class="container d-flex flex-column align-items-center justify-content-center vw-100">
@@ -259,8 +242,6 @@ END_BLOCK;
             <div class="mb-3">
                 <h2>ログイン</h2>
             </div>
-            
-            <?= $this->get_error_display(); ?>
             
             <form name="form1" action="<?= $_SERVER['PHP_SELF']; ?>" method="post" class="border rounded shadow p-4 w-100 login-form">
                 <div class="form-group my-2 px-2 w-100">
@@ -293,7 +274,6 @@ function set_func_form(func, param) {
     document.form1.submit();
 }
 </script>
-</html>
 <?php 
 //PHPブロック再開
 	}
@@ -310,6 +290,8 @@ function set_func_form(func, param) {
 
 //ページを作成
 $page_obj = new cnode();
+//シンプルヘッダ追加
+$page_obj->add_child(cutil::create('csimple_header'));
 //本体追加
 $page_obj->add_child($main_obj = cutil::create('cmain_node'));
 //構築時処理

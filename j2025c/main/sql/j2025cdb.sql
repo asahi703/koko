@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: localhost
--- 生成日時: 2025 年 7 月 04 日 14:03
+-- 生成日時: 2025 年 7 月 09 日 13:37
 -- サーバのバージョン： 8.0.41
 -- PHP のバージョン: 8.0.30
 
@@ -32,7 +32,7 @@ CREATE TABLE `administers` (
   `administer_name` varchar(255) NOT NULL,
   `administer_mailaddress` varchar(255) NOT NULL,
   `administer_password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- テーブルのデータのダンプ `administers`
@@ -53,7 +53,7 @@ CREATE TABLE `attendances` (
   `attendance_status` enum('attend','late','absent') NOT NULL DEFAULT 'attend',
   `attendance_class` int NOT NULL,
   `attendance_user` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -68,7 +68,7 @@ CREATE TABLE `chats` (
   `sent_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `from_chat` int DEFAULT NULL,
   `to_chat` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -79,7 +79,7 @@ CREATE TABLE `chats` (
 CREATE TABLE `chat_recipients` (
   `chat_id` int NOT NULL,
   `user_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -91,7 +91,42 @@ CREATE TABLE `classes` (
   `class_id` int NOT NULL,
   `class_name` varchar(255) NOT NULL,
   `class_community` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- テーブルのデータのダンプ `classes`
+--
+
+INSERT INTO `classes` (`class_id`, `class_name`, `class_community`) VALUES
+(6, 'お疲れ様', 1),
+(7, 'lp', 6),
+(8, 'joi', 6),
+(9, 'joi', 6),
+(10, 'aiueo', 3);
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `class_chats`
+--
+
+CREATE TABLE `class_chats` (
+  `chat_id` int NOT NULL,
+  `class_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `message` text NOT NULL,
+  `file_path` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- テーブルのデータのダンプ `class_chats`
+--
+
+INSERT INTO `class_chats` (`chat_id`, `class_id`, `user_id`, `message`, `file_path`, `created_at`) VALUES
+(10, 6, 8, 'lp', NULL, '2025-07-07 13:53:32'),
+(11, 6, 9, 'お疲れ様です', NULL, '2025-07-07 15:28:31'),
+(12, 10, 11, 'aaaaa', NULL, '2025-07-08 09:36:33');
 
 -- --------------------------------------------------------
 
@@ -102,7 +137,7 @@ CREATE TABLE `classes` (
 CREATE TABLE `class_users` (
   `user_id` int NOT NULL,
   `class_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -119,7 +154,7 @@ CREATE TABLE `comments` (
   `comment_is_sent` tinyint(1) NOT NULL DEFAULT '0',
   `comment_class` int NOT NULL,
   `comment_user` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -132,7 +167,32 @@ CREATE TABLE `communities` (
   `community_name` varchar(255) NOT NULL,
   `community_description` varchar(255) NOT NULL,
   `community_owner` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- テーブルのデータのダンプ `communities`
+--
+
+INSERT INTO `communities` (`community_id`, `community_name`, `community_description`, `community_owner`) VALUES
+(1, '前歯', 'しょう', 8),
+(2, 'aqaaa', 'aaa', 15),
+(3, 'aaaa', '', 11),
+(4, 'annanana', 'adada', 8),
+(5, 'annanana', 'adada', 8),
+(6, 'annanana', 'adada', 8);
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `community_invite_codes`
+--
+
+CREATE TABLE `community_invite_codes` (
+  `invite_id` int NOT NULL,
+  `community_id` int NOT NULL,
+  `invite_code` varchar(32) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -143,7 +203,14 @@ CREATE TABLE `communities` (
 CREATE TABLE `community_users` (
   `user_id` int NOT NULL,
   `community_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- テーブルのデータのダンプ `community_users`
+--
+
+INSERT INTO `community_users` (`user_id`, `community_id`) VALUES
+(9, 1);
 
 -- --------------------------------------------------------
 
@@ -158,7 +225,7 @@ CREATE TABLE `events` (
   `event_start_time` date NOT NULL,
   `event_end_time` date NOT NULL,
   `event_class` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -192,6 +259,69 @@ CREATE TABLE `fruits_match` (
   `member_id` int NOT NULL DEFAULT '0',
   `fruits_id` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `group_chats`
+--
+
+CREATE TABLE `group_chats` (
+  `group_id` int NOT NULL,
+  `group_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- テーブルのデータのダンプ `group_chats`
+--
+
+INSERT INTO `group_chats` (`group_id`, `group_name`) VALUES
+(1, 'osamu'),
+(2, 'あ');
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `group_chat_members`
+--
+
+CREATE TABLE `group_chat_members` (
+  `group_id` int NOT NULL,
+  `user_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- テーブルのデータのダンプ `group_chat_members`
+--
+
+INSERT INTO `group_chat_members` (`group_id`, `user_id`) VALUES
+(1, 8),
+(2, 8),
+(1, 9),
+(2, 15);
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `group_chat_messages`
+--
+
+CREATE TABLE `group_chat_messages` (
+  `message_id` int NOT NULL,
+  `group_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `message` text NOT NULL,
+  `sent_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- テーブルのデータのダンプ `group_chat_messages`
+--
+
+INSERT INTO `group_chat_messages` (`message_id`, `group_id`, `user_id`, `message`, `sent_at`) VALUES
+(1, 1, 8, 'aaaaaa', '2025-07-07 16:04:40'),
+(2, 1, 8, 'asd', '2025-07-07 16:06:25'),
+(3, 1, 11, 'aaaaa', '2025-07-07 16:52:27');
 
 -- --------------------------------------------------------
 
@@ -291,7 +421,7 @@ CREATE TABLE `questions` (
   `is_anser` tinyint(1) NOT NULL DEFAULT '0',
   `asked_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `answered_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -304,7 +434,7 @@ CREATE TABLE `temprates` (
   `temprate_title` varchar(255) NOT NULL,
   `temprate_text` text NOT NULL,
   `temprate_user` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -321,53 +451,17 @@ CREATE TABLE `users` (
   `user_is_teacher` tinyint(1) NOT NULL DEFAULT '0',
   `user_text` text,
   `user_login` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- テーブルのデータのダンプ `users`
 --
 
 INSERT INTO `users` (`user_id`, `user_name`, `user_mailaddress`, `user_password`, `user_icon`, `user_is_teacher`, `user_text`, `user_login`) VALUES
-(1, 'user', 'mail@com', '4d69a6fafd27e155fe2e24c60f0ad9dffd84b5b0', NULL, 0, NULL, 'mail@com'),
-(2, 'name', 'm@c', 'ee18e3f6a485f0fd0d4185f050c15be2623a37a0', NULL, 0, NULL, 'm@c'),
-(3, 'a', 'a@b.c', 'dd8b23ea0e2d32cbe01542b5ac5ad5285d91a0df', NULL, 0, NULL, 'a@b.c');
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `community_invite_codes`
---
-
-CREATE TABLE `community_invite_codes` (
-  `invite_id` int NOT NULL AUTO_INCREMENT,
-  `community_id` int NOT NULL,
-  `invite_code` varchar(32) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`invite_id`),
-  UNIQUE KEY `invite_code` (`invite_code`),
-  KEY `community_id` (`community_id`),
-  CONSTRAINT `community_invite_codes_ibfk_1` FOREIGN KEY (`community_id`) REFERENCES `communities` (`community_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `class_chats`
---
-
-CREATE TABLE `class_chats` (
-  `chat_id` int NOT NULL AUTO_INCREMENT,
-  `class_id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `message` text NOT NULL,
-  `file_path` varchar(255) DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`chat_id`),
-  KEY `class_id` (`class_id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `class_chats_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `classes` (`class_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `class_chats_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+(8, '前歯', 'a@b.c', '219857844b59336f8e8fcec4e631a6db330d1dc4', NULL, 0, NULL, 'a@b.c'),
+(9, 'osa', 'a@bw', 'a3ae759b1dbec6b0bdf17e9182cfd8b8c9716912', NULL, 0, NULL, 'a@bw'),
+(11, 'aaaaa', 'aaaaa@gmail.com', 'df51e37c269aa94d38f93e537bf6e2020b21406c', NULL, 0, NULL, 'aaaaa@gmail.com'),
+(15, 'mizuki', 'mizuki@a.b', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', NULL, 0, NULL, 'mizuki@a.b');
 
 --
 -- ダンプしたテーブルのインデックス
@@ -411,6 +505,14 @@ ALTER TABLE `classes`
   ADD KEY `class_community` (`class_community`);
 
 --
+-- テーブルのインデックス `class_chats`
+--
+ALTER TABLE `class_chats`
+  ADD PRIMARY KEY (`chat_id`),
+  ADD KEY `class_id` (`class_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- テーブルのインデックス `class_users`
 --
 ALTER TABLE `class_users`
@@ -433,6 +535,14 @@ ALTER TABLE `communities`
   ADD KEY `community_owner` (`community_owner`);
 
 --
+-- テーブルのインデックス `community_invite_codes`
+--
+ALTER TABLE `community_invite_codes`
+  ADD PRIMARY KEY (`invite_id`),
+  ADD UNIQUE KEY `invite_code` (`invite_code`),
+  ADD KEY `community_id` (`community_id`);
+
+--
 -- テーブルのインデックス `community_users`
 --
 ALTER TABLE `community_users`
@@ -451,6 +561,27 @@ ALTER TABLE `events`
 --
 ALTER TABLE `fruits`
   ADD PRIMARY KEY (`fruits_id`);
+
+--
+-- テーブルのインデックス `group_chats`
+--
+ALTER TABLE `group_chats`
+  ADD PRIMARY KEY (`group_id`);
+
+--
+-- テーブルのインデックス `group_chat_members`
+--
+ALTER TABLE `group_chat_members`
+  ADD PRIMARY KEY (`group_id`,`user_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- テーブルのインデックス `group_chat_messages`
+--
+ALTER TABLE `group_chat_messages`
+  ADD PRIMARY KEY (`message_id`),
+  ADD KEY `group_id` (`group_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- テーブルのインデックス `member`
@@ -487,22 +618,6 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `user_login` (`user_login`);
 
 --
--- テーブルのインデックス `community_invite_codes`
---
-ALTER TABLE `community_invite_codes`
-  ADD PRIMARY KEY (`invite_id`),
-  ADD UNIQUE KEY `invite_code` (`invite_code`),
-  ADD KEY `community_id` (`community_id`);
-
---
--- テーブルのインデックス `class_chats`
---
-ALTER TABLE `class_chats`
-  ADD PRIMARY KEY (`chat_id`),
-  ADD KEY `class_id` (`class_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
 -- ダンプしたテーブルの AUTO_INCREMENT
 --
 
@@ -528,7 +643,13 @@ ALTER TABLE `chats`
 -- テーブルの AUTO_INCREMENT `classes`
 --
 ALTER TABLE `classes`
-  MODIFY `class_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `class_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- テーブルの AUTO_INCREMENT `class_chats`
+--
+ALTER TABLE `class_chats`
+  MODIFY `chat_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- テーブルの AUTO_INCREMENT `comments`
@@ -540,7 +661,13 @@ ALTER TABLE `comments`
 -- テーブルの AUTO_INCREMENT `communities`
 --
 ALTER TABLE `communities`
-  MODIFY `community_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `community_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- テーブルの AUTO_INCREMENT `community_invite_codes`
+--
+ALTER TABLE `community_invite_codes`
+  MODIFY `invite_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- テーブルの AUTO_INCREMENT `events`
@@ -553,6 +680,18 @@ ALTER TABLE `events`
 --
 ALTER TABLE `fruits`
   MODIFY `fruits_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- テーブルの AUTO_INCREMENT `group_chats`
+--
+ALTER TABLE `group_chats`
+  MODIFY `group_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- テーブルの AUTO_INCREMENT `group_chat_messages`
+--
+ALTER TABLE `group_chat_messages`
+  MODIFY `message_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- テーブルの AUTO_INCREMENT `member`
@@ -582,19 +721,7 @@ ALTER TABLE `temprates`
 -- テーブルの AUTO_INCREMENT `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- テーブルの AUTO_INCREMENT `community_invite_codes`
---
-ALTER TABLE `community_invite_codes`
-  MODIFY `invite_id` int NOT NULL AUTO_INCREMENT;
-
---
--- テーブルの AUTO_INCREMENT `class_chats`
---
-ALTER TABLE `class_chats`
-  MODIFY `chat_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- ダンプしたテーブルの制約
@@ -628,6 +755,13 @@ ALTER TABLE `classes`
   ADD CONSTRAINT `classes_ibfk_1` FOREIGN KEY (`class_community`) REFERENCES `communities` (`community_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- テーブルの制約 `class_chats`
+--
+ALTER TABLE `class_chats`
+  ADD CONSTRAINT `class_chats_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `classes` (`class_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `class_chats_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- テーブルの制約 `class_users`
 --
 ALTER TABLE `class_users`
@@ -648,6 +782,12 @@ ALTER TABLE `communities`
   ADD CONSTRAINT `communities_ibfk_1` FOREIGN KEY (`community_owner`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
+-- テーブルの制約 `community_invite_codes`
+--
+ALTER TABLE `community_invite_codes`
+  ADD CONSTRAINT `community_invite_codes_ibfk_1` FOREIGN KEY (`community_id`) REFERENCES `communities` (`community_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- テーブルの制約 `community_users`
 --
 ALTER TABLE `community_users`
@@ -661,6 +801,20 @@ ALTER TABLE `events`
   ADD CONSTRAINT `events_ibfk_1` FOREIGN KEY (`event_class`) REFERENCES `classes` (`class_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- テーブルの制約 `group_chat_members`
+--
+ALTER TABLE `group_chat_members`
+  ADD CONSTRAINT `group_chat_members_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `group_chats` (`group_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `group_chat_members_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
+
+--
+-- テーブルの制約 `group_chat_messages`
+--
+ALTER TABLE `group_chat_messages`
+  ADD CONSTRAINT `group_chat_messages_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `group_chats` (`group_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `group_chat_messages_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
+
+--
 -- テーブルの制約 `questions`
 --
 ALTER TABLE `questions`
@@ -672,19 +826,6 @@ ALTER TABLE `questions`
 --
 ALTER TABLE `temprates`
   ADD CONSTRAINT `temprates_ibfk_1` FOREIGN KEY (`temprate_user`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- テーブルの制約 `community_invite_codes`
---
-ALTER TABLE `community_invite_codes`
-  ADD CONSTRAINT `community_invite_codes_ibfk_1` FOREIGN KEY (`community_id`) REFERENCES `communities` (`community_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- テーブルの制約 `class_chats`
---
-ALTER TABLE `class_chats`
-  ADD CONSTRAINT `class_chats_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `classes` (`class_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `class_chats_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

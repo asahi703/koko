@@ -131,19 +131,23 @@ class cmain_node extends cnode {
 		}
 		
 		try {
-			$pdo = new cdb();
-			$stmt = $pdo->prepare('INSERT INTO group_chats (group_name) VALUES (?)');
-			$stmt->execute(array($group_name));
-			$group_id = $pdo->lastInsertId();
-			
-			// メンバー追加（自分も含める）
-			$members = array_unique(array_merge(array($this->user['uuid']), $group_members));
-			$mem_stmt = $pdo->prepare('INSERT INTO group_chat_members (group_id, user_id) VALUES (?, ?)');
-			foreach($members as $uid){
-				$mem_stmt->execute(array($group_id, $uid));
+			// グループ作成
+			$group_obj = new crecord();
+			$dataarr = array('group_name' => $group_name);
+			$group_id = $group_obj->insert_core(false, 'group_chats', $dataarr);
+			if($group_id){
+				// メンバー追加（自分も含める）
+				$members = array_unique(array_merge(array($this->user['uuid']), $group_members));
+				$member_obj = new crecord();
+				foreach($members as $uid){
+					$member_data = array('group_id' => $group_id, 'user_id' => $uid);
+					$member_obj->insert_core(false, 'group_chat_members', $member_data);
+				}
+				
+				cutil::redirect_exit($_SERVER['PHP_SELF'] . '?group_id=' . $group_id);
+			} else {
+				$this->error = 'グループ作成に失敗しました。';
 			}
-			
-			cutil::redirect_exit($_SERVER['PHP_SELF'] . '?group_id=' . $group_id);
 		} catch (Exception $e) {
 			$this->error = 'グループ作成に失敗しました。';
 		}
@@ -158,23 +162,29 @@ class cmain_node extends cnode {
 		$message = trim($_POST['message']);
 		
 		if(empty($message)){
-			$this->error = 'メッセージを入力してください。';
+			// チャット画面ではエラーメッセージを表示しない
 			return;
 		}
 		
 		if(!$this->selected_group_id){
-			$this->error = 'グループが選択されていません。';
+			// チャット画面ではエラーメッセージを表示しない
 			return;
 		}
 		
 		try {
-			$pdo = new cdb();
-			$stmt = $pdo->prepare('INSERT INTO group_chat_messages (group_id, user_id, message) VALUES (?, ?, ?)');
-			$stmt->execute(array($this->selected_group_id, $this->user['uuid'], $message));
-			
-			cutil::redirect_exit($_SERVER['PHP_SELF'] . '?group_id=' . $this->selected_group_id);
+			$message_obj = new crecord();
+			$dataarr = array(
+				'group_id' => $this->selected_group_id,
+				'user_id' => $this->user['uuid'],
+				'message' => $message
+			);
+			$result = $message_obj->insert_core(false, 'group_chat_messages', $dataarr);
+			if($result){
+				// リダイレクトを削除して同じページで処理完了
+				$_POST['message'] = ''; // 入力欄をクリア
+			}
 		} catch (Exception $e) {
-			$this->error = 'メッセージ送信に失敗しました。';
+			// チャット画面ではエラーメッセージを表示しない
 		}
 	}
 	//--------------------------------------------------------------------------------------
@@ -185,9 +195,8 @@ class cmain_node extends cnode {
 	//--------------------------------------------------------------------------------------
 	function get_group_list(){
 		try {
-			$pdo = new cdb();
-			$stmt = $pdo->query('SELECT group_id, group_name FROM group_chats');
-			$this->group_list = $stmt->fetchAll();
+			$groups_obj = new cgroup_chats();
+			$this->group_list = $groups_obj->get_all_groups(false);
 		} catch (Exception $e) {
 			$this->error = 'グループ一覧の取得に失敗しました。';
 			$this->group_list = array();
@@ -217,16 +226,8 @@ class cmain_node extends cnode {
 	function get_chat_history(){
 		if($this->selected_group_id){
 			try {
-				$pdo = new cdb();
-				$stmt = $pdo->prepare('
-					SELECT m.*, u.user_name, u.uuid
-					FROM group_chat_messages m
-					JOIN users u ON m.user_id = u.uuid
-					WHERE m.group_id = ?
-					ORDER BY m.sent_at ASC
-				');
-				$stmt->execute(array($this->selected_group_id));
-				$this->chats = $stmt->fetchAll();
+				$messages_obj = new cgroup_chat_messages();
+				$this->chats = $messages_obj->get_group_messages(false, $this->selected_group_id);
 			} catch (Exception $e) {
 				$this->error = 'チャット履歴の取得に失敗しました。';
 				$this->chats = array();
@@ -241,10 +242,8 @@ class cmain_node extends cnode {
 	//--------------------------------------------------------------------------------------
 	function get_templates(){
 		try {
-			$pdo = new cdb();
-			$stmt = $pdo->prepare('SELECT temprate_id, temprate_title, temprate_text FROM temprates WHERE temprate_user = ? ORDER BY temprate_id DESC');
-			$stmt->execute(array($this->user['uuid']));
-			$this->templates = $stmt->fetchAll();
+			$templates_obj = new ctemplates();
+			$this->templates = $templates_obj->get_user_templates(false, $this->user['uuid']);
 		} catch (Exception $e) {
 			$this->templates = array();
 		}
@@ -323,11 +322,11 @@ END_BLOCK;
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	グループ一覧の取得
+	@brief	グループ一覧HTMLの取得
 	@return	グループ一覧文字列
 	*/
 	//--------------------------------------------------------------------------------------
-	function get_group_list(){
+	function get_group_list_html(){
 		$list_str = '';
 		foreach($this->group_list as $group){
 			$group_name = display($group['group_name']);
@@ -362,7 +361,7 @@ END_BLOCK;
 		// 他のユーザーのチェックボックス
 		foreach($this->all_users as $user){
 			$user_name = display($user['user_name']);
-			$user_id = $user['uuid'];
+			$user_id = $user['user_id'];
 			
 			$checkbox_str .= <<<END_BLOCK
 <div class="form-check">
@@ -379,12 +378,12 @@ END_BLOCK;
 	@return	チャット履歴文字列
 	*/
 	//--------------------------------------------------------------------------------------
-	function get_chat_history(){
+	function get_chat_history_html(){
 		$history_str = '';
 		foreach($this->chats as $chat){
 			$user_name = display($chat['user_name']);
 			$message_text = display($chat['message']);
-			$from_id = $chat['uuid'];
+			$from_id = $chat['user_id'];
 			$sent_at = $chat['sent_at'];
 			$time_display = date('H:i', strtotime($sent_at));
 			
@@ -444,9 +443,10 @@ END_BLOCK;
     <link rel="stylesheet" href="css/chat.css">
 </head>
 <div class="contents">
-<?= $this->get_err_flag(); ?>
-<?= $this->get_error_display(); ?>
-<?= $this->get_success_display(); ?>
+<?php // チャット画面ではメッセージ表示を無効化 ?>
+<?php // <?= $this->get_err_flag(); ?> ?>
+<?php // <?= $this->get_error_display(); ?> ?>
+<?php // <?= $this->get_success_display(); ?> ?>
 
 <div class="main-content-wrapper">
     <div class="container-fluid h-100">
@@ -468,7 +468,7 @@ END_BLOCK;
                     </button>
                 </div>
                 <ul class="list-group list-group-flush flex-grow-1 overflow-auto group-list-scroll bg-light px-2">
-                    <?= $this->get_group_list(); ?>
+                    <?= $this->get_group_list_html(); ?>
                 </ul>
             </nav>
 
@@ -476,11 +476,11 @@ END_BLOCK;
             <main class="col-12 col-md-9 col-lg-9 px-0 d-flex flex-column chat-main-area position-relative bg-white">
                 <!-- チャット履歴 -->
                 <div class="flex-grow-1 overflow-auto chat-history p-4 chat-history-scroll bg-light">
-                    <?= $this->get_chat_history(); ?>
+                    <?= $this->get_chat_history_html(); ?>
                 </div>
 
                 <!-- 入力欄（ページ下部に固定） -->
-                <form name="form1" action="<?= $_SERVER['PHP_SELF']; ?>" method="post" class="input-form">
+                <form name="form1" action="<?= $_SERVER['PHP_SELF'] . '?group_id=' . $this->selected_group_id; ?>" method="post" class="input-form" onsubmit="return submitMessageForm();">
                     <div class="mb-3 input-group" style="position: fixed !important; bottom: 2% !important; left: 33% !important; width: 65% !important;">
                         <?= $this->get_message(); ?>
                         <!-- +アイコンとドロップダウン -->
@@ -492,9 +492,9 @@ END_BLOCK;
                                 <?= $this->get_template_dropdown(); ?>
                             </ul>
                         </div>
-                        <button type="button" class="btn btn-primary" onClick="set_func_form('send_message','')">送信</button>
+                        <button type="submit" class="btn btn-primary">送信</button>
                     </div>
-                    <input type="hidden" name="func" value="" />
+                    <input type="hidden" name="func" value="send_message" />
                     <input type="hidden" name="param" value="" />
                 </form>
             </main>
@@ -637,6 +637,18 @@ function set_func_form2(func, param) {
     document.form2.func.value = func;
     document.form2.param.value = param;
     document.form2.submit();
+}
+
+// メッセージフォーム送信処理
+function submitMessageForm() {
+    // 空のメッセージは送信しない
+    var messageInput = document.getElementById('chatInput');
+    if (messageInput && messageInput.value.trim() === '') {
+        return false;
+    }
+    // funcの値を確実にsend_messageに設定
+    document.form1.func.value = 'send_message';
+    return true;
 }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

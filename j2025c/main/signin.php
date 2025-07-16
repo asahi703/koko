@@ -332,6 +332,8 @@ function set_func_form(func, param) {
 
 //ページを作成
 $page_obj = new cnode();
+//シンプルヘッダ追加
+$page_obj->add_child(cutil::create('csimple_header'));
 //本体追加
 $page_obj->add_child($main_obj = cutil::create('cmain_node'));
 //構築時処理
