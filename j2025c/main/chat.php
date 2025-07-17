@@ -293,6 +293,7 @@ include 'includes/sidebar.php';
     </div>
 </div>
 
+                    <!--テンプレートモーダル-->
 <div class="modal fade" id="myModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
