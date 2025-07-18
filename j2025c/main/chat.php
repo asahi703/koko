@@ -12,8 +12,24 @@ if (!$user) {
 }
 $login_user_id = $user['uuid']; // または $user['user_id'] など、ログインユーザーIDのカラム名に合わせてください
 
-// 仮のユーザー情報（本来はセッションやGET/POSTから取得）
-$target_user_id = 9;
+// チャット相手のユーザーID取得（URLパラメータから）
+$target_user_id = isset($_GET['user']) ? intval($_GET['user']) : 9; // デフォルトは9
+$target_user_name = isset($_GET['name']) ? $_GET['name'] : '';
+
+// チャット相手のユーザー名を取得（URLパラメータから取得できない場合はDBから）
+if (!$target_user_name && $target_user_id) {
+    try {
+        $db = new cdb();
+        $stmt = $db->prepare('SELECT user_name FROM users WHERE user_id = ?');
+        $stmt->execute([$target_user_id]);
+        $user_data = $stmt->fetch();
+        if ($user_data) {
+            $target_user_name = $user_data['user_name'];
+        }
+    } catch (PDOException $e) {
+        $target_user_name = 'ユーザー';
+    }
+}
 
 try {
     $db = new cdb();
@@ -162,6 +178,25 @@ include 'includes/sidebar.php';
                         </li>
                     <?php endforeach; ?>
                 </ul>
+                
+                <!-- 個人チャット相手表示 -->
+                <?php if (!$selected_group_id && $target_user_name): ?>
+                <div class="p-3 border-top bg-white">
+                    <h6 class="mb-2 text-success">
+                        <i class="bi bi-person-circle me-2"></i>個人チャット
+                    </h6>
+                    <div class="d-flex align-items-center p-2 bg-light rounded">
+                        <img src="../main/img/headerImg/account.png" 
+                             style="width: 32px; height: 32px; border-radius: 50%;" 
+                             alt="プロフィール画像">
+                        <div class="ms-2">
+                            <div class="fw-bold text-primary" style="font-size: 0.9rem;">
+                                <?php echo htmlspecialchars($target_user_name); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
             </nav>
 
             <!-- チャット画面 -->
@@ -264,6 +299,7 @@ include 'includes/sidebar.php';
     </div>
 </div>
 
+                    <!--テンプレートモーダル-->
 <div class="modal fade" id="myModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">

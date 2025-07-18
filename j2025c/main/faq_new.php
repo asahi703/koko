@@ -200,8 +200,6 @@ include 'includes/sidebar.php';
                                         <?php echo nl2br(htmlspecialchars($faq['faq_answer'])); ?>
                                     </div>
                                 </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     <?php endforeach; ?>

@@ -3,6 +3,7 @@ include 'includes/header.php';
 include 'includes/sidebar.php';
 require_once('common/dbmanager.php');
 require_once('common/session.php');
+require_once('common/notification_helper.php');
 
 $user = get_login_user();
 $error = '';
@@ -22,6 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['invite_code'])) {
         $row = $stmt->fetch();
         if ($row) {
             $community_id = $row['community_id'];
+            
+            // コミュニティ名を取得
+            $community_stmt = $db->prepare('SELECT community_name FROM communities WHERE community_id = ?');
+            $community_stmt->execute([$community_id]);
+            $community_data = $community_stmt->fetch();
+            $community_name = $community_data['community_name'] ?? 'コミュニティ';
+            
             // 既に参加していないか確認
             $stmt2 = $db->prepare('SELECT * FROM community_users WHERE user_id = ? AND community_id = ?');
             $stmt2->execute([$user['uuid'], $community_id]);
@@ -29,6 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['invite_code'])) {
                 // 参加処理
                 $stmt3 = $db->prepare('INSERT INTO community_users (user_id, community_id) VALUES (?, ?)');
                 $stmt3->execute([$user['uuid'], $community_id]);
+                
+                // 新メンバー参加通知を送信
+                $new_member_name = $user['user_name'] ?? $user['name'] ?? 'ユーザー';
+                notify_community_join($community_id, $user['uuid'], $new_member_name, $community_name);
+                
                 $success = 'コミュニティに参加しました。';
             } else {
                 $error = 'すでにこのコミュニティに参加しています。';

@@ -1,6 +1,7 @@
 <?php
 require_once('common/config.php');
 require_once('common/dbmanager.php');
+require_once('common/notification_helper.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
@@ -17,6 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hashed_password,
             $_POST['user_mailaddress'] // user_loginにはメールアドレスを使用
         ]);
+
+        // 新規登録されたユーザーIDを取得
+        $new_user_id = $db->lastInsertId();
+        
+        // ウェルカム通知を送信
+        notify_welcome($new_user_id, $_POST['user_name']);
 
         // 登録成功時はログインページにリダイレクト
         header('Location: index.php');

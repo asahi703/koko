@@ -1,3 +1,15 @@
+<?php
+require_once('../main/common/adminsession.php');
+$admin = get_login_admin();
+
+// ログアウト処理
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
+    logout_admin();
+    header('Location: index.php');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -23,7 +35,22 @@
         <div class="navbar-brand">
             <h3 class="text-decoration-none text-dark">ここスク管理者画面</h3>
         </div>
+        <!-- ユーザー情報表示 -->
+        <?php if ($admin): ?>
+            <div class="ms-4 d-flex align-items-center">
+                <span class="me-2 fw-bold"><?php echo htmlspecialchars($admin['name']); ?></span>
+                <span class="text-secondary small"><?php echo htmlspecialchars($admin['mail']); ?></span>
+                <form method="post" style="display: inline;">
+                    <button type="submit" name="logout" class="btn btn-outline-danger btn-sm ms-3">ログアウト</button>
+                </form>
+            </div>
+        <?php else: ?>
+            <div class="ms-4">
+                <span class="text-secondary small">未ログイン</span>
+            </div>
+        <?php endif; ?>
     </nav>
+
 </header>
 
 </html>

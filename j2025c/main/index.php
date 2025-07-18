@@ -14,12 +14,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$mail]);
             $user = $stmt->fetch();
             if ($user && $user['user_password'] === sha1($pass)) {
+                // 最終ログイン時間を更新
+                try {
+                    $update_stmt = $db->prepare('UPDATE users SET last_login_time = NOW() WHERE user_id = ?');
+                    $update_stmt->execute([$user['user_id']]);
+                } catch (Exception $e) {
+                    // ログイン時間の更新に失敗してもログイン処理は継続
+                    error_log('Failed to update last login time: ' . $e->getMessage());
+                }
+                
                 // ログイン成功
                 login_user([
                     'uuid' => $user['user_id'],
+                    'user_id' => $user['user_id'],
+                    'user_name' => $user['user_name'],
+                    'user_mailaddress' => $user['user_mailaddress'],
+                    'user_icon' => $user['user_icon'],
+                    'user_is_teacher' => $user['user_is_teacher'],
+                    // 後方互換性のため
                     'name' => $user['user_name'],
-                    'mail' => $user['user_mailaddress'],
-                    'user_is_teacher' => $user['user_is_teacher'] // 先生かどうかの情報を追加
+                    'mail' => $user['user_mailaddress']
                 ]);
                 header('Location: community.php');
                 exit;
