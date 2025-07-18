@@ -1,0 +1,344 @@
+/* 通知ページ専用CSS */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    padding-top: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* メインコンテナ */
+.main-content-wrapper {
+    position: relative;
+    z-index: 1;
+}
+
+.main-content-wrapper::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* 通知リスト */
+.notification-list {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.notification-item {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-item:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    transform: translateX(5px);
+}
+
+.notification-item.unread {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.03) 0%, rgba(118, 75, 162, 0.03) 100%);
+    border-left: 4px solid #667eea;
+}
+
+.notification-item.unread::before {
+    content: '';
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 8px;
+    height: 8px;
+    background: #667eea;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+    }
+}
+
+/* 通知アイコン */
+.notification-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+/* 通知内容 */
+.notification-title {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.notification-message {
+    color: #495057;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+}
+
+.notification-from {
+    padding: 0.5rem 0;
+}
+
+.user-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* アクションボタン */
+.notification-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.btn {
+    border-radius: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    font-size: 0.8rem;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+}
+
+.btn-outline-primary {
+    color: #667eea;
+    border-color: #667eea;
+}
+
+.btn-outline-primary:hover {
+    background: #667eea;
+    border-color: #667eea;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    border: none;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+}
+
+.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+    background: #6c757d;
+    border-color: #6c757d;
+}
+
+/* バッジ */
+.badge {
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge.bg-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+/* 空の状態 */
+.empty-state {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.empty-state .display-1 {
+    font-size: 4rem;
+    opacity: 0.3;
+}
+
+/* ヘッダー */
+h2 {
+    color: white;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* アラート */
+.alert {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+    color: white;
+}
+
+/* 通知カテゴリーバッジ */
+.notification-header {
+    flex-grow: 1;
+}
+
+.category-badge {
+    font-size: 0.6rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+.notification-time {
+    white-space: nowrap;
+    margin-left: 1rem;
+}
+
+/* 通知タイプ別の左側ボーダー */
+.notification-item[data-type="chat_message"] {
+    border-left: 4px solid #007bff;
+}
+
+.notification-item[data-type="community_join"], 
+.notification-item[data-type="community_create"] {
+    border-left: 4px solid #28a745;
+}
+
+.notification-item[data-type="faq_answer"] {
+    border-left: 4px solid #17a2b8;
+}
+
+.notification-item[data-type="faq_question"] {
+    border-left: 4px solid #ffc107;
+}
+
+.notification-item[data-type="class_invite"] {
+    border-left: 4px solid #6c757d;
+}
+
+.notification-item[data-type="system"] {
+    border-left: 4px solid #343a40;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .notification-item {
+        padding: 1rem;
+    }
+    
+    .notification-icon {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .notification-actions {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+        margin-bottom: 0.25rem;
+    }
+    
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .user-icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* アニメーション */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.notification-item {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.notification-item:nth-child(1) { animation-delay: 0.1s; }
+.notification-item:nth-child(2) { animation-delay: 0.2s; }
+.notification-item:nth-child(3) { animation-delay: 0.3s; }
+.notification-item:nth-child(4) { animation-delay: 0.4s; }
+.notification-item:nth-child(5) { animation-delay: 0.5s; }
+
+/* スクロールバー */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+}

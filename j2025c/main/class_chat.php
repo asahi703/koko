@@ -1,11 +1,11 @@
 <?php
 /*!
 @file class_chat.php
-@brief クラスチャット
+@brief クラスチャチE��
 @copyright Copyright (c) 2024 Yamanoi Yasushi.
 */
 
-//ライブラリをインクルード
+//ライブラリをインクルーチE
 require_once("common/libs.php");
 
 $err_array = array();
@@ -13,7 +13,7 @@ $err_flag = 0;
 $page_obj = null;
 
 //--------------------------------------------------------------------------------------
-///	本体ノード
+///	本体ノーチE
 //--------------------------------------------------------------------------------------
 class cmain_node extends cnode {
 	public $user;
@@ -44,8 +44,8 @@ class cmain_node extends cnode {
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief  POST変数のデフォルト値をセット
-	@return なし
+	@brief  POST変数のチE��ォルト値をセチE��
+	@return なぁE
 	*/
 	//--------------------------------------------------------------------------------------
 	public function post_default(){
@@ -55,12 +55,12 @@ class cmain_node extends cnode {
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	構築時の処理(継承して使用)
-	@return	なし
+	@brief	構築時の処琁E継承して使用)
+	@return	なぁE
 	*/
 	//--------------------------------------------------------------------------------------
 	public function create(){
-		// セッション情報の取得
+		// セチE��ョン惁E��の取征E
 		require_once(__DIR__ . '/common/session.php');
 		if(is_logged_in()){
 			$this->user = get_login_user();
@@ -72,17 +72,17 @@ class cmain_node extends cnode {
 			cutil::redirect_exit('community.php');
 		}
 		
-		// DB接続
+		// DB接綁E
 		require_once(__DIR__ . '/common/dbmanager.php');
 		$this->db = new cdb();
 		
-		//フォームボックス作成
-		$this->message_box = new ctextarea('message', $_POST['message'], 'class="form-control me-2" placeholder="メッセージを入力" required rows="1"');
+		//フォームボックス作�E
+		$this->message_box = new ctextarea('message', $_POST['message'], 'class="form-control me-2" placeholder="メチE��ージを�E劁E required rows="1"');
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief  本体実行（表示前処理）
-	@return なし
+	@brief  本体実行（表示前�E琁E��E
+	@return なぁE
 	*/
 	//--------------------------------------------------------------------------------------
 	public function execute(){
@@ -91,19 +91,19 @@ class cmain_node extends cnode {
 		global $page_obj;
 		
 		if(is_null($page_obj)){
-			echo 'ページが無効です';
+			echo 'ペ�Eジが無効でぁE;
 			exit();
 		}
 		
 		try{
-			// クラス情報取得
+			// クラス惁E��取征E
 			$this->get_class_info();
 			
 			if(!$this->class_info){
 				cutil::redirect_exit('community.php');
 			}
 			
-			// メッセージ送信処理
+			// メチE��ージ送信処琁E
 			if(isset($_POST['submit'])){
 				$this->validate_message();
 				if(empty($err_array)){
@@ -111,7 +111,7 @@ class cmain_node extends cnode {
 				}
 			}
 			
-			// チャットメッセージ取得
+			// チャチE��メチE��ージ取征E
 			$this->get_messages();
 			
 		} catch(exception $e){
@@ -120,8 +120,8 @@ class cmain_node extends cnode {
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	クラス情報取得
-	@return	なし
+	@brief	クラス惁E��取征E
+	@return	なぁE
 	*/
 	//--------------------------------------------------------------------------------------
 	function get_class_info(){
@@ -140,8 +140,8 @@ class cmain_node extends cnode {
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	メッセージ送信処理
-	@return	なし
+	@brief	メチE��ージ送信処琁E
+	@return	なぁE
 	*/
 	//--------------------------------------------------------------------------------------
 	function send_message(){
@@ -156,23 +156,23 @@ class cmain_node extends cnode {
 			');
 			$stmt->execute([$this->class_id, $this->user['uuid'], $message]);
 			
-			// フォームリセット
+			// フォームリセチE��
 			$_POST['message'] = '';
-			$this->message_box = new ctextarea('message', '', 'class="form-control me-2" placeholder="メッセージを入力" required rows="1"');
+			$this->message_box = new ctextarea('message', '', 'class="form-control me-2" placeholder="メチE��ージを�E劁E required rows="1"');
 			
-			// ページリダイレクト
+			// ペ�EジリダイレクチE
 			cutil::redirect_exit($_SERVER['REQUEST_URI']);
 			
 		} catch(PDOException $e){
-			$this->error = 'メッセージの送信に失敗しました。';
+			$this->error = 'メチE��ージの送信に失敗しました、E;
 		} catch(exception $e){
 			$err_flag = 2;
 		}
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	チャットメッセージ取得
-	@return	なし
+	@brief	チャチE��メチE��ージ取征E
+	@return	なぁE
 	*/
 	//--------------------------------------------------------------------------------------
 	function get_messages(){
@@ -193,8 +193,8 @@ class cmain_node extends cnode {
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	エラー存在文字列の取得
-	@return	エラー表示文字列
+	@brief	エラー存在斁E���Eの取征E
+	@return	エラー表示斁E���E
 	*/
 	//--------------------------------------------------------------------------------------
 	function get_err_flag(){
@@ -203,14 +203,14 @@ class cmain_node extends cnode {
 			case 1:
 			$str =<<<END_BLOCK
 
-<div class="alert alert-danger mt-3">入力エラーがあります。各項目のエラーを確認してください。</div>
+<div class="alert alert-danger mt-3">入力エラーがあります。各頁E��のエラーを確認してください、E/div>
 END_BLOCK;
 			return $str;
 			break;
 			case 2:
 			$str =<<<END_BLOCK
 
-<div class="alert alert-danger mt-3">処理に失敗しました。サポートを確認下さい。</div>
+<div class="alert alert-danger mt-3">処琁E��失敗しました。サポ�Eトを確認下さぁE��E/div>
 END_BLOCK;
 			return $str;
 			break;
@@ -219,8 +219,8 @@ END_BLOCK;
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	エラー表示の取得
-	@return	エラー表示文字列
+	@brief	エラー表示の取征E
+	@return	エラー表示斁E���E
 	*/
 	//--------------------------------------------------------------------------------------
 	function get_error_display(){
@@ -231,8 +231,8 @@ END_BLOCK;
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	成功メッセージ表示の取得
-	@return	成功メッセージ表示文字列
+	@brief	成功メチE��ージ表示の取征E
+	@return	成功メチE��ージ表示斁E���E
 	*/
 	//--------------------------------------------------------------------------------------
 	function get_success_display(){
@@ -243,8 +243,8 @@ END_BLOCK;
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	チャットメッセージ一覧表示の取得
-	@return	チャットメッセージ一覧表示文字列
+	@brief	チャチE��メチE��ージ一覧表示の取征E
+	@return	チャチE��メチE��ージ一覧表示斁E���E
 	*/
 	//--------------------------------------------------------------------------------------
 	function get_chat_messages(){
@@ -283,8 +283,8 @@ END_BLOCK;
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	メッセージバリデーション
-	@return	なし
+	@brief	メチE��ージバリチE�Eション
+	@return	なぁE
 	*/
 	//--------------------------------------------------------------------------------------
 	function validate_message(){
@@ -293,14 +293,14 @@ END_BLOCK;
 		
 		$message = isset($_POST['message']) ? trim($_POST['message']) : '';
 		if(empty($message)){
-			$err_array['message'] = 'メッセージを入力してください。';
+			$err_array['message'] = 'メチE��ージを�E力してください、E;
 			$err_flag = 1;
 		}
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	メッセージエラー表示の取得
-	@return	メッセージエラー表示文字列
+	@brief	メチE��ージエラー表示の取征E
+	@return	メチE��ージエラー表示斁E���E
 	*/
 	//--------------------------------------------------------------------------------------
 	function get_message_error(){
@@ -313,16 +313,16 @@ END_BLOCK;
 	//--------------------------------------------------------------------------------------
 	/*!
 	@brief  表示(継承して使用)
-	@return なし
+	@return なぁE
 	*/
 	//--------------------------------------------------------------------------------------
 	public function display(){
-//PHPブロック終了
+//PHPブロチE��終亁E
 ?>
-<!-- コンテンツ　-->
+<!-- コンチE��チE��-->
 <head>
     <meta charset="UTF-8">
-    <title><?= display($this->class_info['class_name']); ?> - チャット</title>
+    <title><?= display($this->class_info['class_name']); ?> - チャチE��</title>
     <link rel="stylesheet" href="css/Global.css">
     <link rel="stylesheet" href="css/chat.css">
 </head>
@@ -344,12 +344,12 @@ END_BLOCK;
             </div>
         </div>
 
-        <!-- チャットメッセージ表示エリア -->
+        <!-- チャチE��メチE��ージ表示エリア -->
         <div class="chat-messages bg-light rounded p-3 mb-4 flex-grow-1" style="overflow-y: auto;">
             <?= $this->get_chat_messages(); ?>
         </div>
 
-        <!-- メッセージ入力フォーム -->
+        <!-- メチE��ージ入力フォーム -->
         <div class="mt-auto bg-white border-top py-3">
             <form method="post" class="d-flex align-items-center">
                 <?= $this->message_box->get(false); ?>
@@ -360,31 +360,31 @@ END_BLOCK;
     </main>
 </div>
 </div>
-<!-- /コンテンツ　-->
+<!-- /コンチE��チE��-->
 
 <script>
-    // チャットを最新のメッセージまでスクロール
+    // チャチE��を最新のメチE��ージまでスクロール
     window.onload = function() {
         const chatMessages = document.querySelector('.chat-messages');
         chatMessages.scrollTop = chatMessages.scrollHeight;
     };
 </script>
 <?php 
-//PHPブロック再開
+//PHPブロチE��再開
 	}
 
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	デストラクタ
+	@brief	チE��トラクタ
 	*/
 	//--------------------------------------------------------------------------------------
 	public function __destruct(){
-		//親クラスのデストラクタを呼ぶ
+		//親クラスのチE��トラクタを呼ぶ
 		parent::__destruct();
 	}
 }
 
-//ページを作成
+//ペ�Eジを作�E
 $page_obj = new cnode();
 //ヘッダ追加
 $page_obj->add_child(cutil::create('cheader'));
@@ -392,14 +392,209 @@ $page_obj->add_child(cutil::create('cheader'));
 $page_obj->add_child(cutil::create('csidebar'));
 //本体追加
 $page_obj->add_child($main_obj = cutil::create('cmain_node'));
-//構築時処理
+//構築時処琁E
 $page_obj->create();
-//POST変数のデフォルト値をセット
+//POST変数のチE��ォルト値をセチE��
 $main_obj->post_default();
-//本体実行（表示前処理）
+//本体実行（表示前�E琁E��E
 $main_obj->execute();
-//ページ全体を表示
+//ペ�Eジ全体を表示
 $page_obj->display();
 
 ?>
 
+<body>
+    <?php include 'includes/header.php'; ?>
+    <?php include 'includes/sidebar.php'; ?>
+    <div class="main-content-wrapper">
+        <main class="container-fluid py-4 d-flex flex-column" style="height: calc(100vh - 56px);">
+            <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+                <div>
+                    <h2 class="mb-0"><?php echo htmlspecialchars($class['class_name']); ?></h2>
+                    <small class="text-muted">
+                        <a href="class_select.php?id=<?php echo $class['community_id']; ?>"
+                            class="text-decoration-none">
+                            <?php echo htmlspecialchars($class['community_name']); ?>
+                        </a>
+                    </small>
+                    <a href="class_calender.php?id=<?php echo $class_id; ?>"
+                        class="btn btn-outline-primary btn-sm ms-3">行事予定表</a>
+                </div>
+            </div>
+
+            <!-- チャチE��メチE��ージ表示エリア -->
+            <div class="chat-messages bg-light rounded p-3 mb-4 flex-grow-1" style="overflow-y: auto;">
+                <?php foreach (array_reverse($messages) as $message): ?>
+                    <div class="card mb-3">
+                        <div class="card-header bg-white d-flex justify-content-between align-items-center py-2">
+                            <div class="d-flex align-items-center">
+                                <?php if (!empty($message['user_icon'])): ?>
+                                    <img src="../<?php echo htmlspecialchars($message['user_icon']); ?>"
+                                        class="rounded-circle me-2" style="width: 32px; height: 32px;" alt="">
+                                <?php else: ?>
+                                    <img src="../main/img/headerImg/account.png" class="rounded-circle me-2"
+                                        style="width: 32px; height: 32px;" alt="">
+                                <?php endif; ?>
+                                <span class="fw-bold"><?php echo htmlspecialchars($message['user_name']); ?></span>
+                            </div>
+                            <small class="text-muted">
+                                <?php echo date('Y/m/d H:i', strtotime($message['created_at'])); ?>
+                            </small>
+                        </div>
+                        <div class="card-body">
+                            <?php echo nl2br(htmlspecialchars($message['message'])); ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+            <!-- メチE��ージ入力フォーム -->
+            <div class="mt-auto bg-white border-top">
+                <form method="post" class="d-flex align-items-center">
+                    <textarea class="form-control me-2" name="message" id="chatInput" rows="1" placeholder="メチE��ージを�E劁E
+                        required></textarea>
+                    <!-- +アイコンとドロチE�Eダウン -->
+                    <div class="dropdown">
+                        <button class="btn btn-link px-2" type="button" id="templateDropdownBtn"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-plus fa-lg"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="templateDropdownBtn"
+                            style="max-height:200px;overflow-y:auto;">
+                            <?php foreach ($templates as $template): ?>
+                                <li>
+                                    <!--チE��プレートドロチE�Eダウンメニュー-->
+                                    <a class="dropdown-item template-insert-btn" href="#"
+                                        data-body="<?php echo htmlspecialchars($template['temprate_text'], ENT_QUOTES); ?>">
+                                        <?php echo htmlspecialchars($template['temprate_title']); ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <button type="submit" class="btn btn-primary">送信</button>
+                </form>
+            </div>
+
+
+            <!--チE��プレートモーダル-->
+            <div class="modal fade" id="myModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">チE��プレート編雁E�E差し替ぁE/h5>
+                        </div>
+                        <div class="modal-body" id="modal-body"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じめE/button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // チャチE��を最新のメチE��ージまでスクロール
+        window.onload = function () {
+            const chatMessages = document.querySelector('.chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        };
+
+        // プレースホルダを�E部抜き出ぁE
+        function extractPlaceholders(template) {
+            const regex = /{([^{}]+)}/g;
+            let match;
+            const results = new Set();
+            while ((match = regex.exec(template)) !== null) {
+                results.add(match[1]);
+            }
+            return Array.from(results);
+        }
+
+        // 置揁E
+        function fillTemplate(template, values) {
+            return template.replace(/{([^{}]+)}/g, (m, key) => values[key] ?? m);
+        }
+
+
+
+        // ペ�Eジロード時にモーダルの背景めEodyクラスが残ってぁE��ら消す
+        document.addEventListener('DOMContentLoaded', function () {
+            document.body.classList.remove('modal-open');
+            var backdrops = document.querySelectorAll('.modal-backdrop');
+            backdrops.forEach(function (bd) { bd.parentNode.removeChild(bd); });
+
+            // チE��プレートを入力欁E��挿入する
+            document.querySelectorAll('.template-insert-btn').forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const originalTemplate = btn.getAttribute('data-body');
+                    // プレースホルダ重褁E��除�E�EetでOK�E�E
+                    const regex = /{([^{}]+)}/g;
+                    let match;
+                    const placeholderSet = new Set();
+                    while ((match = regex.exec(originalTemplate)) !== null) {
+                        placeholderSet.add(match[1]);
+                    }
+                    const placeholders = Array.from(placeholderSet);
+
+                    // 編雁E��能本斁E
+                    let formHtml = `
+            <div class="mb-3">
+                <label>本斁E��書き換え可�E�E/label>
+                <textarea id="modalTemplateText" class="form-control" rows="4">${originalTemplate}</textarea>
+            </div>
+            <form id="placeholderForm">
+                <table class="table table-sm">
+                  <thead><tr><th>頁E��</th><th>値</th></tr></thead><tbody>
+        `;
+                    placeholders.forEach(ph => {
+                        formHtml += `
+                <tr>
+                  <td>${ph}</td>
+                  <td><input type="text" class="form-control" name="${ph}"></td>
+                </tr>
+            `;
+                    });
+                    formHtml += `
+                  </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary mt-2">反映</button>
+            </form>
+        `;
+                    document.getElementById('modal-body').innerHTML = formHtml;
+                    const modal = new bootstrap.Modal(document.getElementById('myModal'));
+                    modal.show();
+
+                    // サブミチE��晁E
+                    document.getElementById('placeholderForm').onsubmit = function (e) {
+                        e.preventDefault();
+                        const values = {};
+                        placeholders.forEach(ph => values[ph] = this.elements[ph].value);
+                        // 最新の本斁E��置揁E
+                        const currentTemplate = document.getElementById('modalTemplateText').value;
+                        document.getElementById('chatInput').value = fillTemplate(currentTemplate, values);
+                        modal.hide();
+                    };
+                });
+            });
+        });
+    </script>
+</div>
+</div>
+<!-- /コンチE��チE��-->
+
+<script>
+// チャチE��を最新のメチE��ージまでスクロール
+window.onload = function () {
+    const chatMessages = document.querySelector('.chat-messages');
+    if (chatMessages) {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+};
+</script>
+<?php 
+//PHPブロチE��再開
+}

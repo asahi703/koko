@@ -5,6 +5,10 @@
 @copyright Copyright (c) 2024 Yamanoi Yasushi.
 */
 
+require_once('common/config.php');
+require_once('common/dbmanager.php');
+require_once('common/notification_helper.php');
+
 //ライブラリをインクルード
 require_once("common/libs.php");
 
@@ -125,6 +129,15 @@ class cmain_node extends cnode {
 				'user_password' => sha1($_POST['user_password']),
 				'user_login' => $_POST['user_mailaddress']
 			));
+			
+			// 新規登録されたユーザーIDを取得
+			$new_user_id = $result; // insert_userが新しいユーザーIDを返すと仮定
+			
+			// ウェルカム通知を送信
+			if (function_exists('notify_welcome')) {
+				notify_welcome($new_user_id, $_POST['user_name']);
+			}
+			
 			// 登録成功時はログインページにリダイレクト
 			cutil::redirect_exit('index.php');
 		} catch (Exception $e) {

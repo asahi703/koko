@@ -5,7 +5,7 @@
 @copyright Copyright (c) 2024 Yamanoi Yasushi.
 */
 
-//ライブラリをインクルード
+//ライブラリをインクルーチE
 require_once("common/libs.php");
 
 $err_array = array();
@@ -13,7 +13,7 @@ $err_flag = 0;
 $page_obj = null;
 
 //--------------------------------------------------------------------------------------
-///	本体ノード
+///	本体ノーチE
 //--------------------------------------------------------------------------------------
 class cmain_node extends cnode {
 	public $user;
@@ -38,8 +38,8 @@ class cmain_node extends cnode {
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief  POST変数のデフォルト値をセット
-	@return なし
+	@brief  POST変数のチE��ォルト値をセチE��
+	@return なぁE
 	*/
 	//--------------------------------------------------------------------------------------
 	public function post_default(){
@@ -49,12 +49,12 @@ class cmain_node extends cnode {
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	構築時の処理(継承して使用)
-	@return	なし
+	@brief	構築時の処琁E継承して使用)
+	@return	なぁE
 	*/
 	//--------------------------------------------------------------------------------------
 	public function create(){
-		// セッション情報の取得
+		// セチE��ョン惁E��の取征E
 		require_once(__DIR__ . '/common/session.php');
 		if(is_logged_in()){
 			$this->user = get_login_user();
@@ -64,18 +64,18 @@ class cmain_node extends cnode {
 			cutil::redirect_exit('index.php');
 		}
 		
-		// DB接続
+		// DB接綁E
 		require_once(__DIR__ . '/common/dbmanager.php');
 		$this->db = new cdb();
 		
-		//フォームボックス作成
+		//フォームボックス作�E
 		$this->invite_code_box = new ctextbox('invite_code', 'form-control', 255);
 		$this->invite_code_box->set_required(true);
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief  本体実行（表示前処理）
-	@return なし
+	@brief  本体実行（表示前�E琁E��E
+	@return なぁE
 	*/
 	//--------------------------------------------------------------------------------------
 	public function execute(){
@@ -84,15 +84,15 @@ class cmain_node extends cnode {
 		global $page_obj;
 		
 		if(is_null($page_obj)){
-			echo 'ページが無効です';
+			echo 'ペ�Eジが無効でぁE;
 			exit();
 		}
 		
 		try{
-			// POSTデータの検証
+			// POSTチE�Eタの検証
 			$this->invite_code_box->validate();
 			
-			// 送信ボタンが押された場合
+			// 送信ボタンが押された場吁E
 			if(isset($_POST['submit'])){
 				if(empty($err_array)){
 					$this->join_community();
@@ -104,8 +104,8 @@ class cmain_node extends cnode {
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	コミュニティ参加処理
-	@return	なし
+	@brief	コミュニティ参加処琁E
+	@return	なぁE
 	*/
 	//--------------------------------------------------------------------------------------
 	function join_community(){
@@ -115,40 +115,40 @@ class cmain_node extends cnode {
 			$invite_code = trim($_POST['invite_code']);
 			
 			if(!$this->user){
-				$this->error = 'ログインしてください。';
+				$this->error = 'ログインしてください、E;
 				return;
 			}
 			
 			if($invite_code === ''){
-				$this->error = '招待コードを入力してください。';
+				$this->error = '招征E��ードを入力してください、E;
 				return;
 			}
 			
-			// コードが有効か確認
+			// コードが有効か確誁E
 			$stmt = $this->db->prepare('SELECT community_id FROM community_invite_codes WHERE invite_code = ?');
 			$stmt->execute([$invite_code]);
 			$row = $stmt->fetch();
 			
 			if($row){
 				$community_id = $row['community_id'];
-				// 既に参加していないか確認
+				// 既に参加してぁE��ぁE��確誁E
 				$stmt2 = $this->db->prepare('SELECT * FROM community_users WHERE user_id = ? AND community_id = ?');
 				$stmt2->execute([$this->user['uuid'], $community_id]);
 				
 				if(!$stmt2->fetch()){
-					// 参加処理
+					// 参加処琁E
 					$stmt3 = $this->db->prepare('INSERT INTO community_users (user_id, community_id) VALUES (?, ?)');
 					$stmt3->execute([$this->user['uuid'], $community_id]);
-					$this->success = 'コミュニティに参加しました。';
+					$this->success = 'コミュニティに参加しました、E;
 					
-					// フォームリセット
+					// フォームリセチE��
 					$_POST['invite_code'] = '';
 					$this->invite_code_box->set_value('');
 				} else {
-					$this->error = 'すでにこのコミュニティに参加しています。';
+					$this->error = 'すでにこ�Eコミュニティに参加してぁE��す、E;
 				}
 			} else {
-				$this->error = '招待コードが無効です。';
+				$this->error = '招征E��ードが無効です、E;
 			}
 			
 		} catch(exception $e){
@@ -157,8 +157,8 @@ class cmain_node extends cnode {
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	エラー存在文字列の取得
-	@return	エラー表示文字列
+	@brief	エラー存在斁E���Eの取征E
+	@return	エラー表示斁E���E
 	*/
 	//--------------------------------------------------------------------------------------
 	function get_err_flag(){
@@ -167,14 +167,14 @@ class cmain_node extends cnode {
 			case 1:
 			$str =<<<END_BLOCK
 
-<div class="alert alert-danger mt-3">入力エラーがあります。各項目のエラーを確認してください。</div>
+<div class="alert alert-danger mt-3">入力エラーがあります。各頁E��のエラーを確認してください、E/div>
 END_BLOCK;
 			return $str;
 			break;
 			case 2:
 			$str =<<<END_BLOCK
 
-<div class="alert alert-danger mt-3">処理に失敗しました。サポートを確認下さい。</div>
+<div class="alert alert-danger mt-3">処琁E��失敗しました。サポ�Eトを確認下さぁE��E/div>
 END_BLOCK;
 			return $str;
 			break;
@@ -183,8 +183,8 @@ END_BLOCK;
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	エラー表示の取得
-	@return	エラー表示文字列
+	@brief	エラー表示の取征E
+	@return	エラー表示斁E���E
 	*/
 	//--------------------------------------------------------------------------------------
 	function get_error_display(){
@@ -195,8 +195,8 @@ END_BLOCK;
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	成功メッセージ表示の取得
-	@return	成功メッセージ表示文字列
+	@brief	成功メチE��ージ表示の取征E
+	@return	成功メチE��ージ表示斁E���E
 	*/
 	//--------------------------------------------------------------------------------------
 	function get_success_display(){
@@ -208,13 +208,55 @@ END_BLOCK;
 	//--------------------------------------------------------------------------------------
 	/*!
 	@brief  表示(継承して使用)
-	@return なし
+	@return なぁE
 	*/
 	//--------------------------------------------------------------------------------------
 	public function display(){
-//PHPブロック終了
+//PHPブロチE��終亁E
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['invite_code'])) {
+    $invite_code = trim($_POST['invite_code']);
+    if (!$user) {
+        $error = 'ログインしてください、E;
+    } elseif ($invite_code === '') {
+        $error = '招征E��ードを入力してください、E;
+    } else {
+        $db = new cdb();
+        // コードが有効か確誁E
+        $stmt = $db->prepare('SELECT community_id FROM community_invite_codes WHERE invite_code = ?');
+        $stmt->execute([$invite_code]);
+        $row = $stmt->fetch();
+        if ($row) {
+            $community_id = $row['community_id'];
+            
+            // コミュニティ名を取征E
+            $community_stmt = $db->prepare('SELECT community_name FROM communities WHERE community_id = ?');
+            $community_stmt->execute([$community_id]);
+            $community_data = $community_stmt->fetch();
+            $community_name = $community_data['community_name'] ?? 'コミュニティ';
+            
+            // 既に参加してぁE��ぁE��確誁E
+            $stmt2 = $db->prepare('SELECT * FROM community_users WHERE user_id = ? AND community_id = ?');
+            $stmt2->execute([$user['uuid'], $community_id]);
+            if (!$stmt2->fetch()) {
+                // 参加処琁E
+                $stmt3 = $db->prepare('INSERT INTO community_users (user_id, community_id) VALUES (?, ?)');
+                $stmt3->execute([$user['uuid'], $community_id]);
+                
+                // 新メンバ�E参加通知を送信
+                $new_member_name = $user['user_name'] ?? $user['name'] ?? 'ユーザー';
+                notify_community_join($community_id, $user['uuid'], $new_member_name, $community_name);
+                
+                $success = 'コミュニティに参加しました、E;
+            } else {
+                $error = 'すでにこ�Eコミュニティに参加してぁE��す、E;
+            }
+        } else {
+            $error = '招征E��ードが無効です、E;
+        }
+    }
+}
 ?>
-<!-- コンテンツ　-->
+<!-- コンチE��チE��-->
 <head>
     <title>コミュニティ参加</title>
 </head>
@@ -232,7 +274,7 @@ END_BLOCK;
             <div class="card-body">
                 <form method="post">
                     <div class="mb-3">
-                        <label for="inviteCode" class="form-label">招待コード<span class="text-danger">*</span></label>
+                        <label for="inviteCode" class="form-label">招征E��ーチEspan class="text-danger">*</span></label>
                         <?= $this->invite_code_box->get_tag(); ?>
                         <?= $this->invite_code_box->get_error_message_tag(); ?>
                     </div>
@@ -245,23 +287,23 @@ END_BLOCK;
     </main>
 </div>
 </div>
-<!-- /コンテンツ　-->
+<!-- /コンチE��チE��-->
 <?php 
-//PHPブロック再開
+//PHPブロチE��再開
 	}
 
 	//--------------------------------------------------------------------------------------
 	/*!
-	@brief	デストラクタ
+	@brief	チE��トラクタ
 	*/
 	//--------------------------------------------------------------------------------------
 	public function __destruct(){
-		//親クラスのデストラクタを呼ぶ
+		//親クラスのチE��トラクタを呼ぶ
 		parent::__destruct();
 	}
 }
 
-//ページを作成
+//ペ�Eジを作�E
 $page_obj = new cnode();
 //ヘッダ追加
 $page_obj->add_child(cutil::create('cheader'));
@@ -269,13 +311,13 @@ $page_obj->add_child(cutil::create('cheader'));
 $page_obj->add_child(cutil::create('csidebar'));
 //本体追加
 $page_obj->add_child($main_obj = cutil::create('cmain_node'));
-//構築時処理
+//構築時処琁E
 $page_obj->create();
-//POST変数のデフォルト値をセット
+//POST変数のチE��ォルト値をセチE��
 $main_obj->post_default();
-//本体実行（表示前処理）
+//本体実行（表示前�E琁E��E
 $main_obj->execute();
-//ページ全体を表示
+//ペ�Eジ全体を表示
 $page_obj->display();
 
 ?>

@@ -299,6 +299,7 @@ END_BLOCK;
 <head>
     <title>クラス</title>
     <link rel="stylesheet" href="../main/css/class.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 </head>
 <div class="contents">
 <?= $this->get_err_flag(); ?>
@@ -320,6 +321,36 @@ END_BLOCK;
                 <form method="post" class="chat-input">
                     <div class="input-group bg-white rounded-pill border px-3 py-1 align-items-end"
                          style="min-height: 45px;">
+                        <!-- ユーザーアイコン -->
+                        <div class="dropdown d-flex justify-content-center align-items-center me-2" style="height: 38px;">
+                            <a class="cu-pt d-flex align-items-center h-100" id="userProfileDropdown"
+                               data-bs-toggle="dropdown" aria-expanded="false" style="height: 38px;">
+                                <img src="../main/img/headerImg/account.png" alt="プロフィール"
+                                     style="display: block; height: 32px; width: 32px; border-radius: 50%; margin: auto 0; position: relative;">
+                            </a>
+                            <!-- ミニマイページドロップダウン -->
+                            <ul class="dropdown-menu dropdown-menu-start p-3" aria-labelledby="userProfileDropdown" style="min-width: 250px;">
+                                <li class="d-flex align-items-center mb-3">
+                                    <img src="../main/img/headerImg/account.png" style="width: 50px; height: 50px; border-radius: 50%;" alt="プロフィール画像">
+                                    <div class="ms-3">
+                                        <h6 class="mb-1">ユーザー名</h6>
+                                        <small class="text-muted">user@example.com</small>
+                                    </div>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item d-flex align-items-center" href="mypage.php">
+                                    <i class="bi bi-person me-2"></i>マイページ
+                                </a></li>
+                                <li><a class="dropdown-item d-flex align-items-center" href="#">
+                                    <i class="bi bi-gear me-2"></i>設定
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item d-flex align-items-center text-danger" href="#">
+                                    <i class="bi bi-box-arrow-right me-2"></i>ログアウト
+                                </a></li>
+                            </ul>
+                        </div>
+
                         <?= $this->message_box->get_tag(); ?>
 
                         <div class="dropdown d-flex justify-content-center align-items-center me-2"

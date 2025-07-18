@@ -23,7 +23,10 @@ class cmain_node extends cnode {
 	public $chats;
 	public $templates;
 	public $error;
-	public $success;
+	pub                <!-- 入力欄（ページ下部に固定） -->
+                <form name="form1" action="<?= $this->get_form_action(); ?>" method="post" class="input-form" onsubmit="return submitMessageForm();"">c $success;
+	public $target_user_id;
+	public $target_user_name;
 	
 	//--------------------------------------------------------------------------------------
 	/*!
@@ -41,6 +44,8 @@ class cmain_node extends cnode {
 		$this->templates = array();
 		$this->error = '';
 		$this->success = '';
+		$this->target_user_id = 0;
+		$this->target_user_name = '';
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
@@ -87,6 +92,15 @@ class cmain_node extends cnode {
 		
 		// 選択中グループIDを取得
 		$this->selected_group_id = isset($_GET['group_id']) ? intval($_GET['group_id']) : 0;
+		
+		// 個人チャット用パラメータ取得
+		$this->target_user_id = isset($_GET['user']) ? intval($_GET['user']) : 0;
+		$this->target_user_name = isset($_GET['name']) ? $_GET['name'] : '';
+		
+		// ターゲットユーザー名がない場合はDBから取得
+		if (!$this->target_user_name && $this->target_user_id) {
+			$this->get_target_user_name();
+		}
 		
 		if(isset($_POST['func'])){
 			switch($_POST['func']){
@@ -166,25 +180,33 @@ class cmain_node extends cnode {
 			return;
 		}
 		
-		if(!$this->selected_group_id){
-			// チャット画面ではエラーメッセージを表示しない
-			return;
-		}
-		
-		try {
-			$message_obj = new crecord();
-			$dataarr = array(
-				'group_id' => $this->selected_group_id,
-				'user_id' => $this->user['uuid'],
-				'message' => $message
-			);
-			$result = $message_obj->insert_core(false, 'group_chat_messages', $dataarr);
-			if($result){
-				// リダイレクトを削除して同じページで処理完了
-				$_POST['message'] = ''; // 入力欄をクリア
+		if($this->selected_group_id){
+			// グループチャットの場合
+			try {
+				$message_obj = new crecord();
+				$dataarr = array(
+					'group_id' => $this->selected_group_id,
+					'user_id' => $this->user['uuid'],
+					'message' => $message
+				);
+				$result = $message_obj->insert_core(false, 'group_chat_messages', $dataarr);
+				if($result){
+					// リダイレクトを削除して同じページで処理完了
+					$_POST['message'] = ''; // 入力欄をクリア
+				}
+			} catch (Exception $e) {
+				// チャット画面ではエラーメッセージを表示しない
 			}
-		} catch (Exception $e) {
-			// チャット画面ではエラーメッセージを表示しない
+		} else if($this->target_user_id) {
+			// 個人チャットの場合
+			try {
+				$db = new cdb();
+				$stmt = $db->prepare('INSERT INTO chats (from_chat, to_chat, text_chat) VALUES (?, ?, ?)');
+				$stmt->execute([$this->user['uuid'], $this->target_user_id, $message]);
+				$_POST['message'] = ''; // 入力欄をクリア
+			} catch (Exception $e) {
+				// チャット画面ではエラーメッセージを表示しない
+			}
 		}
 	}
 	//--------------------------------------------------------------------------------------
@@ -225,9 +247,27 @@ class cmain_node extends cnode {
 	//--------------------------------------------------------------------------------------
 	function get_chat_history(){
 		if($this->selected_group_id){
+			// グループチャットの場合
 			try {
 				$messages_obj = new cgroup_chat_messages();
 				$this->chats = $messages_obj->get_group_messages(false, $this->selected_group_id);
+			} catch (Exception $e) {
+				$this->error = 'チャット履歴の取得に失敗しました。';
+				$this->chats = array();
+			}
+		} else if($this->target_user_id) {
+			// 1対1チャットの場合
+			try {
+				$db = new cdb();
+				$stmt = $db->prepare('
+					SELECT c.*, u.user_name AS from_user_name
+					FROM chats c
+					JOIN users u ON c.from_chat = u.user_id
+					WHERE (c.from_chat = ? AND c.to_chat = ?) OR (c.from_chat = ? AND c.to_chat = ?)
+					ORDER BY c.sent_at ASC
+				');
+				$stmt->execute([$this->user['uuid'], $this->target_user_id, $this->target_user_id, $this->user['uuid']]);
+				$this->chats = $stmt->fetchAll();
 			} catch (Exception $e) {
 				$this->error = 'チャット履歴の取得に失敗しました。';
 				$this->chats = array();
@@ -248,7 +288,25 @@ class cmain_node extends cnode {
 			$this->templates = array();
 		}
 	}
-
+	//--------------------------------------------------------------------------------------
+	/*!
+	@brief	ターゲットユーザー名取得
+	@return	なし
+	*/
+	//--------------------------------------------------------------------------------------
+	function get_target_user_name(){
+		try {
+			$db = new cdb();
+			$stmt = $db->prepare('SELECT user_name FROM users WHERE user_id = ?');
+			$stmt->execute([$this->target_user_id]);
+			$user_data = $stmt->fetch();
+			if ($user_data) {
+				$this->target_user_name = $user_data['user_name'];
+			}
+		} catch (Exception $e) {
+			$this->target_user_name = 'ユーザー';
+		}
+	}
 
 	//--------------------------------------------------------------------------------------
 	/*!
@@ -381,12 +439,22 @@ END_BLOCK;
 	function get_chat_history_html(){
 		$history_str = '';
 		foreach($this->chats as $chat){
-			$user_name = display($chat['user_name']);
-			$message_text = display($chat['message']);
-			$from_id = $chat['user_id'];
-			$sent_at = $chat['sent_at'];
-			$time_display = date('H:i', strtotime($sent_at));
+			// グループチャットか個人チャットかで処理を分ける
+			if($this->selected_group_id) {
+				// グループチャットの場合
+				$user_name = display($chat['user_name']);
+				$message_text = display($chat['message']);
+				$from_id = $chat['user_id'];
+				$sent_at = $chat['sent_at'];
+			} else {
+				// 個人チャットの場合
+				$user_name = display($chat['from_user_name']);
+				$message_text = display($chat['text_chat']);
+				$from_id = $chat['from_chat'];
+				$sent_at = $chat['sent_at'];
+			}
 			
+			$time_display = date('H:i', strtotime($sent_at));
 			$align_class = ($from_id == $this->user['uuid']) ? 'justify-content-end' : 'justify-content-start';
 			$msg_class = ($from_id == $this->user['uuid']) ? 'chat-msg-sbm' : 'bg-white';
 			
@@ -430,6 +498,20 @@ END_BLOCK;
 	}
 	//--------------------------------------------------------------------------------------
 	/*!
+	@brief	フォームアクションURLの取得
+	@return	フォームアクションURL文字列
+	*/
+	//--------------------------------------------------------------------------------------
+	function get_form_action(){
+		if($this->selected_group_id) {
+			return $_SERVER['PHP_SELF'] . '?group_id=' . $this->selected_group_id;
+		} else if($this->target_user_id) {
+			return $_SERVER['PHP_SELF'] . '?user=' . $this->target_user_id . '&name=' . urlencode($this->target_user_name);
+		}
+		return $_SERVER['PHP_SELF'];
+	}
+	//--------------------------------------------------------------------------------------
+	/*!
 	@brief  表示(継承して使用)
 	@return なし
 	*/
@@ -470,6 +552,25 @@ END_BLOCK;
                 <ul class="list-group list-group-flush flex-grow-1 overflow-auto group-list-scroll bg-light px-2">
                     <?= $this->get_group_list_html(); ?>
                 </ul>
+                
+                <!-- 個人チャット相手表示 -->
+                <?php if (!$this->selected_group_id && $this->target_user_name): ?>
+                <div class="p-3 border-top bg-white">
+                    <h6 class="mb-2 text-success">
+                        <i class="bi bi-person-circle me-2"></i>個人チャット
+                    </h6>
+                    <div class="d-flex align-items-center p-2 bg-light rounded">
+                        <img src="../main/img/headerImg/account.png" 
+                             style="width: 32px; height: 32px; border-radius: 50%;" 
+                             alt="プロフィール画像">
+                        <div class="ms-2">
+                            <div class="fw-bold text-primary" style="font-size: 0.9rem;">
+                                <?php echo display($this->target_user_name); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
             </nav>
 
             <!-- チャット画面 -->
@@ -531,6 +632,7 @@ END_BLOCK;
     </div>
 </div>
 
+                    <!--テンプレートモーダル-->
 <div class="modal fade" id="myModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">

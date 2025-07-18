@@ -1,220 +1,4 @@
 <?php
-/*!
-@file faq.php
-@brief よくある質問一覧
-@copyright Copyright (c) 2024 Yamanoi Yasushi.
-*/
-
-//ライブラリをインクルーチE
-require_once("common/libs.php");
-
-$err_array = array();
-$err_flag = 0;
-$page_obj = null;
-
-//--------------------------------------------------------------------------------------
-///	本体ノーチE
-//--------------------------------------------------------------------------------------
-class cmain_node extends cnode {
-	public $user;
-	public $faqs;
-	public $error;
-	public $success;
-	
-	//--------------------------------------------------------------------------------------
-	/*!
-	@brief	コンストラクタ
-	*/
-	//--------------------------------------------------------------------------------------
-	public function __construct() {
-		//親クラスのコンストラクタを呼ぶ
-		parent::__construct();
-		$this->user = null;
-		$this->faqs = array();
-		$this->error = '';
-		$this->success = '';
-	}
-	//--------------------------------------------------------------------------------------
-	/*!
-	@brief  POST変数のチE��ォルト値をセチE��
-	@return なぁE
-	*/
-	//--------------------------------------------------------------------------------------
-	public function post_default(){
-	}
-	//--------------------------------------------------------------------------------------
-	/*!
-	@brief	構築時の処琁E継承して使用)
-	@return	なぁE
-	*/
-	//--------------------------------------------------------------------------------------
-	public function create(){
-		// セチE��ョン惁E��の取征E
-		require_once(__DIR__ . '/common/session.php');
-		if(is_logged_in()){
-			$this->user = get_login_user();
-		}
-		
-		if(!$this->user){
-			cutil::redirect_exit('index.php');
-		}
-	}
-	//--------------------------------------------------------------------------------------
-	/*!
-	@brief  本体実行（表示前�E琁E��E
-	@return なぁE
-	*/
-	//--------------------------------------------------------------------------------------
-	public function execute(){
-		global $err_array;
-		global $err_flag;
-		global $page_obj;
-		
-		if(is_null($page_obj)){
-			echo 'ペ�Eジが無効でぁE;
-			exit();
-		}
-		
-		// FAQ一覧を取征E
-		$this->get_faqs();
-	}
-	//--------------------------------------------------------------------------------------
-	/*!
-	@brief	FAQ一覧取征E
-	@return	なぁE
-	*/
-	//--------------------------------------------------------------------------------------
-	function get_faqs(){
-		// サンプルFAQチE�Eタ
-		$this->faqs = array(
-			array(
-				'faq_id' => 1,
-				'question' => '行事�E予定がわかりません',
-				'answer' => '行事�E予定�E「�Eイペ�Eジ > 行事カレンダー」からご確認いただけます、E
-			),
-			array(
-				'faq_id' => 2,
-				'question' => '配币E��がどこにあるか�EからなぁE,
-				'answer' => '配币E��は「お知らせ」タブにあるPDF一覧からダウンロードできます、E
-			),
-			array(
-				'faq_id' => 3,
-				'question' => 'チャチE��の通知が届かなぁE,
-				'answer' => '通知設定がOFFになってぁE��可能性があります。アプリの設定をご確認ください、E
-			),
-			array(
-				'faq_id' => 4,
-				'question' => 'コミュニティの作�E方法が知りたぁE,
-				'answer' => '「コミュニティを作�E」�Eタンを押し、忁E��事頁E��入力して作�Eできます、E
-			)
-		);
-	}
-	//--------------------------------------------------------------------------------------
-	/*!
-	@brief	エラー存在斁E���Eの取征E
-	@return	エラー表示斁E���E
-	*/
-	//--------------------------------------------------------------------------------------
-	function get_err_flag(){
-		global $err_flag;
-		switch($err_flag){
-			case 1:
-			$str =<<<END_BLOCK
-
-<div class="alert alert-danger mt-3">入力エラーがあります。各頁E��のエラーを確認してください、E/div>
-END_BLOCK;
-			return $str;
-			break;
-			case 2:
-			$str =<<<END_BLOCK
-
-<div class="alert alert-danger mt-3">処琁E��失敗しました。サポ�Eトを確認下さぁE��E/div>
-END_BLOCK;
-			return $str;
-			break;
-		}
-		return '';
-	}
-	//--------------------------------------------------------------------------------------
-	/*!
-	@brief	エラー表示の取征E
-	@return	エラー表示斁E���E
-	*/
-	//--------------------------------------------------------------------------------------
-	function get_error_display(){
-		if(!empty($this->error)){
-			return '<div class="alert alert-danger mt-3">' . display($this->error) . '</div>';
-		}
-		return '';
-	}
-	//--------------------------------------------------------------------------------------
-	/*!
-	@brief	成功メチE��ージ表示の取征E
-	@return	成功メチE��ージ表示斁E���E
-	*/
-	//--------------------------------------------------------------------------------------
-	function get_success_display(){
-		if(!empty($this->success)){
-			return '<div class="alert alert-success mt-3">' . display($this->success) . '</div>';
-		}
-		return '';
-	}
-	//--------------------------------------------------------------------------------------
-	/*!
-	@brief	FAQアコーチE��オンの取征E
-	@return	FAQアコーチE��オン斁E���E
-	*/
-	//--------------------------------------------------------------------------------------
-	function get_faq_accordion(){
-		$accordion_str = '';
-		$first = true;
-		
-		foreach($this->faqs as $faq){
-			$question = display($faq['question']);
-			$answer = display($faq['answer']);
-			$faq_id = $faq['faq_id'];
-			$show_class = $first ? 'show' : '';
-			$expanded = $first ? 'true' : 'false';
-			$collapsed = $first ? '' : 'collapsed';
-			
-			$accordion_str .= <<<END_BLOCK
-<div class="accordion-item">
-    <h2 class="accordion-header" id="heading{$faq_id}">
-        <button class="accordion-button {$collapsed}" type="button" data-bs-toggle="collapse"
-                data-bs-target="#collapse{$faq_id}" aria-expanded="{$expanded}" aria-controls="collapse{$faq_id}">
-            {$question}
-        </button>
-    </h2>
-    <div id="collapse{$faq_id}" class="accordion-collapse collapse {$show_class}" aria-labelledby="heading{$faq_id}"
-         data-bs-parent="#faqAccordion">
-        <div class="accordion-body">
-            {$answer}
-        </div>
-    </div>
-</div>
-END_BLOCK;
-			$first = false;
-		}
-		
-		return $accordion_str;
-	}
-	//--------------------------------------------------------------------------------------
-	/*!
-	@brief  表示(継承して使用)
-	@return なぁE
-	*/
-	//--------------------------------------------------------------------------------------
-	public function display(){
-//PHPブロチE��終亁E
-?>
-<!-- コンチE��チE��-->
-<head>
-    <title>よくある質啁E/title>
-</head>
-<div class="contents">
-<?= $this->get_err_flag(); ?>
-<?= $this->get_error_display(); ?>
-<?= $this->get_success_display(); ?>
 require_once('common/session.php');
 require_once('common/dbmanager.php');
 
@@ -224,17 +8,17 @@ if (!$user) {
     exit;
 }
 
-// ユーザーが教師かどぁE��を判宁E
+// ユーザーが教師かどうかを判定
 $is_teacher = isset($user['user_is_teacher']) && $user['user_is_teacher'] == 1;
-error_log("FAQ表示: ユーザーが教師かどぁE�� = " . ($is_teacher ? 'true' : 'false'));
+error_log("FAQ表示: ユーザーが教師かどうか = " . ($is_teacher ? 'true' : 'false'));
 error_log("FAQ表示: user_is_teacher値 = " . ($user['user_is_teacher'] ?? 'NULL'));
 error_log("FAQ表示: ユーザーID = " . ($user['uuid'] ?? 'NULL'));
 
-// チE�Eタベ�Eスから質問と回答を取征E
+// データベースから質問と回答を取得
 try {
     $db = new cdb();
     
-    // 回答済みの質問を取征E
+    // 回答済みの質問を取得
     $stmt = $db->prepare('
         SELECT 
             faq_id,
@@ -243,7 +27,7 @@ try {
             faq_answer,
             faq_created_at,
             COALESCE(faq_user_id, 0) as faq_user_id,
-            COALESCE(users.user_name, "匿吁E) as questioner_name
+            COALESCE(users.user_name, "匿名") as questioner_name
         FROM faq 
         LEFT JOIN users ON faq.faq_user_id = users.user_id 
         WHERE faq_answer IS NOT NULL AND faq_answer != ""
@@ -252,7 +36,7 @@ try {
     $stmt->execute();
     $answered_faqs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-    // 回答征E��の質問を取征E
+    // 回答待ちの質問を取得
     $stmt = $db->prepare('
         SELECT 
             faq_id,
@@ -260,7 +44,7 @@ try {
             faq_question,
             faq_created_at,
             COALESCE(faq_user_id, 0) as faq_user_id,
-            COALESCE(users.user_name, "匿吁E) as questioner_name
+            COALESCE(users.user_name, "匿名") as questioner_name
         FROM faq 
         LEFT JOIN users ON faq.faq_user_id = users.user_id 
         WHERE faq_answer IS NULL OR faq_answer = ""
@@ -283,13 +67,13 @@ include 'includes/sidebar.php';
     <main class="main-content-styles">
         <div class="container-fluid" style="padding-top: 20px; padding-bottom: 0;">
 
-            <!-- タイトルとボタン�E�横並び�E�E-->
+            <!-- タイトルとボタン（横並び） -->
             <div class="faq-header">
-                <h2 class="faq-title">送った質啁E/h2>
+                <h2 class="faq-title">送った質問</h2>
                 <div class="faq-actions">
                     <?php if ($is_teacher): ?>
                     <a href="teacher_questions.php" class="btn btn-success me-2">
-                        <i class="fas fa-chalkboard-teacher me-1"></i> 質問管琁E�Eージ
+                        <i class="fas fa-chalkboard-teacher me-1"></i> 質問管理ページ
                     </a>
                     <?php endif; ?>
                     <a href="faq_create.php" class="btn btn-primary">
@@ -298,60 +82,19 @@ include 'includes/sidebar.php';
                 </div>
             </div>
             
-            <!-- 説明テキスチE-->
+            <!-- 説明テキスト -->
             <div class="faq-info">
                 <i class="fas fa-info-circle me-2"></i>
-                <strong>使ぁE���E�E/strong> 質問をクリチE��すると回答が表示されます。お探し�E回答が見つからなぁE��合�E「質問をする」�Eタンから新しい質問を投稿してください、E
+                <strong>使い方：</strong> 質問をクリックすると回答が表示されます。お探しの回答が見つからない場合は「質問をする」ボタンから新しい質問を投稿してください。
             </div>
 
-            <!-- FAQアコーチE��オン -->
-            <div class="accordion shadow" id="faqAccordion">
-                <?= $this->get_faq_accordion(); ?>
-            </div>
-        </div>
-    </main>
-</div>
-</div>
-<!-- /コンチE��チE��-->
-<?php 
-//PHPブロチE��再開
-	}
-
-	//--------------------------------------------------------------------------------------
-	/*!
-	@brief	チE��トラクタ
-	*/
-	//--------------------------------------------------------------------------------------
-	public function __destruct(){
-		//親クラスのチE��トラクタを呼ぶ
-		parent::__destruct();
-	}
-}
-
-//ペ�Eジを作�E
-$page_obj = new cnode();
-//ヘッダ追加
-$page_obj->add_child(cutil::create('cheader'));
-//サイドバー追加
-$page_obj->add_child(cutil::create('csidebar'));
-//本体追加
-$page_obj->add_child($main_obj = cutil::create('cmain_node'));
-//構築時処琁E
-$page_obj->create();
-//POST変数のチE��ォルト値をセチE��
-$main_obj->post_default();
-//本体実行（表示前�E琁E��E
-$main_obj->execute();
-//ペ�Eジ全体を表示
-$page_obj->display();
-
-?>
+            <!-- FAQアコーディオン -->
             <div class="faq-accordion" id="faqAccordion">
                 
                 <?php if (!empty($pending_faqs)): ?>
-                    <!-- 回答征E��の質問セクション -->
+                    <!-- 回答待ちの質問セクション -->
                     <div class="faq-section-header pending">
-                        <h4><i class="fas fa-clock text-warning me-2"></i>回答征E��の質啁E/h4>
+                        <h4><i class="fas fa-clock text-warning me-2"></i>回答待ちの質問</h4>
                     </div>
                     
                     <?php foreach ($pending_faqs as $faq): ?>
@@ -361,10 +104,10 @@ $page_obj->display();
                                     <i class="fas fa-clock"></i>
                                 </div>
                                 <div class="faq-title-content">
-                                    <strong><?php echo htmlspecialchars($faq['faq_title'] ?? 'タイトルなぁE); ?></strong>
+                                    <strong><?php echo htmlspecialchars($faq['faq_title'] ?? 'タイトルなし'); ?></strong>
                                 </div>
                                 <div class="faq-meta">
-                                    投稿老E <?php echo htmlspecialchars($faq['questioner_name'] ?? '匿吁E); ?> | 
+                                    投稿者: <?php echo htmlspecialchars($faq['questioner_name'] ?? '匿名'); ?> | 
                                     <?php echo date('Y/m/d', strtotime($faq['faq_created_at'])); ?>
                                 </div>
                                 <?php if ($is_teacher || (string)$faq['faq_user_id'] === (string)$user['uuid']): ?>
@@ -385,7 +128,7 @@ $page_obj->display();
                                 <div class="faq-question">
                                     <div class="content-header">
                                         <i class="fas fa-question-circle text-primary me-2"></i>
-                                        <strong>質問�E容</strong>
+                                        <strong>質問内容</strong>
                                     </div>
                                     <div class="content-text">
                                         <?php echo nl2br(htmlspecialchars($faq['faq_question'])); ?>
@@ -394,10 +137,10 @@ $page_obj->display();
                                 <div class="faq-answer pending">
                                     <div class="content-header">
                                         <i class="fas fa-hourglass-half text-warning me-2"></i>
-                                        <strong>回答状況E/strong>
+                                        <strong>回答状況</strong>
                                     </div>
                                     <div class="content-text pending">
-                                        こ�E質問�Eまだ回答されてぁE��せん。しばらくお征E��ください、E
+                                        この質問はまだ回答されていません。しばらくお待ちください。
                                     </div>
                                 </div>
                             </div>
@@ -408,7 +151,7 @@ $page_obj->display();
                 <?php if (!empty($answered_faqs)): ?>
                     <!-- 回答済みの質問セクション -->
                     <div class="faq-section-header answered">
-                        <h4><i class="fas fa-check-circle text-success me-2"></i>回答済みの質啁E/h4>
+                        <h4><i class="fas fa-check-circle text-success me-2"></i>回答済みの質問</h4>
                     </div>
                     
                     <?php foreach ($answered_faqs as $faq): ?>
@@ -418,10 +161,10 @@ $page_obj->display();
                                     <i class="fas fa-check-circle"></i>
                                 </div>
                                 <div class="faq-title-content">
-                                    <strong><?php echo htmlspecialchars($faq['faq_title'] ?? 'タイトルなぁE); ?></strong>
+                                    <strong><?php echo htmlspecialchars($faq['faq_title'] ?? 'タイトルなし'); ?></strong>
                                 </div>
                                 <div class="faq-meta">
-                                    投稿老E <?php echo htmlspecialchars($faq['questioner_name'] ?? '匿吁E); ?> | 
+                                    投稿者: <?php echo htmlspecialchars($faq['questioner_name'] ?? '匿名'); ?> | 
                                     <?php echo date('Y/m/d', strtotime($faq['faq_created_at'])); ?>
                                 </div>
                                 <?php if ($is_teacher || (string)$faq['faq_user_id'] === (string)$user['uuid']): ?>
@@ -442,7 +185,7 @@ $page_obj->display();
                                 <div class="faq-question">
                                     <div class="content-header">
                                         <i class="fas fa-question-circle text-primary me-2"></i>
-                                        <strong>質問�E容</strong>
+                                        <strong>質問内容</strong>
                                     </div>
                                     <div class="content-text">
                                         <?php echo nl2br(htmlspecialchars($faq['faq_question'])); ?>
@@ -451,12 +194,10 @@ $page_obj->display();
                                 <div class="faq-answer answered">
                                     <div class="content-header">
                                         <i class="fas fa-reply text-success me-2"></i>
-                                        <strong>回筁E/strong>
+                                        <strong>回答</strong>
                                     </div>
                                     <div class="content-text">
                                         <?php echo nl2br(htmlspecialchars($faq['faq_answer'])); ?>
-                                    </div>
-                                </div>
                                     </div>
                                 </div>
                             </div>
@@ -465,26 +206,26 @@ $page_obj->display();
                 <?php endif; ?>
                 
                 <?php if (empty($pending_faqs) && empty($answered_faqs)): ?>
-                    <!-- 質問が全くなぁE��吁E-->
+                    <!-- 質問が全くない場合 -->
                     <div class="faq-empty">
                         <i class="fas fa-question-circle me-2"></i>
-                        まだ質問が投稿されてぁE��せん。「質問をする」�Eタンから最初�E質問を投稿してみませんか！E
+                        まだ質問が投稿されていません。「質問をする」ボタンから最初の質問を投稿してみませんか？
                     </div>
                 <?php endif; ?>
 
                 <!-- よくある質問セクション -->
                 <div class="faq-section-header common">
-                    <h4><i class="fas fa-info-circle me-2"></i>よくある質啁E/h4>
+                    <h4><i class="fas fa-info-circle me-2"></i>よくある質問</h4>
                 </div>
                
-                <!-- 既存�Eよくある質啁E-->
+                <!-- 既存のよくある質問 -->
                 <div class="faq-item common" data-faq-id="common1">
                     <div class="faq-question-header" onclick="toggleFAQ('common1')">
                         <div class="faq-icon">
                             <i class="fas fa-calendar-alt"></i>
                         </div>
                         <div class="faq-title-content">
-                            <strong>行事�E予定がわかりません</strong>
+                            <strong>行事の予定がわかりません</strong>
                         </div>
                         <div class="faq-toggle">
                             <i class="fas fa-chevron-down"></i>
@@ -494,20 +235,20 @@ $page_obj->display();
                         <div class="faq-answer common">
                             <div class="content-header">
                                 <i class="fas fa-lightbulb text-warning me-2"></i>
-                                <strong>行事予定�E確認方況E/strong>
+                                <strong>行事予定の確認方法</strong>
                             </div>
                             <div class="answer-steps">
                                 <div class="step-item">
                                     <i class="fas fa-calendar-check text-primary me-2"></i>
-                                    <span>「�Eイペ�Eジ > 行事カレンダー」から月間予定を確誁E/span>
+                                    <span>「マイページ > 行事カレンダー」から月間予定を確認</span>
                                 </div>
                                 <div class="step-item">
                                     <i class="fas fa-bell text-info me-2"></i>
-                                    <span>「お知らせ」タブで重要な行事�E詳細惁E��を確誁E/span>
+                                    <span>「お知らせ」タブで重要な行事の詳細情報を確認</span>
                                 </div>
                                 <div class="step-item">
                                     <i class="fas fa-users text-success me-2"></i>
-                                    <span>吁E��ミュニティで個別の行事予定も確認可能</span>
+                                    <span>各コミュニティで個別の行事予定も確認可能</span>
                                 </div>
                             </div>
                         </div>
@@ -520,7 +261,7 @@ $page_obj->display();
                             <i class="fas fa-file-download"></i>
                         </div>
                         <div class="faq-title-content">
-                            <strong>配币E��がどこにあるか�EからなぁE/strong>
+                            <strong>配布物がどこにあるか分からない</strong>
                         </div>
                         <div class="faq-toggle">
                             <i class="fas fa-chevron-down"></i>
@@ -530,12 +271,12 @@ $page_obj->display();
                         <div class="faq-answer common">
                             <div class="content-header">
                                 <i class="fas fa-lightbulb text-warning me-2"></i>
-                                <strong>配币E��の確認方況E/strong>
+                                <strong>配布物の確認方法</strong>
                             </div>
                             <div class="answer-steps">
                                 <div class="step-item">
                                     <i class="fas fa-file-pdf text-danger me-2"></i>
-                                    <span>「お知らせ」タブ�EPDF一覧からダウンローチE/span>
+                                    <span>「お知らせ」タブのPDF一覧からダウンロード</span>
                                 </div>
                                 <div class="step-item">
                                     <i class="fas fa-search text-primary me-2"></i>
@@ -543,7 +284,7 @@ $page_obj->display();
                                 </div>
                                 <div class="step-item">
                                     <i class="fas fa-folder text-info me-2"></i>
-                                    <span>吁E��ミュニティ冁E�E賁E��フォルダも確誁E/span>
+                                    <span>各コミュニティ内の資料フォルダも確認</span>
                                 </div>
                             </div>
                         </div>
@@ -556,7 +297,7 @@ $page_obj->display();
                             <i class="fas fa-bell-slash"></i>
                         </div>
                         <div class="faq-title-content">
-                            <strong>チャチE��の通知が届かなぁE/strong>
+                            <strong>チャットの通知が届かない</strong>
                         </div>
                         <div class="faq-toggle">
                             <i class="fas fa-chevron-down"></i>
@@ -566,12 +307,12 @@ $page_obj->display();
                         <div class="faq-answer common">
                             <div class="content-header">
                                 <i class="fas fa-lightbulb text-warning me-2"></i>
-                                <strong>通知設定�E確認方況E/strong>
+                                <strong>通知設定の確認方法</strong>
                             </div>
                             <div class="answer-steps">
                                 <div class="step-item">
                                     <i class="fas fa-browser text-primary me-2"></i>
-                                    <span>ブラウザの通知設定を確誁E/span>
+                                    <span>ブラウザの通知設定を確認</span>
                                 </div>
                                 <div class="step-item">
                                     <i class="fas fa-cog text-secondary me-2"></i>
@@ -579,7 +320,7 @@ $page_obj->display();
                                 </div>
                                 <div class="step-item">
                                     <i class="fas fa-mobile-alt text-info me-2"></i>
-                                    <span>端末の「設宁E> 通知」も確誁E/span>
+                                    <span>端末の「設定 > 通知」も確認</span>
                                 </div>
                             </div>
                         </div>
@@ -592,7 +333,7 @@ $page_obj->display();
                             <i class="fas fa-users"></i>
                         </div>
                         <div class="faq-title-content">
-                            <strong>コミュニティの作�E方法が知りたぁE/strong>
+                            <strong>コミュニティの作成方法が知りたい</strong>
                         </div>
                         <div class="faq-toggle">
                             <i class="fas fa-chevron-down"></i>
@@ -602,20 +343,20 @@ $page_obj->display();
                         <div class="faq-answer common">
                             <div class="content-header">
                                 <i class="fas fa-lightbulb text-warning me-2"></i>
-                                <strong>コミュニティ作�E手頁E/strong>
+                                <strong>コミュニティ作成手順</strong>
                             </div>
                             <div class="answer-steps">
                                 <div class="step-item">
                                     <i class="fas fa-plus-circle text-success me-2"></i>
-                                    <span>「コミュニティを作�E」�EタンをクリチE��</span>
+                                    <span>「コミュニティを作成」ボタンをクリック</span>
                                 </div>
                                 <div class="step-item">
                                     <i class="fas fa-edit text-primary me-2"></i>
-                                    <span>コミュニティ名と説明を入劁E/span>
+                                    <span>コミュニティ名と説明を入力</span>
                                 </div>
                                 <div class="step-item">
                                     <i class="fas fa-exclamation-triangle text-warning me-2"></i>
-                                    <span><strong>※先生のみが作�E可能でぁE/strong></span>
+                                    <span><strong>※先生のみが作成可能です</strong></span>
                                 </div>
                             </div>
                         </div>
@@ -638,20 +379,20 @@ $page_obj->display();
                         <div class="faq-answer common">
                             <div class="content-header">
                                 <i class="fas fa-lightbulb text-warning me-2"></i>
-                                <strong>パスワード�E設定につぁE��</strong>
+                                <strong>パスワード再設定について</strong>
                             </div>
                             <div class="answer-steps">
                                 <div class="step-item">
                                     <i class="fas fa-chalkboard-teacher text-success me-2"></i>
-                                    <span>拁E��の先生に相諁E/span>
+                                    <span>担任の先生に相談</span>
                                 </div>
                                 <div class="step-item">
                                     <i class="fas fa-user-shield text-primary me-2"></i>
-                                    <span>学校の管琁E��E��お問ぁE��わせ</span>
+                                    <span>学校の管理者にお問い合わせ</span>
                                 </div>
                                 <div class="step-item">
                                     <i class="fas fa-id-card text-info me-2"></i>
-                                    <span>生徒証明書が忁E��な場合がありまぁE/span>
+                                    <span>生徒証明書が必要な場合があります</span>
                                 </div>
                             </div>
                         </div>
@@ -665,7 +406,7 @@ $page_obj->display();
 
 <!-- CSS -->
 <style>
-/* FAQペ�Eジ専用スタイル */
+/* FAQページ専用スタイル */
 .main-content-wrapper {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     min-height: 100vh;
@@ -710,7 +451,7 @@ $page_obj->display();
     flex-wrap: wrap;
 }
 
-/* 惁E��エリア */
+/* 情報エリア */
 .faq-info {
     background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
     border: 1px solid #2196f3;
@@ -721,7 +462,7 @@ $page_obj->display();
     margin-bottom: 1.5rem;
 }
 
-/* アコーチE��オンコンチE�� */
+/* アコーディオンコンテナ */
 .faq-accordion {
     max-width: 900px;
     margin: 0 auto;
@@ -744,7 +485,7 @@ $page_obj->display();
     font-weight: 700;
 }
 
-/* FAQアイチE�� */
+/* FAQアイテム */
 .faq-item {
     border-bottom: 1px solid rgba(0,0,0,.125);
     transition: all 0.3s ease;
@@ -795,7 +536,7 @@ $page_obj->display();
     justify-content: center;
 }
 
-/* タイトルコンチE��チE*/
+/* タイトルコンテンツ */
 .faq-title-content {
     min-width: 0;
     flex: 1;
@@ -809,7 +550,7 @@ $page_obj->display();
     white-space: nowrap;
 }
 
-/* メタ惁E�� */
+/* メタ情報 */
 .faq-meta {
     font-size: 0.8rem;
     opacity: 0.9;
@@ -852,7 +593,7 @@ $page_obj->display();
     transform: rotate(180deg);
 }
 
-/* FAQコンチE��チE*/
+/* FAQコンテンツ */
 .faq-content {
     display: none;
     padding: 1.5rem;
@@ -884,7 +625,7 @@ $page_obj->display();
     }
 }
 
-/* 質問�E回答エリア */
+/* 質問・回答エリア */
 .faq-question, .faq-answer {
     margin-bottom: 1.5rem;
 }
@@ -929,7 +670,7 @@ $page_obj->display();
     background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
 }
 
-/* スチE��プアイチE�� */
+/* ステップアイテム */
 .answer-steps {
     display: flex;
     flex-direction: column;
@@ -966,7 +707,7 @@ $page_obj->display();
     line-height: 1.5;
 }
 
-/* 空の状慁E*/
+/* 空の状態 */
 .faq-empty {
     text-align: center;
     padding: 3rem 1rem;
@@ -1007,7 +748,7 @@ $page_obj->display();
     box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
 }
 
-/* レスポンシブ対忁E*/
+/* レスポンシブ対応 */
 @media (max-width: 768px) {
     .main-content-wrapper {
         padding-left: 0;
@@ -1100,12 +841,12 @@ html {
 <!-- JavaScript -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('FAQ機�Eを�E期化してぁE��ぁE..');
+    console.log('FAQ機能を初期化しています...');
     
-    // 削除ボタンの処琁E
-    console.log('削除機�Eを�E期化してぁE��ぁE..');
+    // 削除ボタンの処理
+    console.log('削除機能を初期化しています...');
     const deleteButtons = document.querySelectorAll('.delete-btn');
-    console.log(`${deleteButtons.length}個�E削除ボタンを検�Eしました`);
+    console.log(`${deleteButtons.length}個の削除ボタンを検出しました`);
 });
 
 // FAQの開閉
@@ -1116,12 +857,12 @@ function toggleFAQ(faqId) {
     if (faqItem && content) {
         const isActive = faqItem.classList.contains('active');
         
-        // 他�EFAQを閉じる
+        // 他のFAQを閉じる
         document.querySelectorAll('.faq-item.active').forEach(item => {
             item.classList.remove('active');
         });
         
-        // クリチE��したFAQが閉じてぁE��場合�E開く
+        // クリックしたFAQが閉じていた場合は開く
         if (!isActive) {
             faqItem.classList.add('active');
         }
@@ -1133,43 +874,43 @@ function deleteFAQ(buttonElement) {
     const faqId = buttonElement.getAttribute('data-faq-id');
     const faqTitle = buttonElement.getAttribute('data-faq-title');
     
-    console.log(`削除ボタンがクリチE��されました: ID=${faqId}, タイトル=${faqTitle}`);
+    console.log(`削除ボタンがクリックされました: ID=${faqId}, タイトル=${faqTitle}`);
     
-    if (confirm(`、E{faqTitle}」を削除してもよろしぁE��すか�E�`)) {
+    if (confirm(`「${faqTitle}」を削除してもよろしいですか？`)) {
         console.log(`FAQ ID=${faqId} の削除を開始します`);
         
-        // ボタンを無効匁E
+        // ボタンを無効化
         buttonElement.disabled = true;
-        buttonElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 処琁E��...';
+        buttonElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 処理中...';
         
-        // フォームチE�Eタ作�E
+        // フォームデータ作成
         const formData = new FormData();
         formData.append('faq_id', faqId);
         
-        // サーバ�EにリクエスチE
+        // サーバーにリクエスト
         fetch('faq_delete.php', {
             method: 'POST',
             body: formData
         })
         .then(response => {
-            console.log(`サーバ�Eからのレスポンス: status=${response.status}`);
+            console.log(`サーバーからのレスポンス: status=${response.status}`);
             
             if (!response.ok) {
-                throw new Error(`サーバ�Eエラー: ${response.status}`);
+                throw new Error(`サーバーエラー: ${response.status}`);
             }
             
             return response.text().then(text => {
                 try {
-                    console.log('サーバ�Eからの生レスポンス:', text);
+                    console.log('サーバーからの生レスポンス:', text);
                     return JSON.parse(text);
                 } catch (e) {
-                    console.error('JSONパ�Eスエラー:', e);
-                    throw new Error('サーバ�Eからの応答が不正でぁE);
+                    console.error('JSONパースエラー:', e);
+                    throw new Error('サーバーからの応答が不正です');
                 }
             });
         })
         .then(data => {
-            console.log('処琁E��果:', data);
+            console.log('処理結果:', data);
             
             if (data.success) {
                 alert('削除しました');
@@ -1184,7 +925,7 @@ function deleteFAQ(buttonElement) {
                     setTimeout(() => {
                         faqItem.remove();
                         
-                        // 質問が全て削除された場合�Eペ�Eジを更新
+                        // 質問が全て削除された場合はページを更新
                         const remainingItems = document.querySelectorAll('.faq-item.pending, .faq-item.answered').length;
                         if (remainingItems === 0) {
                             window.location.reload();
@@ -1194,7 +935,7 @@ function deleteFAQ(buttonElement) {
                     window.location.reload();
                 }
             } else {
-                alert(`削除できませんでした: ${data.message || '不�Eなエラー'}`);
+                alert(`削除できませんでした: ${data.message || '不明なエラー'}`);
                 
                 buttonElement.disabled = false;
                 buttonElement.innerHTML = '<i class="fas fa-trash"></i> 削除';
@@ -1202,7 +943,7 @@ function deleteFAQ(buttonElement) {
         })
         .catch(error => {
             console.error('エラーが発生しました:', error);
-            alert(`削除処琁E��失敗しました: ${error.message}`);
+            alert(`削除処理に失敗しました: ${error.message}`);
             
             buttonElement.disabled = false;
             buttonElement.innerHTML = '<i class="fas fa-trash"></i> 削除';
