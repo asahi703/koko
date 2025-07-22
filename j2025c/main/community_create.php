@@ -4,6 +4,7 @@ include 'includes/sidebar.php';
 
 require_once('common/dbmanager.php');
 require_once('common/session.php');
+require_once('common/notification_helper.php');
 
 $user = get_login_user();
 $error = '';
@@ -30,6 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_POST['community_description'] ?? '',
                 $user['uuid']
             ]);
+            
+            // 作成されたコミュニティIDを取得
+            $community_id = $db->lastInsertId();
+            
+            // コミュニティ作成通知を送信
+            $creator_name = $user['user_name'] ?? $user['name'] ?? 'ユーザー';
+            notify_community_created($community_id, $user['uuid'], $creator_name, $_POST['community_name']);
+            
             // 作成後は一覧ページにリダイレクト
             header("Location: community.php?created=1");
             exit;
